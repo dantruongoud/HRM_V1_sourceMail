@@ -1,0 +1,511 @@
+@page "/educate/course/list"
+
+<!-- start main -->
+<section class="main">
+    <ul class="column">
+        <li class="column column-half">
+            <div class="infoEducate">
+                <div class="card left">
+                    <div class="column is-3">
+                        <div class="img">
+                            <img src="img/test4.jpg" alt="">
+                        </div>
+                    </div>
+                    <div class="column is-9">
+                        <h2>DAN TRUONG NGUYEN</h2>
+                        <div>
+                            <p class="mb-1">
+                                <span class="is-font">DOCORP</span>
+                            </p>
+                            <p class="mb-1"></p>
+                            <span class="is-font">└─ CONANDO</span>
+                            <p class="mb-1 ">
+                                <span class="is-font ">└─ Team Dev</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <ul class="column card-3">
+                <li class="column">
+                    <div class="is-card">
+                        <div class="icon has-text-link">
+                            <span class="is-large material-icons material-icons-outlined">
+                                verified
+                            </span>
+                            <strong>6</strong>
+                        </div>
+                        <div class="text-line ellipsis" title="Chứng chỉ đạt được">Chứng chỉ đạt được</div>
+                    </div>
+                </li>
+                <li class="column">
+                    <div class="is-card">
+                        <div class="icon has-text-warning">
+                            <span class="is-large material-icons material-icons-outlined">
+                                menu_book
+                            </span>
+                            <strong>7</strong>
+                        </div>
+                        <div class="text-line ellipsis" title="Khoá học đã tham gia">Khoá học đã tham gia
+                        </div>
+                    </div>
+                </li>
+                <li class="column">
+                    <div class="is-card">
+                        <div class="icon has-text-success">
+                            <span class="is-large material-icons material-icons-outlined">
+                                trending_up
+                            </span>
+                            <strong>8</strong>
+                        </div>
+                        <div class="text-line ellipsis" title="Xếp hạng học tập">Xếp hạng học tập</div>
+                    </div>
+                </li>
+            </ul>
+            <div class="field is-olique">
+                <div class="control has-text-left">
+                    <span>"Tự do không phải là làm mọi điều mình thích, mà là cơ hội để làm những điều mình
+                        không cảm thấy hối hận"</span>
+                </div>
+                <div class="control has-text-right">
+                    <span>
+                        — Sưu tầm
+                    </span>
+                </div>
+            </div>
+        </li>
+        <li class="column column-half">
+            <div class="infoEducate contineu">
+                <div class="card">
+                    <h2>Học tiếp bạn ơi !</h2>
+                    <div class="scroll tablelist">
+                        <table class="table">
+                            <tbody>
+                              @foreach (var edu in educatesContineuList)
+                              {
+                                <tr>
+                                    <td class="p-16" width="95px">
+                                        <div class="imageEducate is_radius is-64x64">
+                                            <img src="@edu.linkIMG" alt="IMG">
+                                        </div>
+                                    </td>
+                                    <td class="py-16" width="0px">
+                                        <div class="has-text-dark">@edu.nameEdu</div>
+                                        <div class="progress-has-value">
+                                            <progress class="progress is-small" value="@edu.valueProgress"
+                                                max="100"></progress>
+                                            <span>@edu.valueProgress%</span>
+                                        </div>
+                                        <div class="is-grouped">
+                                            <div class="control">
+                                                <div class="icon-text">
+                                                    <span class="has-text-warning">
+                                                        <span
+                                                            class="icon-size-6 material-icons material-icons-outlined">
+                                                            timer
+                                                        </span>
+                                                    </span>
+                                                    <span class="text">@edu.timeEdu phút</span>
+                                                </div>
+                                            </div>
+                                            <div class="control">
+                                                <div class="icon-text">
+                                                    <span class="has-text-warning">
+                                                        <span
+                                                            class="icon-size-6 material-icons material-icons-outlined">
+                                                            person
+                                                        </span>
+                                                    </span>
+                                                    <span class="text">@edu.nameUserEdu</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="p-16" width="140px">
+                                        <a href="" class="tag">
+                                            <span class="">Tiếp tục</span>
+                                            <i class="icon-4 material-icons material-icons-outlined">
+                                                arrow_right
+                                            </i>
+                                        </a>
+                                    </td>
+                                </tr>
+                              }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </li>
+
+        <li class="column listeducate">
+            <div class="card-p5">
+                <h2 class="has-text-info mb-5">KHOÁ HỌC NỔI BẬT</h2>
+                <ul class="is-multiline mb-5">
+
+                    @foreach (var course in course)
+                    {
+                    <li class="is-one-fifth">
+                        <div class="card-has-image">
+                            <div class="card-image">
+                                <a class="pt-60 is-image">
+                                    <img src="@course.avatarCourse" alt="IMG">
+                                </a>
+                            </div>
+                            <div class="card-content">
+                                <ul class="is-multi is-vcentered">
+                                    <li class="column is-10">
+                                        <div class="user-item has-text-weight-semibol is-image">
+                                            <img src="@course.avtUser" alt="IMG"
+                                                class="image is-32x32">
+                                            <span class="has-text-link text_1_line">@course.nameUser</span>
+                                        </div>
+                                    </li>
+                                    <li class="column is-2 has-text-right">
+                                        <a class="icon">
+                                            <span class="is-size-5 material-icons material-icons-outlined">
+                                                bookmark_border
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li class="column is-full">
+                                        <a href=""
+                                            class="has-text-weight-samibold has-text-dark text_2_line px-2"
+                                            style="height: 3em;">@course.nameCourse</a>
+                                    </li>
+                                    <li class="colmun column-half is-size-7">
+                                        <span class="icon-text">
+                                            <span class="icon has-text-warning">
+                                                <span class="material-icons material-icons-outlined">
+                                                    star
+                                                </span>
+                                            </span>
+                                            <span>@course.evalueCourse đánh giá</span>
+                                        </span>
+                                    </li>
+                                    <li class="colmun column-half is-size-7">
+                                        <span class="icon-text">
+                                            <span class="icon has-text-warning">
+                                                <span class="material-icons material-icons-outlined">
+                                                    book
+                                                </span>
+                                            </span>
+                                            <span>@course.countLesson Bài học</span>
+                                        </span>
+                                    </li>
+                                    <li class="colmun column-half is-size-7">
+                                        <span class="icon-text">
+                                            <span class="icon has-text-warning">
+                                                <span class="material-icons material-icons-outlined">
+                                                    timer
+                                                </span>
+                                            </span>
+                                            <span>@course.timeCourse Phút</span>
+                                        </span>
+                                    </li>
+                                    <li class="colmun column-half is-size-7">
+                                        <span class="icon-text">
+                                            <span class="icon has-text-warning">
+                                                <span class="material-icons material-icons-outlined">
+                                                    group
+                                                </span>
+                                            </span>
+                                            <span>@course.userEnjoyCourse đã học</span>
+                                        </span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+                    }
+                </ul>
+                <div class="has-text-centered mt-5">
+                    <a class="has-text-weight-semibold mt-4">
+                        Xem thêm
+                    </a>
+                </div>
+            </div>
+        </li>
+        <li class="column listeducate">
+            <div class="card-p5">
+                <h2 class="has-text-info mb-5">KHOÁ HỌC ĐÃ HOÀN THÀNH</h2>
+                <ul class="is-multiline mb-5">
+
+                  @foreach (var course in course)
+                  { 
+                    <li class="is-one-fifth">
+                        <div class="card-has-image">
+                            <div class="card-image">
+                                <a class="pt-60 is-image">
+                                    <img src="@course.avatarCourse" alt="IMG">
+                                </a>
+                            </div>
+                            <div class="card-content">
+                                <ul class="is-multi is-vcentered">
+                                    <li class="column is-10">
+                                        <div class="user-item has-text-weight-semibol is-image">
+                                            <img src="@course.avtUser" alt="IMG"
+                                                class="image is-32x32">
+                                            <span class="has-text-link text_1_line">@course.nameUser</span>
+                                        </div>
+                                    </li>
+                                    <li class="column is-2 has-text-right">
+                                        <a class="icon">
+                                            <span class="is-size-5 material-icons material-icons-outlined">
+                                                bookmark_border
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li class="column is-full">
+                                        <a href=""
+                                            class="has-text-weight-samibold has-text-dark text_2_line px-2"
+                                            style="height: 3em;">
+                                            @course.nameCourse 
+                                        </a>
+                                    </li>
+                                    <li class="colmun column-half is-size-7">
+                                        <span class="icon-text">
+                                            <span class="icon has-text-warning">
+                                                <span class="material-icons material-icons-outlined">
+                                                    star
+                                                </span>
+                                            </span>
+                                            <span>@course.evalueCourse đánh giá</span>
+                                        </span>
+                                    </li>
+                                    <li class="colmun column-half is-size-7">
+                                        <span class="icon-text">
+                                            <span class="icon has-text-warning">
+                                                <span class="material-icons material-icons-outlined">
+                                                    book
+                                                </span>
+                                            </span>
+                                            <span>@course.countLesson Bài học</span>
+                                        </span>
+                                    </li>
+                                    <li class="colmun column-half is-size-7">
+                                        <span class="icon-text">
+                                            <span class="icon has-text-warning">
+                                                <span class="material-icons material-icons-outlined">
+                                                    timer
+                                                </span>
+                                            </span>
+                                            <span>@course.timeCourse Phút</span>
+                                        </span>
+                                    </li>
+                                    <li class="colmun column-half is-size-7">
+                                        <span class="icon-text">
+                                            <span class="icon has-text-warning">
+                                                <span class="material-icons material-icons-outlined">
+                                                    group
+                                                </span>
+                                            </span>
+                                            <span>@course.userEnjoyCourse đã học</span>
+                                        </span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+                  }
+                </ul>
+            </div>
+        </li>
+        <li class="column column-is-full">
+            <h2 class="has-text-info">
+                DANH MỤC KHOÁ HỌC
+            </h2>
+        </li>
+
+        <li class="column is-7">
+            <div class="scroll" style="height: 480px;">
+                <ul class="is-multi">
+                  @foreach (var cate in category)
+                  {
+                    <li class="column is-one-third">
+                        <a class="category-item p-5 is-block">
+                            <div class="is-flex is-vcentered is-centered mt-3" style="height: 64px;">
+                                <img src="@cate.avtCate" alt="IMG"
+                                    style="max-height: 100%;">
+                            </div>
+                            <div class="mt-2 is-size-6 has-text-dark has-text-weight-medium has-text-centered text_2_line">
+                              @cate.nameCate
+                            </div>
+                        </a>
+                    </li> 
+                  }
+                </ul>
+            </div>
+        </li>
+        <li class="column is-5">
+            <section class="card">
+                <h2 class="has-text-info">Chọn khoá học</h2>
+                <div class="scroll" style="height: 420px;"></div>
+            </section>
+        </li>
+    </ul>
+</section>
+<!-- end main -->
+
+
+@code {
+  private List<EducateModels> educatesContineuList = new ();
+  
+  private List<EducateCourseModels> course = new ();
+  
+  private List<EducatecategoryModels> category = new ();
+  protected override void OnInitialized()
+  {
+    listEduContineu();
+    listCourse();
+    listCategory();
+  }
+  
+  public void listEduContineu() {
+    educatesContineuList = new () {
+      new EducateModels() {
+        linkIMG = "img/educateimg.png",
+        nameEdu = "Lập trình căn bản với Blazor",
+        valueProgress = 10,
+        timeEdu = "100",
+        nameUserEdu = "Đan Trường"
+      },
+
+      new EducateModels() {
+        linkIMG = "img/educateimg.png",
+        nameEdu = "Lập trình Java",
+        valueProgress = 60,
+        timeEdu = "20",
+        nameUserEdu = "Đan Trường"
+      },
+
+      new EducateModels() {
+        linkIMG = "img/educateimg.png",
+        nameEdu = "Lập trình C#",
+        valueProgress = 40,
+        timeEdu = "20",
+        nameUserEdu = "Đan Trường"
+      },
+
+      new EducateModels() {
+        linkIMG = "img/educateimg.png",
+        nameEdu = "Lập trình Automation Testing",
+        valueProgress = 90,
+        timeEdu = "20",
+        nameUserEdu = "Đan Trường"
+      },
+
+      new EducateModels() {
+        linkIMG = "img/educateimg.png",
+        nameEdu = "Lập trình Java",
+        valueProgress = 60,
+        timeEdu = "20",
+        nameUserEdu = "Đan Trường"
+      },
+
+      new EducateModels() {
+        linkIMG = "img/educateimg.png",
+        nameEdu = "Lập trình Java",
+        valueProgress = 60,
+        timeEdu = "20",
+        nameUserEdu = "Đan Trường"
+      },
+
+      new EducateModels() {
+        linkIMG = "img/educateimg.png",
+        nameEdu = "Lập trình Java",
+        valueProgress = 60,
+        timeEdu = "20",
+        nameUserEdu = "Đan Trường"
+      },
+    };
+  }
+
+  public void listCourse() {
+    course = new () {
+      new EducateCourseModels {
+        avatarCourse = "img/educateimg.png",
+        avtUser = "img/test4.jpg",
+        nameUser = "Đan Trường",
+        nameCourse = "NEW DO TALENT",
+        evalueCourse = 4,
+        countLesson = 15,
+        timeCourse = 60,
+        userEnjoyCourse = 5,
+      },
+
+      new EducateCourseModels {
+        avatarCourse = "img/educateimg.png",
+        avtUser = "img/test4.jpg",
+        nameUser = "Đan Trường",
+        nameCourse = "NEW DO TALENT",
+        evalueCourse = 4,
+        countLesson = 15,
+        timeCourse = 60,
+        userEnjoyCourse = 5,
+      },
+
+      new EducateCourseModels {
+        avatarCourse = "img/educateimg.png",
+        avtUser = "img/test4.jpg",
+        nameUser = "Đan Trường",
+        nameCourse = "NEW DO TALENT",
+        evalueCourse = 4,
+        countLesson = 15,
+        timeCourse = 60,
+        userEnjoyCourse = 5,
+      },
+
+      new EducateCourseModels {
+        avatarCourse = "img/educateimg.png",
+        avtUser = "img/test4.jpg",
+        nameUser = "Đan Trường",
+        nameCourse = "NEW DO TALENT",
+        evalueCourse = 4,
+        countLesson = 15,
+        timeCourse = 60,
+        userEnjoyCourse = 5,
+      },
+
+      new EducateCourseModels {
+        avatarCourse = "img/educateimg.png",
+        avtUser = "img/test4.jpg",
+        nameUser = "Đan Trường",
+        nameCourse = "NEW DO TALENT",
+        evalueCourse = 4,
+        countLesson = 15,
+        timeCourse = 60,
+        userEnjoyCourse = 5,
+      },
+    };
+  }
+
+  public void listCategory () {
+    category = new () {
+      new EducatecategoryModels() {
+        avtCate = "img/637810866596127875.png",
+        nameCate = "Bán hàng"
+      },
+
+      new EducatecategoryModels() {
+        avtCate = "img/637810866596127875.png",
+        nameCate = "Bán hàng"
+      },
+
+      new EducatecategoryModels() {
+        avtCate = "img/637810866596127875.png",
+        nameCate = "Bán hàng"
+      },
+
+      new EducatecategoryModels() {
+        avtCate = "img/637810866596127875.png",
+        nameCate = "Bán hàng"
+      },
+
+      new EducatecategoryModels() {
+        avtCate = "img/637810866596127875.png",
+        nameCate = "Bán hàng"
+      },
+    };
+  }
+}

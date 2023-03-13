@@ -1,0 +1,8 @@
+{
+  "RoslynExtensionsOptions": {
+    "enableAnalyzersSupport": true,
+    "enableDecompilationSupport": true,
+    "enableImportCompletion": true,
+    "enableMSBuildLoadProjectsOnDemand": true
+  }
+}

@@ -1,0 +1,21 @@
+﻿@inherits LayoutComponentBase
+@inject NavigationManager navigation
+@* <CascadingValue Value="this"> *@
+  <main id="main">
+      <NavMenu />
+      <section id="content">
+        <HeaderMain />
+        @Body
+      </section>
+  </main>
+@* </CascadingValue> *@
+
+@code {
+  public bool loadPage = true;
+  @* protected override async Task OnAfterRenderAsync(bool firstRender) {
+    if (firstRender) 
+    {
+      navigation.NavigateTo("/todolist");
+    }
+  } *@
+}

@@ -1,0 +1,525 @@
+﻿@inject NavigationManager navigation
+
+<section id="sidebar" class="@menuClass">
+  <ul class="nav-header is-iflex">
+      <a class="" @onclick="Toggle">
+          <span class="gi-menu material-symbols-outlined">
+              menu
+          </span>
+      </a>
+    <li class="cycle">
+      <a class="is-flex">
+        <span class="">Chọn chu kỳ</span>
+        <span class="is-iflex">
+          <i class="gi material-icons material-icons-outlined">
+            arrow_drop_down
+          </i>
+        </span>
+      </a>
+      <ul class="subcycle font_13">
+        <li>
+          <a>
+            Chưa có chu kỳ
+          </a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+  <nav class="nav-main">
+      @foreach (var item in NavList)
+      {
+        <li class="@(item.active == true ? "is_active" : "")">
+          @if(item.Childs.Any())
+          {
+            <a class="item-menu" @onclick="() => item.active = !item.active">
+              <span class="gi material-symbols-outlined">
+                @item.iconNav
+              </span>
+              <span class="content">@item.nameNav</span>
+              <span class="gi-arrow">
+                <i class="gi material-icons material-icons-outlined">
+                  @item.iconArrow
+                </i>
+              </span>
+            </a>
+            <ul class="subSidebar">
+              @foreach(var child in item.Childs) {
+              <li class="@(child.active == true ? "is_active" : "")">
+                @if (child.Childs.Any())
+                {
+                  <a class="button" @onclick="() => child.active = !child.active">
+                    <span class="content">@child.nameNav</span>
+                    <span class="gi-subarrow">
+                      <i class="gi material-icons material-icons-outlined">
+                        @child.iconArrow
+                      </i>
+                    </span>
+                  </a>
+                  <ul class="sub-okrs">
+                    @foreach (var childsecond in child.Childs)
+                    {
+                    <li class="@(childsecond.active == true ? "is_active" : "")">
+                      <a href="@childsecond.href" class="button">
+                        <span class="content">@childsecond.nameNav</span>
+                      </a>
+                    </li>
+                    }
+                    <div class="sidebar-highlight"></div>
+                  </ul>
+                }else {
+                  <a href="@child.href" class="button">
+                  <span class="content">@child.nameNav</span>
+                  <span class="gi-subarrow">
+                    <i class="gi material-icons material-icons-outlined">
+                      @child.iconArrow
+                    </i>
+                  </span>
+                </a>
+                }
+              </li>
+              }
+            </ul>
+          }
+          else
+          {
+            <a href="@item.href" class="item-menu">
+              <span class="gi material-symbols-outlined">
+                @item.iconNav
+              </span>
+              <span class="content">@item.nameNav</span>
+              <span class="gi-arrow">
+                <i class="gi material-icons material-icons-outlined">
+                  @item.iconArrow
+                </i>
+              </span>
+            </a>
+          }
+        </li>
+      }
+  </nav>
+  <a class="nav-logout item-menu" title="Đăng xuất">
+    <span class="gi material-icons material-icons-outlined">
+      logout
+    </span>
+    <span class="content-logout">Đăng xuất</span>
+  </a>
+</section>
+
+
+@* Start mail menu *@
+<section id="sidebarmail" class="@menuClassMail">
+  <ul class="nav-header">
+      <a class="" @onclick="ToggleMail">
+          <span class="gi-menu material-symbols-outlined">
+              menu
+          </span>
+      </a>
+  </ul>
+  <nav class="nav-main">
+    <a href="" class="button-is-link" title="Tạo thư mới">
+      <span class="gi-menu material-symbols-outlined">
+            Add
+      </span>
+      <span class="content">Tạo thư mới</span>
+    </a>
+    @foreach (var navMail in NavMailList)
+    {
+      <li class="@(navMail.active == true ? "is_active" : "")">
+        <a href="@navMail.href" class="item-menu" @onclick="() => navMail.active = !navMail.active" title="@navMail.nameNav">
+            <span class="gi material-icons material-icons-outlined">
+              @navMail.iconNav
+            </span>
+          <span class="content">@navMail.nameNav</span>
+          <span class="number">@navMail.number</span>
+        </a>
+      </li>
+    }
+  </nav>
+
+  <a class="nav-setting item-menu" title="Cài đặt">
+    <span class="gi material-icons material-icons-outlined">
+      settings
+    </span>
+    <span class="content-setting">Cài đặt</span>
+  </a>
+</section>
+
+@code {
+  private bool isOpenMenu = false;
+
+  private string menuClass => isOpenMenu ? "is_less" : "";
+
+  public void Toggle()
+  {
+    isOpenMenu = !isOpenMenu;
+  }
+  private bool isOpenMenuMail = false;
+
+  private string menuClassMail => isOpenMenuMail ? "is_less" : "";
+  public void ToggleMail()
+  {
+    isOpenMenuMail = !isOpenMenuMail;
+  }
+  private List<SidebarModels> NavList = new();
+  private List<SidebarModels> NavMailList = new();
+  protected override void OnInitialized() {
+    CreateNav();
+    CreateNavMail();
+  }
+  public void clearActiveNavlist() {
+    foreach (var item in NavList)
+    {
+      item.active = false;
+      if (item.Childs != null)
+      {
+        foreach (var child in item.Childs)
+        {
+         child.active = false;
+         if (child.Childs != null)
+         {
+          foreach (var childSecond in child.Childs)
+          {
+            childSecond.active = false;
+          }
+         } 
+        } 
+      }
+    }
+  }
+  public void clearActiveNavMaillist() {
+    foreach (var item in NavMailList)
+    {
+      item.active = false;
+    }
+  }
+
+  protected override void OnParametersSet() {
+
+    var url = navigation.Uri.Replace(navigation.BaseUri, "");
+    foreach (var main in NavList)
+    {
+      main.active = url.StartsWith(main.href.Replace("#", ""));
+      if (main.Childs != null)
+      {
+        foreach (var child in main.Childs)
+        {
+          child.active = url.StartsWith(child.href.Replace("#", ""));
+          if (child.Childs != null)
+          {
+            foreach (var sub in child.Childs)
+            {
+              sub.active = url.StartsWith(sub.href.Replace("#", ""));
+            }
+          }    
+        }        
+      }
+    }
+  }
+
+  private void CreateNavMail() {
+    NavMailList = new() {
+      new SidebarModels() {
+        href = "receivedMail",
+        nameNav = "Hộp thư đến",
+        iconNav = "inbox",
+        active = false,
+        number = 7
+      },
+      new SidebarModels() {
+        href = "sendMail",
+        nameNav = "Thư đã gửi",
+        iconNav = "send",
+        active = false,
+        number = 0
+      },      
+      new SidebarModels() {
+        href = "starMail",
+        nameNav = "Thư quan trọng",
+        iconNav = "star",
+        active = false,
+        number = 2
+      },
+      new SidebarModels() {
+        href = "draftMail",
+        nameNav = "Thư nháp",
+        iconNav = "drafts",
+        active = false,
+        number = 0
+      },
+      new SidebarModels() {
+        href = "deleteMail",
+        nameNav = "Thùng rác",
+        iconNav = "delete",
+        active = false,
+        number = 0
+      },
+    };
+  }
+  private void CreateNav() {
+    NavList = new() {
+      new SidebarModels() {
+        href = "email",
+        nameNav = "Hộp thư",
+        iconNav = "email",
+        iconArrow = "",
+        Childs = new() {},
+      },
+      new SidebarModels() {
+        href = "news",
+        nameNav = "Tin tức",
+        iconNav = "dashboard",
+        iconArrow = "",
+        Childs = new() {},
+      },
+      new SidebarModels() {
+        href = "reports",
+        nameNav = "Thống kê",
+        iconNav = "leaderboard",
+        Childs = new() {},
+      },
+      new SidebarModels() {
+        href = "teams",
+        nameNav = "Đội nhóm",
+        iconNav = "group",
+        iconArrow = "",
+        Childs = new() {},
+      },
+        new SidebarModels() {
+        href = "todolist",
+        nameNav = "Todolist",
+        iconNav = "check_box",
+        Childs = new() {},
+      },
+      new SidebarModels() {
+        href = "plans",
+        nameNav = "Kế hoạch",
+        iconNav = "view_timeline",
+        iconArrow = "",
+        Childs = new() {},
+      },
+
+        new SidebarModels() {
+        href = "#okrs",
+        nameNav = "OKRs",
+        iconNav = "track_changes",
+        iconArrow = "arrow_right",
+        Childs = new() {
+          
+          new SidebarModels() {
+            href = "#okrs/setup",
+            nameNav = "Thiết lập",
+            iconArrow = "arrow_right",
+            Childs = new() {
+              new SidebarModels() {
+                href = "okrs/setup/timeline",
+                nameNav = "Timeline",
+                Childs = new() {},
+              },
+               new SidebarModels() {
+                href = "okrs/setup/suggest",
+                nameNav = "Góp ý mục tiêu",
+                Childs = new() {},
+              },
+               new SidebarModels() {
+                href = "okrs/setup/target",
+                nameNav = "Công bố mục tiêu",
+                Childs = new() {},
+              },
+               new SidebarModels() {
+                href = "okrs/setup/details",
+                nameNav = "Tạo OKRs",
+                active = false,
+                Childs = new() {},
+              },
+            },
+          },
+
+          new SidebarModels() {
+            href = "okrs/task",
+            nameNav = "Hành động",
+            Childs = new() {},
+          },
+
+          new SidebarModels() {
+            href = "okrs/overview",
+            nameNav = "Tổng quan",
+            Childs = new() {},
+          },
+
+        },
+      },
+
+        new SidebarModels() {
+        href = "#cfrs",
+        nameNav = "CFRs",
+        iconNav = "grade",
+        iconArrow = "arrow_right",
+        Childs = new() {
+
+           new SidebarModels() {
+            href = "cfrs/checkin",
+            nameNav = "Check in",
+            Childs = new() {},
+          },
+
+          new SidebarModels() {
+            href = "cfrs/star",
+            nameNav = "Ghi nhận - Tặng sao",
+            Childs = new() {},
+          },
+
+        },
+      },
+        new SidebarModels() {
+        href = "kaizen",
+        nameNav = "Kaizen",
+        iconNav = "show_chart",
+        active = false,
+        iconArrow = "",
+        Childs = new() {},
+      },
+        new SidebarModels() {
+        href = "#gift",
+        nameNav = "Đổi quà",
+        iconNav = "card_giftcard",
+        active = false,
+        iconArrow = "",
+        Childs = new() {},
+      },
+      new SidebarModels() {
+        href = "#educate",
+        nameNav = "Đào tạo",
+        iconNav = "book",
+        active = false,
+        iconArrow = "arrow_right",
+        Childs = new() {
+
+           new SidebarModels() {
+            href = "educate/course/list",
+            nameNav = "Khoá học",
+            iconNav = "",
+            active = false,
+            iconArrow = "",
+            Childs = new() {},
+          },
+
+          new SidebarModels() {
+            href = "educate/course/manager",
+            nameNav = "Quản lý khoá học",
+            iconNav = "",
+            active = false,
+            iconArrow = "",
+            Childs = new() {},
+          },
+
+          new SidebarModels() {
+            href = "educate/exam/manager",
+            nameNav = "Chấm bài thi",
+            iconNav = "",
+            active = false,
+            iconArrow = "",
+            Childs = new() {},
+          },
+
+          new SidebarModels() {
+            href = "educate/certificate/manager",
+            nameNav = "Cấp chứng chỉ",
+            iconNav = "",
+            active = false,
+            iconArrow = "",
+            Childs = new() {},
+          },
+
+           new SidebarModels() {
+            href = "educate/certificate/manager",
+            nameNav = "Chứng chỉ đạt được",
+            iconNav = "",
+            active = false,
+            iconArrow = "",
+            Childs = new() {},
+          },
+
+        },
+      },
+      new SidebarModels() {
+        href = "#settings",
+        nameNav = "Cấu hình",
+        iconNav = "settings",
+        active = false,
+        iconArrow = "arrow_right",
+        Childs = new() {
+
+           new SidebarModels() {
+            href = "setting/system",
+            nameNav = "Cơ cấu",
+            iconNav = "",
+            active = false,
+            iconArrow = "",
+            Childs = new() {},
+          },
+
+          new SidebarModels() {
+            href = "setting/okrs",
+            nameNav = "OKRs - CFRs",
+            iconNav = "",
+            active = false,
+            iconArrow = "",
+            Childs = new() {},
+          },
+           new SidebarModels() {
+            href = "setting/todolist",
+            nameNav = "Todolist",
+            iconNav = "",
+            active = false,
+            iconArrow = "",
+            Childs = new() {},
+          },
+
+          new SidebarModels() {
+            href = "setting/kaizen",
+            nameNav = "Kaizen",
+            iconNav = "",
+            active = false,
+            iconArrow = "",
+            Childs = new() {},
+          },
+           new SidebarModels() {
+            href = "setting/gift",
+            nameNav = "Đổi quà",
+            iconNav = "",
+            active = false,
+            iconArrow = "",
+            Childs = new() {},
+          },
+
+          new SidebarModels() {
+            href = "setting/educate",
+            nameNav = "Đào tạo",
+            iconNav = "",
+            active = false,
+            iconArrow = "",
+            Childs = new() {},
+          },
+
+           new SidebarModels() {
+            href = "setting/other",
+            nameNav = "Tiện ích",
+            iconNav = "",
+            active = false,
+            iconArrow = "",
+            Childs = new() {},
+          },
+
+        },
+      },
+      new SidebarModels() {
+        href = "/user/info",
+        nameNav = "Tài khoản",
+        iconNav = "account_circle",
+        active = false,
+        iconArrow = "",
+        Childs = new () {},
+      },
+    };
+  }
+}

@@ -1,0 +1,819 @@
+@inject IJSRuntime JSRuntime;
+@page "/todolist"
+<section class="p-4">
+  <ul class="column is-multiline is-title">
+    <li class="column">
+      <h1 class="title is-5 has-text-weight-bold has-text-link">
+        Chào buổi chiều, Đan Trường
+      </h1>
+    </li>
+
+    <li class="column is-narrow has-text-weight-bold is-size-7">
+      Bạn đang có
+      <span class="has-text-danger">8</span>
+      ngày liên tiếp không trễ Todolist
+    </li>
+
+  </ul>
+
+  <div class="card-p-5">
+    <ul class="column is-multiline mb-3 is-title-table">
+      <li class="columm">
+        <h1 class="title has-text-info mb-1">TODOLIST CỦA TÔI</h1>
+        <div class="is-italic has-text-link is-size-7 is-family-font weight500">Lựa chọn ngày phù hợp và tạo list công việc</div>
+      </li>
+      <li class="column is-narrow p-8">
+        <a class="button is-link is-outlined" @onclick="setShowWorkPending">
+          <span class="icon mr-2">
+            <span class="material-icons material-icons-outlined">
+              alarm
+            </span>
+          </span>
+          <span class="is-family-font weight400 is-size-14">Việc chờ xử lý</span>
+        </a>
+      </li>
+      <li class="column is-narrow p-8">
+        <div class="field has-addons">
+          <div class="control has-icons-left">
+            <div id="" title="Chọn ngày">
+              <span class="icon is-left has-text-link">
+                <i class="material-icons is-size-5 material-icons-outlined">
+                  event
+                </i>
+              </span>
+              <div class="input is-link is-family-code">
+                <span>T6 - 24/02/2023</span>
+              </div>
+            </div>
+          </div>
+          <div class="control is-boder is-disBoder">
+            <a class="button is-link is-outlined">
+              <span class="icon">
+                <i class="material-icons is-size-6 material-icons-outlined">
+                  chevron_left
+                </i>
+              </span>
+            </a>
+          </div>
+          <div class="control is-boder boder-radius-right">
+            <a class="button is-link is-outlined">
+              <span class="icon">
+                <i class="material-icons is-size-6 material-icons-outlined">
+                  chevron_right
+                </i>
+              </span>
+            </a>
+          </div>
+        </div>
+      </li>
+    </ul>
+
+    @* star body table todolist *@
+
+    <table class="table is-group2 is-fullwidth is-reponsive mb-3">
+      <thead>
+        <tr>
+          <th>Danh sách công việc</th>
+          <th width="140px">Phân loại</th>
+          <th width="140px">Độ ưu tiên</th>
+          <th width="105px" align="center">Bắt đầu</th>
+          <th width="105px" align="center">Kết thúc</th>
+          <th width="100px" align="center">Tình trạng</th>
+        </tr>
+      </thead>
+      <tbody> 
+        @foreach (var todo in listTodolist)
+        {
+          if (todo.isEdit)
+          {
+            <tr> 
+              <td class="is-not-pl">
+                <input type="text" class="input" @bind="todo.name" placeholder="Nhập tên công việc">
+                @* <ValidationMessage For="@(() => todolist.name)" /> *@
+              </td>
+              <td>
+                <div class="td-value">
+                  <div class="select is-fullwidth">
+                      <select @bind="todo.type">
+                        @foreach (var typeTodo in TypeList())
+                        {
+                          <option value="@typeTodo.id">@typeTodo.name</option>
+                        }
+                      </select>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="td-value">
+                  <div class="select is-fullwidth">
+                      <select @bind="todo.prioty">
+                        @foreach (var priotyTodo in TypeListPrioty())
+                        {
+                         <option value="@priotyTodo.id">@priotyTodo.name</option> 
+                        }
+                      </select>
+                  </div>
+                </div>
+              </td>
+              <td align="center">
+                <div class="td-value">
+                  <div class="select is-fullwidth">
+                    <select @onchange="@((ChangeEventArgs e) => todo.timeStart = e.Value.ToString())">
+                      @foreach (var item in TimeList())
+                      {
+                        <option selected="@(item == todo.timeStart)" value="@item">@item</option>
+                      }
+                    </select>
+                  </div>
+                </div>
+              </td>
+              <td align="center">
+                <div class="td-value">
+                  <div class="select is-fullwidth">
+                   <select @onchange="@((ChangeEventArgs e) => todo.timeEnd = e.Value.ToString())">
+                      @foreach (var item in TimeList())
+                      {
+                        <option selected="@(item == todo.timeEnd)" value="@item">@item</option>
+                      }
+                    </select>
+                  </div>
+                </div>
+              </td>
+              <td align="center">
+                <div class="td-value">
+                  <div class="dropdown is-hoverable">
+                    <div class="dropdown-trigger">
+                      <a style="width: 92px;" class="button @SelectedColor is-rounded px-2 is-iflex">
+                        <span>@SelectedValue</span>
+                        <span class="icon is-small">
+                          <i class="material-icons is-size-5 material-icons-outlined">
+                            arrow_drop_down
+                          </i>
+                        </span>
+                      </a>
+                    </div>
+                    <div class="dropdown-menu" style="width: 85px; align-items: center;">
+                      <div class="dropdown-content">
+                        <a class="dropdown-item" @onclick="@(() => OnSelectValueChanged("Todo", ""))">Todo</a>
+                        <a class="dropdown-item" @onclick="@(() => OnSelectValueChanged("Pending", "is-warning"))">Pending</a>
+                        <a class="dropdown-item" @onclick="@(() => OnSelectValueChanged("Doing", "is-link"))">Doing</a>
+                        <a class="dropdown-item" @onclick="@(() => OnSelectValueChanged("Done", "is-success"))">Done</a>
+                        <a class="dropdown-item" @onclick="@(() => OnSelectValueChanged("Cancel", "is-dark"))">Cancel</a>
+                    </div>
+                    </div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            
+            <tr>
+              <td colspan="3" class="is-not-pl">
+                <div class="is-flex">
+                  <label class="td-label is-show">Chi tiết:</label>
+                  <div class="td-value">
+                    <textarea @oninput="@((ChangeEventArgs e) => todo.description = e.Value.ToString())" style="overflow: hidden; height: 35px;" id="" rows="1" class="textarea is-auto" placeholder="Nhập chi tiết công việc...">@todo.description</textarea>
+                  </div>
+                </div>
+                <div class="is-flex">
+                  <label class="td-label is-show">Kết quả:</label>
+                  <div class="td-value">
+                    <textarea @oninput="@((ChangeEventArgs e) => todo.result = e.Value.ToString())" style="overflow: hidden; height: 35px;" id="" rows="1" class="textarea is-auto" placeholder="Nhập kết quả công việc...">@todo.result</textarea>
+                  </div>
+                </div>
+              </td> 
+              <td colspan="3" valign="bottom">
+                <div class="has-text-right">
+                  <a class="icon-text has-text-link mr-3" @onclick="@(() => todo.isEdit = false)">
+                    <span class="icon">
+                      <i class="is-size-5 material-icons material-icons-outlined">
+                        update
+                      </i>
+                    </span>
+                    <span>Cập nhật</span>
+                  </a>
+                  <a class="icon-text has-text-danger">
+                    <span class="icon">
+                      <i class="is-size-5 material-icons material-icons-outlined">
+                        delete_outline
+                      </i>
+                    </span>
+                    <span>Xoá</span>
+                  </a>
+                </div>
+              </td> 
+            </tr>
+            <hr>
+          } else {
+
+            <tr>
+              <td class="is-not-pl">
+                <span class="has-text-weight-semibold has-text-link">@todo.name</span>
+              </td>
+              <td>
+                <div class="td-value">
+                  <span class="has-text-weight-semibold @TypeList(todo.type).color">
+                    @TypeList(todo.type).name
+                  </span>
+                </div>
+              </td>
+              <td>
+                <div class="td-value">
+                  <span class="has-text-weight-semibold @TypeListPrioty(todo.prioty).color">
+                    @TypeListPrioty(todo.prioty).name
+                  </span>
+                </div>
+              </td>
+              <td align="center">
+                <div class="td-value">
+                    @todo.timeStart
+                </div>
+              </td>
+              <td align="center">
+                <div class="td-value">
+                  @todo.timeEnd
+                </div>
+              </td>
+              <td align="center">
+                <div class="td-value">
+                  <div class="dropdown is-hoverable">
+                    <div class="dropdown-trigger">
+                      <a style="width: 90px;" class="button @SelectedColor is-small px-2 is-iflex">
+                        <span style="font-size: 13px;">@SelectedValue</span>
+                        <span class="icon is-small">
+                          <i class="material-icons is-size-5 material-icons-outlined">
+                            arrow_drop_down
+                          </i>
+                        </span>
+                      </a>
+                    </div>
+                    <div class="dropdown-menu" style="width: 85px; align-items: center;">
+                      <div class="dropdown-content">
+                        <a class="dropdown-item" @onclick="@(() => OnSelectValueChanged("Todo", ""))">Todo</a>
+                        <a class="dropdown-item" @onclick="@(() => OnSelectValueChanged("Pending", "is-warning"))">Pending</a>
+                        <a class="dropdown-item" @onclick="@(() => OnSelectValueChanged("Doing", "is-link"))">Doing</a>
+                        <a class="dropdown-item" @onclick="@(() => OnSelectValueChanged("Done", "is-success"))">Done</a>
+                        <a class="dropdown-item" @onclick="@(() => OnSelectValueChanged("Cancel", "is-dark"))">Cancel</a>
+                    </div>
+                    </div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            
+            <tr>
+              <td colspan="3" class="is-not-pl">
+                <div class="is-flex">
+                  <label class="td-label is-show">Chi tiết:</label>
+                  <div class="td-value is-word-break">
+                    <div class="text_2_line is-show">@todo.description</div>
+                  </div>
+                </div>
+                <div class="is-flex">
+                  <label class="td-label is-show">Kết quả:</label>
+                  <div class="td-value is-word-break">
+                    <div class="text_2_line is-show">@todo.result</div>
+                  </div>
+                </div>
+              </td> 
+              <td colspan="3" valign="bottom">
+                <div class="has-text-right">
+                  <a class="icon-text has-text-link mr-3" @onclick="@(() => todo.isEdit = true)">
+                    <span class="icon">
+                      <i class="is-size-5 material-icons material-icons-outlined">
+                        edit
+                      </i>
+                    </span>
+                    <span>Chỉnh sửa</span>
+                  </a>
+                  <a class="icon-text has-text-danger" @onclick="OnDeleteClick">
+                    <span class="icon">
+                      <i class="is-size-5 material-icons material-icons-outlined">
+                        delete_outline
+                      </i>
+                    </span>
+                    <span>Xoá</span>
+                  </a>
+                  
+                </div>
+              </td> 
+            </tr>
+            <hr>
+          }
+        }
+      </tbody>
+    </table>
+  @* end body list todolist *@
+
+    <div class="field is-grouped is-grouped-multiline">
+      <div class="control is-expanded has-text-weight-semibold has-text-link">
+        <div>
+        Tôi biết bạn sẽ làm tốt mà. Hãy hoàn thành thật sớm nhé!
+        </div>
+      </div>
+
+    @* button control *@
+        @if (showCheckinbtn == false)
+        {
+          <div class="control">
+            <a class="button is-info" @onclick="addTodo"> 
+              <span class="icon">
+                <i class="material-icons material-icons-outlined is-size-6">
+                  add
+                </i>
+              </span>
+              <span>Thêm công việc</span>
+            </a>
+          </div>
+          if (listTodolist.Count > 0)
+          {
+            <div class="control">
+              <a class="button is-links" @onclick="CheckInHandler">
+                <span class="icon">
+                  <i class="material-icons material-icons-outlined is-size-6">
+                    logout
+                  </i>
+                </span>
+                <span>Check-in</span>
+              </a>
+            </div>
+            
+          }
+        } else {
+          <div class="control">
+            <a class="button is-info" @onclick="addTodo"> 
+              <span class="icon">
+                <i class="material-icons material-icons-outlined is-size-6">
+                  add
+                </i>
+              </span>
+              <span>Thêm công việc</span>
+            </a>
+          </div>
+          <div class="control">
+            <a class="button is-danger">
+              <span class="icon">
+                <i class="material-icons material-icons-outlined is-size-6">
+                  done
+                </i>
+              </span>
+              <span>Check-out</span>
+            </a>    
+          </div>
+        }
+
+  @* end button control *@
+    </div>
+  </div>
+
+  <section class="modal @isShowWorkPending">
+
+    <div class="modal-background"></div>
+    
+    <section class="modal-card is-medium">
+      <section class="modal-card-head py-2">
+        <div class="modal-card-title">CÔNG VIỆC CHỜ XỬ LÝ</div>
+
+        <a class="delete" @onclick="setShowWorkPending">
+          <span class="icon-close-filled">
+            <i class="material-icons material-icons">
+              cancel
+            </i>
+          </span>
+        </a>
+      </section>
+      <section class="modal-body-card">
+        <div class="field has-addons">
+          <div class="control is-expanded">
+            <input @oninput="@((ChangeEventArgs e) => pendingTitle = e.Value.ToString())" class="input" type="text" id="checklist_name" placeholder="Nhập mô tả công việc...">
+          </div>
+          <div class="control">
+            <a class="button is-links">Thêm</a>
+          </div>
+        </div>
+        <div class="@(string.IsNullOrEmpty(pendingTitle) ? "is-hidden" : "field")">
+          <textarea name="" id="checklist_detail" rows="2" class="textarea is-auto" placeholder="Nhập mô tả công việc..."></textarea>
+        </div>
+        <ul class="scrolly"></ul>
+      </section>
+    </section>
+  </section>
+
+  <div class="card-p-5">
+    <ul class="column is-vcentered is-variable is-2">
+      <li class="columm">
+        <h1 class="title is-5 has-text-info">DANH SÁCH TODOLIST</h1>
+      </li>
+      <li class="column is-narrow p-8 has-text-right" style="width: 130px;">
+        <div class="dropdown is-hoverable is-right">
+          <div class="dropdown-trigger">
+            <a class="icon-text">
+              <span class="has-text-link">Tuần này</span>
+              <span class="icon">
+                <i class="material-icons material-icons-outlined is-size-5">arrow_drop_down</i>
+              </span>
+            </a>
+          </div>
+          <div class="dropdown-menu" style="width: 120px;">
+            <div class="dropdown-content">
+              <a class="dropdown-item">Tuần này</a>
+              <a class="dropdown-item">Tuần trước</a>
+              <a class="dropdown-item">Tháng này</a>
+              <a class="dropdown-item">Tháng trước</a>
+              <a class="dropdown-item">Quý này</a>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li class="column is-narrow p-8">
+         <div class="dropdown is-right @is_dropdown">
+          <div class="dropdown-trigger">
+            <a class="icon-text" @onclick="setIsDropdown">
+              <span class="has-text-link">Todolist của tôi</span>
+              <span class="icon">
+                <i class="material-icons material-icons-outlined is-size-5">arrow_drop_down</i>
+              </span>
+            </a>
+          </div>
+          <div class="dropdown-menu">
+            <div class="dropdown-content">
+              <a class="dropdown-item is-family-code">Todolist của tôi</a>
+              <a class="dropdown-item is-family-code">DOCORP</a>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li class="column is-narrow p-8 is-one-quarter">
+        <div class="control has-icon-left has-icon-right has-suggest">
+          <input type="text" class="input is-rounded" placeholder="Nhập tên nhân viên...">
+          <span class="icon is-left">
+            <i class="is-14 material-icons material-icons-outlined">
+              search
+            </i>
+          </span>
+        </div>
+      </li>
+    </ul>
+    <table class="table is-noborder is-fullwidth is-vcentered mt-3 is-reponsive">
+      <thead>
+        <tr class="has-text-weight-semibold">
+          <th>Thành viên</th>
+          <th width="200px">Ngày Check-in</th>
+          <th width="200px">Ngày Check-out</th>
+          <th width="120px">Hoàn thành</th>
+          <th width="120px">Trạng thái</th>
+        </tr>
+      </thead>
+      <tbody @if="isTbodyVisible">
+        <tr>
+          <td colspan="4">
+          <div class="user_item">
+            <img src="/img/test4.jpg" alt="IMG" class="image is-36x36 mr-2">
+            <div>
+              <p class="has-text-weight-semibold has-text-info is-size-6">DAN TRUONG NGUYEN</p>
+              <p class="text_1_line has-text-grey is-size-7" style="width: 400px; height: 18px;">DOCORP / CONANDO / Team QC</p>
+            </div>
+          </div>
+          </td>
+        </tr>
+        @* // list *@
+        <tr>
+          <td class="pl-6">
+            <div class="td-value">
+              <a class="icon-text has-text-link">
+                <span class="has-text-weight-semibold">27/02/2023</span>
+
+                <span title="Xem nhanh các công việc" class="icon">
+                  <i class="material-icons material-icons-outlined is-size-5">
+                    arrow_right
+                  </i>
+                </span>
+              </a>
+            </div>
+          </td>
+          <td>
+            <div class="td-value">
+              <span class="mr-3">25/02 - 12:07</span>
+              <span class="has-text-success">Đúng hạn</span>
+            </div>
+          </td>
+          <td>
+            <div class="td-value">
+              <span>Chưa check-out</span>
+            </div>
+          </td>
+          <td>
+            <div class="td-value has-text-weight-semibold">
+              2/4 - 50%
+            </div>
+          </td>
+          <td>
+            <div class="td-value has-text-weight-semibold">
+              <span title="Hệ thống tự động xác nhận">Đã xác nhận</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="pl-6">
+            <div class="td-value">
+              <a class="icon-text has-text-link">
+                <span class="has-text-weight-semibold">25/02/2023</span>
+
+                <span title="Xem nhanh các công việc" class="icon">
+                  <i class="material-icons material-icons-outlined is-size-5">
+                    arrow_right
+                  </i>
+                </span>
+              </a>
+            </div>
+          </td>
+          <td>
+            <div class="td-value">
+              <span class="mr-3">24/02 - 17:30</span>
+              <span class="has-text-success">Đúng hạn</span>
+            </div>
+          </td>
+          <td>
+            <div class="td-value">
+              <span class="mr-3">24/02 - 17:31</span>
+              <span class="has-text-success">Đúng hạn</span>
+            </div>
+          </td>
+          <td>
+            <div class="td-value has-text-weight-semibold">
+              2/2 - 100%
+            </div>
+          </td>
+          <td>
+            <div class="td-value has-text-weight-semibold">
+              <span title="Hệ thống tự động xác nhận">Đã xác nhận</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="pl-6">
+            <div class="td-value">
+              <a class="icon-text has-text-link">
+                <span class="has-text-weight-semibold">23/02/2023</span>
+
+                <span title="Xem nhanh các công việc" class="icon">
+                  <i class="material-icons material-icons-outlined is-size-5">
+                    arrow_right
+                  </i>
+                </span>
+              </a>
+            </div>
+          </td>
+          <td>
+            <div class="td-value">
+              <span class="mr-3">23/02 - 08:30</span>
+              <span class="has-text-danger">Trễ hạn</span>
+            </div>
+          </td>
+          <td>
+            <div class="td-value">
+              <span class="mr-3">23/02 - 17:30</span>
+              <span class="has-text-success">Đúng hạn</span>
+            </div>
+          </td>
+          <td>
+            <div class="td-value has-text-weight-semibold">
+              6/6 - 100%
+            </div>
+          </td>
+          <td>
+            <div class="td-value has-text-weight-semibold">
+              <span title="Hệ thống tự động xác nhận">Đã xác nhận</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="pl-6">
+            <div class="td-value">
+             <span class="has-text-weight-semibold has-text-grey">22/02/2023</span>
+            </div>
+          </td>
+          <td colspan="4" class="is-italic has-text-grey">Không nộp todolist</td>
+        </tr>
+        @* // list *@
+      </tbody>
+    </table>
+  </div>
+</section>
+@code {
+  private string SelectedValue { get; set; } = "Todo";
+  private string SelectedColor { get; set; } = "";
+  private bool is_dropdownMenu = false;
+  private string is_dropdown => is_dropdownMenu ? "is_active" : "";
+  
+  private string pendingTitle = "";
+  private bool showCheckinbtn = false;
+
+  private bool showCheckoutbtn = false;
+  private bool showWorkPending = false;
+  private string isShowWorkPending => showWorkPending ? "is_active" : "";
+  private List<TodolistModels> listTodolist = new();
+  public TodolistModels todolist = new TodolistModels();
+  public void setIsDropdown() {
+    is_dropdownMenu = !is_dropdownMenu;
+  }
+  public void setShowWorkPending() {
+    showWorkPending = !showWorkPending;
+  }
+  private void OnSelectValueChanged(string value, string className)
+  {
+    SelectedValue = value;
+    SelectedColor = className;
+  }
+  public void addTodo() {
+    listTodolist.Add(
+      new  TodolistModels() {
+        ID = "" + DateTime.Now.Ticks,
+        name = "",
+        type = "1",
+        prioty = "1",
+        timeStart = "08:30",
+        timeEnd = "17:30",
+        status = "Todo",
+        isEdit = true
+      }
+    );
+  }
+
+  /// <summary>
+  /// Mốc giờ
+  /// </summary>
+  public static List<string> TimeList()
+  {
+    var list = new List<string>();
+    for (int i = 8; i <= 20; i++)
+    {
+      for (int m = 0; m < 60; m += 10)
+      {
+        list.Add(string.Format("{0:00}:{1:00}", i, m));
+      }
+    }
+
+    return list;
+  } 
+
+  public static List<SelectTypeModel> TypeList()
+  {
+    var list = new List<SelectTypeModel>();
+    list.Add(
+      new SelectTypeModel() {
+        id = "1",
+        name = "Kế hoạch",
+        color = ""
+      }
+    );
+
+    list.Add(
+      new SelectTypeModel() {
+        id = "2",
+        name = "Cấp trên giao",
+        color = "has-text-link"
+      }
+    );
+    list.Add(
+      new SelectTypeModel() {
+        id = "3",
+        name = "Đột xuất",
+        color = "has-text-danger"
+      }
+    );
+    return list;
+  }
+
+  public static SelectTypeModel TypeList(string ID)
+  {
+    var result = TypeList().SingleOrDefault(x => x.id == ID);
+    if(result != null)
+      return result;
+    return new SelectTypeModel();
+  }
+  
+   public static List<SelectPriotyModel> TypeListPrioty()
+  {
+    var list = new List<SelectPriotyModel>();
+    list.Add(
+      new SelectPriotyModel() {
+        id = "1",
+        name = "Bình thường",
+        color = "has-text-success"
+      }
+    );
+
+    list.Add(
+      new SelectPriotyModel() {
+        id = "2",
+        name = "Quan trọng",
+        color = "has-text-warning"
+      }
+    );
+
+    list.Add(
+      new SelectPriotyModel() {
+        id = "3",
+        name = "Rất quan trọng",
+        color = "has-text-danger"
+      }
+    );
+    return list;
+  }
+
+  public static SelectPriotyModel TypeListPrioty(string ID)
+  {
+    var prioty = TypeListPrioty().SingleOrDefault(x => x.id == ID);
+    if(prioty != null)
+      return prioty;
+    return new SelectPriotyModel();
+  }
+
+    public static List<SelectStatusModel> StatusList()
+  {
+    var list = new List<SelectStatusModel>();
+    list.Add(
+      new SelectStatusModel() {
+        id = "1",
+        name = "Todo",
+        cssClass = ""
+      }
+    );
+
+    list.Add(
+      new SelectStatusModel() {
+        id = "2",
+        name = "Pending",
+        cssClass = "is-warning"
+      }
+    );
+
+    list.Add(
+      new SelectStatusModel() {
+        id = "3",
+        name = "Doing",
+        cssClass = "is-link"
+      }
+    );
+
+    list.Add(
+      new SelectStatusModel() {
+        id = "4",
+        name = "Done",
+        cssClass = "is-success"
+      }
+    );
+
+    list.Add(
+      new SelectStatusModel() {
+        id = "5",
+        name = " Cancel",
+        cssClass = "is-dark"
+      }
+    );
+    return list;
+  }
+
+  public static SelectStatusModel StatusList(string ID)
+  {
+    var status = StatusList().SingleOrDefault(x => x.id == ID);
+    if(status != null)
+      return status;
+    return new SelectStatusModel();
+  }
+
+ private async Task OnDeleteClick()
+  {
+      bool confirmDelete = await JSRuntime.InvokeAsync<bool>("confirm", "Bạn có chắc chắn muốn xoá dữ liệu này?");
+      if (confirmDelete)
+      {
+          // Xoá dữ liệu ở đây
+      }
+      else
+      {
+          // Huỷ bỏ thao tác xoá
+      }
+  }
+  private async Task CheckInHandler()
+  {
+    // Hiển thị thông báo và thay đổi nút Check-in thành nút Check-out khi người dùng đồng ý
+    var result = await JSRuntime.InvokeAsync<bool>("confirm", "Bạn có chắc chắn muốn check-in?");
+    if (result)
+    {
+      showCheckinbtn = true;
+    }
+  }
+
+  private async Task OnValidSubmit()
+  {
+    if (!todolist.IsNameValid)
+    {
+     await JSRuntime.InvokeVoidAsync("alert", "Nhập tên công việc!");
+     return;
+    }
+  }
+  private void OnInputNameChanged(ChangeEventArgs e) 
+  {
+    todolist.IsNameValid = !string.IsNullOrWhiteSpace(todolist.name);
+  }
+}
