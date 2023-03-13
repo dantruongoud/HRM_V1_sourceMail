@@ -34,18 +34,6 @@
     </div> *@
     <script src="_framework/blazor.server.js"></script>
     @* <script src="~/js/menu.js"></script> *@
-    <script>
-    const emailLink = document.querySelector('li.is_active a[href="email"]');
-    const sidebarMail = document.getElementById('sidebarmail');
-
-    if (emailLink && sidebarMail) {
-      emailLink.addEventListener('click', function(event) {
-        event.preventDefault(); // Ngăn chặn trình duyệt chuyển hướng đến đường dẫn email
-
-        // Thay đổi thuộc tính "display" của section có id "sidebarmail" thành "block"
-        sidebarMail.style.display = "block";
-      });
-    }
-    </script>
+  
 </body>
 </html>

@@ -32,7 +32,7 @@ body {
 }
 
 #sidebar {
-  width: 220px;
+  width: 200px;
   height: 100vh;
   background-color: var(--color-extra);
   left: 0;
@@ -79,7 +79,15 @@ body {
   /* font-size: 14px; */
   font-weight: 400;
 }
-
+#sidebarmail + #content {
+  width: calc(100% - 400px);
+}
+#sidebarmail.is_less + #content {
+  width: calc(100% - 260px);
+}
+#sidebar.is_less + #sidebarmail.is_less + #content {
+  width: calc(100% - 120px);
+}
 #sidebar.is_less {
   width: 60px;
   overflow: hidden;
@@ -2000,7 +2008,7 @@ a.delete:hover {
   padding: 6px;
 }
 #sidebarmail {
-  width: 210px;
+  width: 200px;
   height: 100vh;
   background-color: #fff;
   left: 0;
@@ -2030,7 +2038,7 @@ a.delete:hover {
   border-radius: 5px;
 }
 .is_less + #sidebarmail + #content {
-  width: calc(100% - 120px);
+  width: calc(100% - 260px);
 }
 
 #sidebarmail.is_less .nav-header {
@@ -2057,6 +2065,9 @@ a.delete:hover {
   justify-content: center;
   align-items: center;
   color: #575e72;
+}
+#sidebarmail .nav-main > li:last-child {
+  margin-bottom: 10px;
 }
 #sidebarmail .nav-main > li > a:hover,
 #sidebarmail .nav-setting:hover {
@@ -2101,17 +2112,6 @@ a.delete:hover {
   font-weight: 300;
   cursor: pointer;
 }
-.line-highlight {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  left: 0;
-  height: 1px;
-  width: 20px;
-  background-color: #ccc;
-  opacity: 0.6;
-}
 
 #sidebarmail > nav.nav-main {
   border-bottom: 1px solid #575e72;
@@ -2126,4 +2126,15 @@ a.delete:hover {
   background-color: #ecf0ff;
   border-radius: 5px;
   color: #355caa;
+}
+
+/* start main mail for page */
+
+.has-text-titleMail {
+  font-size: 18px;
+  color: #363636;
+  font-weight: 500 !important;
+}
+div > ul.column.is-flex {
+  align-items: center;
 }
