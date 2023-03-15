@@ -2,6 +2,7 @@ namespace testApp.Model
 {
   public class SidebarModels
   {
+    public string id { get; set; }
     public string href { get; set; }
     public string nameNav { get; set; }
     public string iconNav { get; set; }

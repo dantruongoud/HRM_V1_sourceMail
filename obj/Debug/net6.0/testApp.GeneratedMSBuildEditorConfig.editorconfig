@@ -35,8 +35,28 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXgucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/myC\#/testAPP/Pages/Mail/DeleteMail.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWFpbFxEZWxldGVNYWlsLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/myC\#/testAPP/Pages/Mail/DraftMail.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWFpbFxEcmFmdE1haWwucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/myC\#/testAPP/Pages/Mail/FooterMail.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWFpbFxGb290ZXJNYWlsLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/myC\#/testAPP/Pages/Mail/ReceivedMail.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWFpbFxSZWNlaXZlZE1haWwucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/myC\#/testAPP/Pages/Mail/SendMail.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWFpbFxTZW5kTWFpbC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/myC\#/testAPP/Pages/Mail/StarMail.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWFpbFxTdGFyTWFpbC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/myC\#/testAPP/Pages/Todolist.razor]

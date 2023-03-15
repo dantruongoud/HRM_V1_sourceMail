@@ -196,8 +196,8 @@ body {
   z-index: 20;
   margin-top: 4px;
 }
-#sidebar .cycle .font_13 {
-  font-size: 13px;
+.font_13 {
+  font-size: 13px !important;
 }
 #sidebar li:hover .subcycle {
   display: block;
@@ -383,7 +383,7 @@ body {
   top: 0;
   background-color: #fff;
   position: sticky;
-  z-index: 2;
+  z-index: 5;
   font-size: 14px;
   padding: 10px 16px;
   border-bottom: 1px solid #ccc;
@@ -578,15 +578,17 @@ section > ul {
 }
 
 .has-text-link {
-  color: var(--color-main);
+  color: var(--color-main) !important;
 }
 
 .has-text-warning {
-  color: rgb(229, 191, 84);
+  color: rgb(229, 191, 84) !important;
 }
-
+.has-text-white {
+  color: #fff !important;
+}
 .has-text-success {
-  color: rgb(72, 199, 142);
+  color: rgb(72, 199, 142) !important;
 }
 
 .row {
@@ -864,7 +866,9 @@ tr {
 .mt-5 {
   margin-top: 5px;
 }
-
+.mt-10 {
+  margin-top: 10px;
+}
 .listeducate {
   padding: 8px;
 }
@@ -907,7 +911,9 @@ a {
 .pt-60 {
   padding-top: 60%;
 }
-
+.pb-5 {
+  padding-bottom: 5px;
+}
 .is-image img {
   display: block;
   object-fit: cover;
@@ -1218,9 +1224,14 @@ ul li {
 .p-8 {
   padding: 8px;
 }
-
+.p-7 {
+  padding: 7px;
+}
 .mr-2 {
   margin-right: 0.7rem !important;
+}
+.ml-2 {
+  margin-left: 0.7rem !important;
 }
 .is-italic {
   font-style: italic;
@@ -1464,7 +1475,6 @@ span.icon {
 
 .dropdown-menu {
   display: none;
-  left: 0;
   padding-top: 4px;
   position: absolute;
   top: 100%;
@@ -1488,7 +1498,7 @@ span.icon {
   position: relative;
 }
 a.dropdown-item {
-  padding-right: 3rem;
+  /* padding-right: 3rem; */
   text-align: start;
   white-space: nowrap;
   width: 100%;
@@ -1510,6 +1520,12 @@ a.dropdown-item {
 }
 .is-right .icon {
   color: #4a4a4a;
+}
+.is-right-dropdown {
+  right: 0;
+}
+.is-left-dropdown {
+  left: 0;
 }
 .is-hoverable:hover .dropdown-menu {
   display: block;
@@ -2135,6 +2151,222 @@ a.delete:hover {
   color: #363636;
   font-weight: 500 !important;
 }
-div > ul.column.is-flex {
+div.is-sticky-68 > ul.column.is-flex,
+div.mt-10 > ul:first-child {
+  gap: 20px;
   align-items: center;
+}
+div > ul.column.is-flex li:first-child {
+  width: fit-content;
+  flex: none;
+  flex-wrap: nowrap;
+}
+section#content > section.main {
+  background-color: #fff;
+}
+.input.is_bg {
+  background: #f1f7f7;
+  box-shadow: none;
+  color: var(--color-extra);
+}
+
+.dropdown-trigger > a.icon-text:hover span:last-child {
+  color: var(--color-main);
+}
+
+.dropdown-trigger > a.icon-text:hover {
+  color: var(--color-main);
+}
+
+div.dropdown-content > a.dropdown-item > ul.is-flex {
+  text-align: center;
+  justify-content: center;
+}
+.pt-2 {
+  padding-top: 2px;
+}
+
+section.main div.dropdown-content > a.dropdown-item.has-text-weight-bold:first-child:hover {
+  background-color: #fff;
+}
+input[type="checkbox"] {
+  cursor: pointer;
+  width: 12px;
+  height: 12px;
+}
+a.dropdown-item > ul.column.is-flex > li {
+  width: 15%;
+}
+a.dropdown-item > ul.column.is-flex > li:last-child {
+  width: 70%;
+}
+div.control.is-flex > a {
+  padding: 4px;
+  margin-left: 15px;
+  justify-content: center;
+  align-items: center;
+}
+.pt-5 {
+  padding-top: 5px;
+}
+.pr-5 {
+  padding-right: 5px;
+}
+
+.is-radius-4 {
+  border-radius: 4px;
+}
+div.control.is-flex > a:first-child:hover {
+  background-color: #3082c5;
+}
+div.control.is-flex > a:last-child:hover {
+  background-color: #e2e2e2;
+}
+
+.is-sticky-68 {
+  position: sticky;
+  top: 68px;
+}
+.is-sticky-109 {
+  position: sticky;
+  top: 109px;
+}
+
+div.columm.mt-10.is-sticky-109 > ul:first-child {
+  width: 10%;
+  left: 0;
+}
+div.columm.mt-10.is-sticky-109 > ul:last-child {
+  width: 90%;
+  justify-content: flex-end;
+}
+.is-border-bot li {
+  text-align: center;
+  border-bottom: 2px solid #e2e2e2;
+}
+.is-border-bot li.is_active {
+  color: #3082c5;
+  border-bottom-color: #3082c5;
+}
+div.columm.mt-10.is-sticky-109 > ul:first-child li {
+  width: 15px;
+  justify-content: center;
+}
+div.columm.mt-10.is-sticky-109 > ul:first-child li:last-child {
+  width: calc(100% - 20%);
+}
+div.columm.mt-10.is-sticky-109 > ul:last-child li {
+  width: 100px;
+  cursor: pointer;
+  flex: auto;
+}
+div.columm.mt-10.is-sticky-109.bg-danger > ul:last-child li {
+  justify-content: flex-end;
+}
+div.columm.mt-10.is-sticky-109.bg-danger > ul:last-child li:last-child {
+  justify-content: flex-start;
+}
+div.columm.mt-10.is-sticky-109.bg-danger > ul:last-child li:last-child a {
+  border: 1px solid #f14668;
+  width: fit-content;
+}
+
+div.columm.mt-10.is-sticky-109.bg-danger > ul:last-child li:last-child a:hover {
+  background-color: #f14668;
+}
+
+div.columm.mt-10.is-sticky-109.bg-danger > ul:last-child li:last-child a:hover span {
+  color: #fff;
+}
+
+div.columm.mt-10.is-sticky-109:not(.bg-danger) > ul:last-child li:hover {
+  background-color: #e2e2e2;
+}
+
+div.columm.mt-10.is-sticky-109 > ul:last-child li:last-child {
+  justify-content: end;
+  align-items: center;
+}
+
+div.columm.mt-10.is-sticky-109 > ul:last-child li:last-child a {
+  align-items: center;
+}
+
+@media screen and (max-width: 768px) {
+  .is-rps {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+div.columm.mt-10.is-sticky-109 > ul:last-child li:last-child div.dropdown-menu {
+  display: none;
+}
+
+div.columm.mt-10.is-sticky-109 > ul:last-child li:last-child.is_active div.dropdown-menu {
+  display: block;
+}
+
+.disable-hover:hover {
+  background-color: #fff;
+}
+
+/* Start phân trang */
+footer {
+  display: block;
+  background-color: #fff;
+  position: sticky;
+  bottom: 0;
+  border-top: 1px solid #ccc;
+}
+div.pagination > ul {
+  height: 50px;
+  width: 100%;
+  padding: 10px;
+  justify-content: center;
+  align-items: center;
+}
+
+div.pagination > ul > li {
+  padding: 8px;
+  justify-content: center;
+  align-items: center;
+}
+div.pagination > ul > li:first-child {
+  display: flex;
+}
+div.pagination > ul > li:first-child span {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}
+div.pagination > ul > li:first-child a {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}
+div.pagination > ul > li:last-child {
+  display: flex;
+}
+div.pagination > ul > li:last-child span {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}
+div.pagination > ul > li:last-child a {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}
+div.pagination > ul > li > a {
+  color: #363636;
+}
+
+div.pagination > ul > li:hover {
+  background-color: #ccc;
+  border-radius: 5px;
+}
+.bg-danger {
+  background-color: #ffede9;
 }

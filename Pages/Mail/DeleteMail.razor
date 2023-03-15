@@ -1,0 +1,170 @@
+@page "/email/deleteMail"
+
+<section class="main ">
+  <div class="columm is-sticky-68">
+    <ul class="column is-flex">
+      <li class="column">
+        <span class="has-text-titleMail">Thùng rác</span>
+      </li>
+      <li class="column is-narrow is-one-quarter" style="width: 750px;">
+        <div class="control has-icon-left has-icon-right has-suggest">
+          <input type="text" class="input is-rounded is_bg" placeholder="Tiêu đề, nội dung, người gửi...">
+          <span class="icon is-left">
+            <i class="is-14 material-icons material-icons-outlined">
+              search
+            </i>
+          </span>
+        </div>
+      </li>
+       <li class="column is-narrow">
+        <div class="field has-addons">
+          <div class="control has-icons-left">
+            <div id="" title="Chọn ngày">
+              <span class="icon is-left has-text-link">
+                <i class="material-icons is-size-5 material-icons-outlined">
+                  event
+                </i>
+              </span>
+              <div class="input is-link is-family-code">
+                <span>24/02/2023 - 24/02/2023</span>
+              </div>
+            </div>
+          </div>
+          <div class="control is-boder boder-radius-right">
+            <div class="dropdown is-hoverable is-right">
+              <div class="dropdown-trigger">
+                <a class="icon-text p-7">
+                  <span class="has-text-weight-medium">@selectTimevalue</span>
+                  <span class="icon">
+                    <i class="material-icons material-icons-outlined is-size-5">arrow_drop_down</i>
+                  </span>
+                </a>
+              </div>
+              <div class="dropdown-menu is-right-dropdown" style="width: 170px;">
+                <div class="dropdown-content">
+                  <a class="dropdown-item" @onclick='() => OnSelectValueChanged("Tất cả")'>Tất cả</a>
+                  <a class="dropdown-item" @onclick='() => OnSelectValueChanged("Hơn 1 tuần trước")'>Hơn 1 tuần trước</a>
+                  <a class="dropdown-item" @onclick='() => OnSelectValueChanged("Hơn 1 tháng trước")'>Hơn 1 tháng trước</a>
+                  <a class="dropdown-item" @onclick='() => OnSelectValueChanged("Hơn 6 tháng trước")'>Hơn 6 tháng trước</a>
+                  <a class="dropdown-item" @onclick='() => OnSelectValueChanged("Hơn 1 năm trước")'>Hơn 1 năm trước</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li class="column is-narrow has-text-right" style="width: 160px;">
+        
+      </li>
+    </ul>
+    <div class="columm mt-10 is-sticky-109 is-flex bg-danger p-8">
+      <ul class="column is-flex p-8">
+        <li class="column is-flex">
+          <input type="checkbox">
+        </li>
+        <li class="column">Chọn tất cả</li>
+      </ul>
+      <ul class="column is-flex">
+        <li class="column is-flex p-8">
+          Thư trong thùng rác sau 30 ngày sẽ được xóa ra khỏi hệ thống.
+        </li>
+        <li class="column">
+          <a class="button has-text-danger is-flex is-radius-4 p-8" @onclick="ToggleStickMenu">
+            <span class="icon">
+              <span class="material-icons material-icons-outlined is-size-5">
+              delete
+              </span>
+            </span>
+            <span>Dọn dẹp thùng rác</span>
+          </a>   
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+<FooterMail />
+
+@code {
+  private List<TypeSortMailModels> sortListMail = new();
+  private string tabId = "0";
+  private string selectTimevalue { get; set; } = "Thời gian";
+  private string selectStatusvalue { get; set; } = "Trạng thái";
+  private string selectSortMail {get; set;} = "Khác (+3)";
+  private bool isStickMenu = false;
+  private string openStickMenu => isStickMenu ? "is_active" : "";
+  private bool isTypeSortMail = false;
+  private string choseTypeSortMail => isTypeSortMail ? "is_active" : "";
+  public void ToggleStickMenu()
+  {
+    isStickMenu = !isStickMenu;
+  }
+  protected override void OnInitialized()
+  {
+    CreateListSortMail();
+  }
+
+  public void CreateListSortMail()
+  {
+    sortListMail = new()
+    {
+      new TypeSortMailModels()
+      {
+        id = "0",
+        name = "Tất cả",
+        isActive = false,
+      },
+      new TypeSortMailModels()
+      {
+        id = "1",
+        name = "Vận hành",
+        isActive = false,
+      },
+      new TypeSortMailModels()
+      {
+        id = "2",
+        name = "Nhân sự",
+        isActive = false,
+      },
+      new TypeSortMailModels()
+      {
+        id = "3",
+        name = "Kế toán",
+        isActive = false,
+      },
+      new TypeSortMailModels()
+      {
+        id = "4",
+        name = "Sale Marketing",
+        isActive = false,
+      },
+      new TypeSortMailModels()
+      {
+        id = "5",
+        name = "Truyền thông",
+        isActive = false,
+      },
+      new TypeSortMailModels()
+      {
+        id = "6",
+        name = "Tổng công ty",
+        isActive = false,
+      },
+    };
+  }
+  public void choseTypeSort()
+  {
+    isTypeSortMail = !isTypeSortMail;
+  }
+  private void OnSelectValueChanged(string value)
+  {
+    selectTimevalue = value;
+  }
+  private void OnSelectStatusValueChanged(string value)
+  {
+    selectStatusvalue = value;
+  }
+  private void OnSelectTypeSortValueChanged(string value)
+  {
+    selectSortMail = value;
+  }
+}

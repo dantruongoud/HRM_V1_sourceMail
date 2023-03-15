@@ -105,10 +105,8 @@
   </a>
 </section>
 
-
-@* Start mail menu *@
 @if (navigation.Uri.Contains("email"))
-{ 
+{
   <section id="sidebarmail" class="@menuClassMail">
     <ul class="nav-header">
         <a class="" @onclick="ToggleMail">
@@ -124,17 +122,17 @@
         </span>
         <span class="content">Tạo thư mới</span>
       </a>
-      @foreach (var navMail in NavMailList)
+      @foreach (var navMail in NavMailList) 
       {
-        <li class="@(navMail.active == true ? "is_active" : "")">
-          <a href="@navMail.href" class="item-menu" @onclick="() => navMail.active = !navMail.active" title="@navMail.nameNav">
-              <span class="gi material-icons material-icons-outlined">
-                @navMail.iconNav
-              </span>
-            <span class="content">@navMail.nameNav</span>
-            <span class="number">@navMail.number</span>
-          </a>
-        </li>
+            <li class='@(navMail.id == menuMail ? "is_active" : "")'>
+              <a href="@navMail.href" class="item-menu" @onclick="() => menuMail = navMail.id" title="@navMail.nameNav">
+                  <span class="gi material-icons material-icons-outlined">
+                  @navMail.iconNav  
+                  </span>
+                <span class="content">@navMail.nameNav</span>
+                <span class="number">@navMail.number</span>
+              </a>
+            </li>
       }
     </nav>
     <a class="nav-setting item-menu" title="Cài đặt">
@@ -148,25 +146,26 @@
 
 @code {
   private bool isOpenMenu = false;
-
   private string menuClass => isOpenMenu ? "is_less" : "";
+  private bool isOpenMenuMail = false;
+  private string menuClassMail => isOpenMenuMail ? "is_less" : "";
 
+  private string menuMail = "0";
   public void Toggle()
   {
     isOpenMenu = !isOpenMenu;
   }
-  private bool isOpenMenuMail = false;
+  private List<SidebarModels> NavList = new();
+  private List<SidebarModels> NavMailList = new();
 
-  private string menuClassMail => isOpenMenuMail ? "is_less" : "";
   public void ToggleMail()
   {
     isOpenMenuMail = !isOpenMenuMail;
   }
-  private List<SidebarModels> NavList = new();
-  private List<SidebarModels> NavMailList = new();
+
   protected override void OnInitialized() {
-    CreateNav();
     CreateNavMail();
+    CreateNav();
   }
   public void clearActiveNavlist() {
     foreach (var item in NavList)
@@ -186,12 +185,6 @@
          } 
         } 
       }
-    }
-  }
-  public void clearActiveNavMaillist() {
-    foreach (var item in NavMailList)
-    {
-      item.active = false;
     }
   }
 
@@ -217,56 +210,18 @@
       }
     }
   }
-
-  private void CreateNavMail() {
-    NavMailList = new() {
-      new SidebarModels() {
-        href = "email/receivedMail",
-        nameNav = "Hộp thư đến",
-        iconNav = "inbox",
-        active = false,
-        number = 7
-      },
-      new SidebarModels() {
-        href = "email/sendMail",
-        nameNav = "Thư đã gửi",
-        iconNav = "send",
-        active = false,
-        number = 0
-      },      
-      new SidebarModels() {
-        href = "email/starMail",
-        nameNav = "Thư quan trọng",
-        iconNav = "star",
-        active = false,
-        number = 2
-      },
-      new SidebarModels() {
-        href = "email/draftMail",
-        nameNav = "Thư nháp",
-        iconNav = "drafts",
-        active = false,
-        number = 0
-      },
-      new SidebarModels() {
-        href = "email/deleteMail",
-        nameNav = "Thùng rác",
-        iconNav = "delete",
-        active = false,
-        number = 0
-      },
-    };
-  }
   private void CreateNav() {
     NavList = new() {
       new SidebarModels() {
+        id = "0",
         href = "email",
         nameNav = "Hộp thư",
         iconNav = "email",
         iconArrow = "",
         Childs = new() {},
       },
-      new SidebarModels() {
+      new SidebarModels() { 
+        id = "1",
         href = "news",
         nameNav = "Tin tức",
         iconNav = "dashboard",
@@ -274,12 +229,14 @@
         Childs = new() {},
       },
       new SidebarModels() {
+        id = "2",
         href = "reports",
         nameNav = "Thống kê",
         iconNav = "leaderboard",
         Childs = new() {},
       },
       new SidebarModels() {
+        id = "3",
         href = "teams",
         nameNav = "Đội nhóm",
         iconNav = "group",
@@ -287,12 +244,14 @@
         Childs = new() {},
       },
         new SidebarModels() {
+        id = "4",
         href = "todolist",
         nameNav = "Todolist",
         iconNav = "check_box",
         Childs = new() {},
       },
       new SidebarModels() {
+        id = "5",
         href = "plans",
         nameNav = "Kế hoạch",
         iconNav = "view_timeline",
@@ -301,6 +260,7 @@
       },
 
         new SidebarModels() {
+        id = "6",
         href = "#okrs",
         nameNav = "OKRs",
         iconNav = "track_changes",
@@ -308,26 +268,31 @@
         Childs = new() {
           
           new SidebarModels() {
+            id = "7",
             href = "#okrs/setup",
             nameNav = "Thiết lập",
             iconArrow = "arrow_right",
             Childs = new() {
               new SidebarModels() {
+                id = "8",
                 href = "okrs/setup/timeline",
                 nameNav = "Timeline",
                 Childs = new() {},
               },
                new SidebarModels() {
+                id = "9",
                 href = "okrs/setup/suggest",
                 nameNav = "Góp ý mục tiêu",
                 Childs = new() {},
               },
                new SidebarModels() {
+                id = "10",
                 href = "okrs/setup/target",
                 nameNav = "Công bố mục tiêu",
                 Childs = new() {},
               },
                new SidebarModels() {
+                id = "11",
                 href = "okrs/setup/details",
                 nameNav = "Tạo OKRs",
                 active = false,
@@ -337,12 +302,14 @@
           },
 
           new SidebarModels() {
+            id = "12",
             href = "okrs/task",
             nameNav = "Hành động",
             Childs = new() {},
           },
 
           new SidebarModels() {
+            id = "13",
             href = "okrs/overview",
             nameNav = "Tổng quan",
             Childs = new() {},
@@ -352,6 +319,7 @@
       },
 
         new SidebarModels() {
+        id = "14",
         href = "#cfrs",
         nameNav = "CFRs",
         iconNav = "grade",
@@ -359,12 +327,14 @@
         Childs = new() {
 
            new SidebarModels() {
+            id = "15",
             href = "cfrs/checkin",
             nameNav = "Check in",
             Childs = new() {},
           },
 
           new SidebarModels() {
+            id = "16",
             href = "cfrs/star",
             nameNav = "Ghi nhận - Tặng sao",
             Childs = new() {},
@@ -373,6 +343,7 @@
         },
       },
         new SidebarModels() {
+        id = "17",
         href = "kaizen",
         nameNav = "Kaizen",
         iconNav = "show_chart",
@@ -381,6 +352,7 @@
         Childs = new() {},
       },
         new SidebarModels() {
+        id = "18",
         href = "#gift",
         nameNav = "Đổi quà",
         iconNav = "card_giftcard",
@@ -389,6 +361,7 @@
         Childs = new() {},
       },
       new SidebarModels() {
+        id = "19",
         href = "#educate",
         nameNav = "Đào tạo",
         iconNav = "book",
@@ -397,6 +370,7 @@
         Childs = new() {
 
            new SidebarModels() {
+            id = "20",
             href = "educate/course/list",
             nameNav = "Khoá học",
             iconNav = "",
@@ -406,6 +380,7 @@
           },
 
           new SidebarModels() {
+            id = "21",
             href = "educate/course/manager",
             nameNav = "Quản lý khoá học",
             iconNav = "",
@@ -415,6 +390,7 @@
           },
 
           new SidebarModels() {
+            id = "22",
             href = "educate/exam/manager",
             nameNav = "Chấm bài thi",
             iconNav = "",
@@ -424,6 +400,7 @@
           },
 
           new SidebarModels() {
+            id = "23",
             href = "educate/certificate/manager",
             nameNav = "Cấp chứng chỉ",
             iconNav = "",
@@ -433,6 +410,7 @@
           },
 
            new SidebarModels() {
+            id = "24",
             href = "educate/certificate/manager",
             nameNav = "Chứng chỉ đạt được",
             iconNav = "",
@@ -444,6 +422,7 @@
         },
       },
       new SidebarModels() {
+        id = "25",
         href = "#settings",
         nameNav = "Cấu hình",
         iconNav = "settings",
@@ -452,6 +431,7 @@
         Childs = new() {
 
            new SidebarModels() {
+            id = "26",
             href = "setting/system",
             nameNav = "Cơ cấu",
             iconNav = "",
@@ -461,6 +441,7 @@
           },
 
           new SidebarModels() {
+            id = "27",
             href = "setting/okrs",
             nameNav = "OKRs - CFRs",
             iconNav = "",
@@ -469,6 +450,7 @@
             Childs = new() {},
           },
            new SidebarModels() {
+            id = "28",
             href = "setting/todolist",
             nameNav = "Todolist",
             iconNav = "",
@@ -478,6 +460,7 @@
           },
 
           new SidebarModels() {
+            id = "29",
             href = "setting/kaizen",
             nameNav = "Kaizen",
             iconNav = "",
@@ -486,6 +469,7 @@
             Childs = new() {},
           },
            new SidebarModels() {
+            id = "30",
             href = "setting/gift",
             nameNav = "Đổi quà",
             iconNav = "",
@@ -495,6 +479,7 @@
           },
 
           new SidebarModels() {
+            id = "31",
             href = "setting/educate",
             nameNav = "Đào tạo",
             iconNav = "",
@@ -504,6 +489,7 @@
           },
 
            new SidebarModels() {
+            id = "32",
             href = "setting/other",
             nameNav = "Tiện ích",
             iconNav = "",
@@ -515,12 +501,57 @@
         },
       },
       new SidebarModels() {
+        id = "33",
         href = "/user/info",
         nameNav = "Tài khoản",
         iconNav = "account_circle",
         active = false,
         iconArrow = "",
         Childs = new () {},
+      },
+    };
+  }
+  private void CreateNavMail() {
+    NavMailList = new() {
+      new SidebarModels() {
+        id = "0",
+        href = "email/receivedMail",
+        nameNav = "Hộp thư đến",
+        iconNav = "inbox",
+        active = false,
+        number = 7
+      },
+      new SidebarModels() {
+        id = "1",
+        href = "email/sendMail",
+        nameNav = "Thư đã gửi",
+        iconNav = "send",
+        active = false,
+        number = 0
+      },      
+      new SidebarModels() {
+        id = "2",
+        href = "email/starMail",
+        nameNav = "Thư quan trọng",
+        iconNav = "star",
+        active = false,
+        number = 2
+      },
+      new SidebarModels() {
+        id = "3",
+        href = "email/draftMail",
+        nameNav = "Thư nháp",
+        iconNav = "drafts",
+        active = false,
+        number = 0
+      },
+      new SidebarModels() {
+        id = "4",
+        href = "email/deleteMail",
+        nameNav = "Thùng rác",
+        iconNav = "delete",
+        active = false,
+        number = 0
       },
     };
   }

@@ -1,12 +1,10 @@
-@page "/email"
-@page "/email/receivedMail"
-@inherits LayoutComponentBase
+@page "/email/starMail"
 
 <section class="main ">
   <div class="columm is-sticky-68">
     <ul class="column is-flex">
       <li class="column">
-        <span class="has-text-titleMail">Hộp thư đến</span>
+        <span class="has-text-titleMail">Thư quan trọng</span>
       </li>
       <li class="column is-narrow is-one-quarter" style="width: 650px;">
         <div class="control has-icon-left has-icon-right has-suggest">
@@ -229,7 +227,6 @@
   </div>
 </section>
 <FooterMail />
-
 
 @code {
   private List<TypeSortMailModels> sortListMail = new();
