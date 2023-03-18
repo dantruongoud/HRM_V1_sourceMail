@@ -983,7 +983,9 @@ a {
 .is-size-5 {
   font-size: 1.25rem !important;
 }
-
+i.is-size-18 {
+  font-size: 18px;
+}
 .column .is-2 {
   flex: none;
   width: 16.66667%;
@@ -1220,7 +1222,9 @@ ul li {
 .is-title-table {
   /* display: flex; */
 }
-
+.p-3 {
+  padding: 3px;
+}
 .p-8 {
   padding: 8px;
 }
@@ -1644,7 +1648,9 @@ input:focus {
 .pl-6 {
   padding-left: 3rem !important;
 }
-
+.pl-10 {
+  padding-left: 10px;
+}
 a {
   user-select: none;
 }
@@ -2156,7 +2162,7 @@ div.mt-10 > ul:first-child {
   gap: 20px;
   align-items: center;
 }
-div > ul.column.is-flex li:first-child {
+div.is-sticky-68 > ul.column.is-flex li:first-child {
   width: fit-content;
   flex: none;
   flex-wrap: nowrap;
@@ -2369,4 +2375,36 @@ div.pagination > ul > li:hover {
 }
 .bg-danger {
   background-color: #ffede9;
+}
+
+/* form create mail */
+div.foot-form {
+  position: fixed;
+}
+
+div.head-form > ul > li:first-child:hover {
+  background-color: #e2e2e2;
+  border-radius: 5px;
+}
+div.head-form > ul > li {
+  width: fit-content;
+}
+div.head-form > ul {
+  align-items: center;
+}
+div.head-form > ul > li:nth-child(3).is_active .dropdown-menu {
+  display: block;
+}
+div.head-form > ul > li:last-child.is_active .dropdown-menu {
+  display: block;
+}
+.is-border {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+li.is-flex {
+  align-items: center;
+}
+div.head-form > ul > li > a.is-flex > div.dropdown {
+  align-items: center;
 }

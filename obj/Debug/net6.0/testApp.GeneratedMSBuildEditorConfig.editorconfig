@@ -47,6 +47,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWFpbFxGb290ZXJNYWlsLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/myC\#/testAPP/Pages/Mail/FormCreateNewMail.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWFpbFxGb3JtQ3JlYXRlTmV3TWFpbC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/myC\#/testAPP/Pages/Mail/ReceivedMail.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWFpbFxSZWNlaXZlZE1haWwucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
