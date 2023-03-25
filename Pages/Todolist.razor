@@ -285,7 +285,7 @@
                     </span>
                     <span>Chỉnh sửa</span>
                   </a>
-                  <a class="icon-text has-text-danger" @onclick="OnDeleteClick">
+                  <a class="icon-text has-text-danger" @onclick="() => OnDeleteClick(listTodolist, todo.ID)">
                     <span class="icon">
                       <i class="is-size-5 material-icons material-icons-outlined">
                         delete_outline
@@ -782,18 +782,16 @@
     return new SelectStatusModel();
   }
 
- private async Task OnDeleteClick()
+  private async Task OnDeleteClick(List<TodolistModels> list, string id)
   {
       bool confirmDelete = await JSRuntime.InvokeAsync<bool>("confirm", "Bạn có chắc chắn muốn xoá dữ liệu này?");
       if (confirmDelete)
       {
           // Xoá dữ liệu ở đây
-      }
-      else
-      {
-          // Huỷ bỏ thao tác xoá
+          list.RemoveAll(x => x.ID == id);
       }
   }
+
   private async Task CheckInHandler()
   {
     // Hiển thị thông báo và thay đổi nút Check-in thành nút Check-out khi người dùng đồng ý

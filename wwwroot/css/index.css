@@ -615,7 +615,7 @@ section > ul {
 .is-size-14 {
   font-size: 15px;
 }
-.field {
+.field:not(.is-grouped) {
   font-size: 14px;
   font-weight: 500;
   margin-top: 8px;
@@ -731,6 +731,10 @@ table .p-16 {
 
 .py-16 {
   padding: 16px;
+}
+.py-8 {
+  padding-top: 8px;
+  padding-bottom: 8px;
 }
 
 .has-text-dark {
@@ -1025,6 +1029,11 @@ ul.is-multi {
   padding-right: 0.5rem !important;
 }
 
+.px-3 {
+  padding-top: 3px;
+  padding-bottom: 3px;
+}
+
 .card-content .icon-text {
   align-items: center;
   display: inline-flex;
@@ -1126,7 +1135,7 @@ li.is-5 {
   justify-content: center;
 }
 
-.category-item.is-vcentered {
+.is-vcentered {
   align-items: center;
 }
 
@@ -1219,8 +1228,14 @@ ul li {
   color: #585c7d;
 }
 
-.is-title-table {
-  /* display: flex; */
+.gap_5 {
+  gap: 5px;
+}
+.gap_8 {
+  gap: 8px;
+}
+.gap_10 {
+  gap: 10px;
 }
 .p-3 {
   padding: 3px;
@@ -1228,8 +1243,18 @@ ul li {
 .p-8 {
   padding: 8px;
 }
+.p-9 {
+  padding: 9px;
+}
 .p-7 {
   padding: 7px;
+}
+.p-6 {
+  padding: 6px;
+}
+.py-3 {
+  padding-left: 3px;
+  padding-right: 3px;
 }
 .mr-2 {
   margin-right: 0.7rem !important;
@@ -1313,7 +1338,9 @@ li.column.is-narrow.p-8 > a:hover {
 div.field.has-addons .input {
   margin-left: 8px;
 }
-
+div.field.has-addons > .control .input {
+  margin-left: 0px;
+}
 div.field.has-addons {
   display: flex;
   justify-content: flex-start;
@@ -1443,12 +1470,15 @@ div.field.is-grouped.is-grouped-multiline {
 .button.is-info:hover {
   background-color: #3082c5;
 }
-
+.button.is-link:hover {
+  background-color: #3082c5;
+}
 .button .icon:first-child:not(:last-child) {
   margin-right: 0.4em;
 }
 .button.is-danger {
   background-color: #f14668;
+  color: #fff;
 }
 
 .button.is-danger:hover {
@@ -1464,7 +1494,7 @@ div.field.is-grouped.is-grouped-multiline {
 }
 
 .has-text-info {
-  color: var(--color-extra);
+  color: var(--color-extra) !important;
 }
 
 div.card-p-5 ul.column.is-variable.is-2 {
@@ -1519,9 +1549,6 @@ a.dropdown-item {
   background-color: #f5f5f5;
   color: #363636;
 }
-
-.button.is-link {
-}
 .is-right .icon {
   color: #4a4a4a;
 }
@@ -1534,7 +1561,7 @@ a.dropdown-item {
 .is-hoverable:hover .dropdown-menu {
   display: block;
 }
-div.dropdown.is_active .dropdown-menu {
+li.is-narrow div.dropdown.is_active .dropdown-menu {
   display: block;
 }
 li.is-one-quarter {
@@ -1556,6 +1583,15 @@ li.is-one-quarter {
   padding-right: 2.5em;
 }
 
+.control.has-icon-right .icon {
+  color: #dbdbdb;
+  height: 2.5em;
+  pointer-events: none;
+  position: absolute;
+  top: 6px;
+  width: 1.75em;
+  z-index: 4;
+}
 .control > .input {
   max-width: 100%;
   width: 100%;
@@ -1585,8 +1621,7 @@ span.icon > i.is-14 {
 .control.has-icon-left.is-left {
   left: 0;
 }
-.control.has-icon-left .icon,
-.control.has-icon-right .icon {
+.control.has-icon-left .icon {
   color: #dbdbdb;
   height: 1em;
   pointer-events: none;
@@ -1596,7 +1631,7 @@ span.icon > i.is-14 {
   z-index: 4;
   padding-left: 8px;
 }
-input:focus {
+input:not(#title_survey, .checkbox_survey, .form-control):focus {
   outline: 1px solid #355caa;
 }
 .user-item {
@@ -1616,6 +1651,20 @@ input:focus {
 .image.is-36x36 {
   width: 36px;
   height: 36px;
+}
+.image.is-24x24 {
+  width: 24px;
+  height: 24px;
+}
+.image.is-rounded {
+  border-radius: 50%;
+}
+.image img {
+  display: block;
+  width: 100%;
+  object-fit: cover;
+  height: 100%;
+  max-height: none;
 }
 .user_item {
   object-fit: cover;
@@ -1651,10 +1700,22 @@ input:focus {
 .pl-10 {
   padding-left: 10px;
 }
+.pl-0 {
+  padding-left: 0;
+}
+.pl-3 {
+  padding-left: 3px;
+}
+.pl-4 {
+  padding-left: 4px;
+}
 a {
   user-select: none;
 }
-
+.py-1 {
+  padding-top: 1px;
+  padding-bottom: 1px;
+}
 .mr-3 {
   margin-right: 0.75rem !important;
 }
@@ -1968,7 +2029,7 @@ a.delete:hover {
   margin-right: -1px;
 }
 
-.field:not(:last-child) {
+.field:not(:last-child, .column) {
   margin-bottom: 0.75rem;
 }
 .field.has-addons .control:first-child:not(:only-child) .input:not(.is-link) {
@@ -2069,7 +2130,9 @@ a.delete:hover {
 #sidebarmail.is_less .nav-main > a:hover {
   background-color: #3082c5;
 }
-
+#sidebarmail .nav-main > a:hover {
+  background-color: #3082c5;
+}
 #sidebarmail .nav-main > a {
   font-weight: 400;
   display: flex;
@@ -2222,10 +2285,10 @@ div.control.is-flex > a {
 .is-radius-4 {
   border-radius: 4px;
 }
-div.control.is-flex > a:first-child:hover {
+div.control.is-flex:not(.float-right) > a:first-child:hover {
   background-color: #3082c5;
 }
-div.control.is-flex > a:last-child:hover {
+div.control.is-flex:not(.float-right) > a:last-child:hover {
   background-color: #e2e2e2;
 }
 
@@ -2398,6 +2461,9 @@ div.head-form > ul > li:nth-child(3).is_active .dropdown-menu {
 div.head-form > ul > li:last-child.is_active .dropdown-menu {
   display: block;
 }
+div.head-form > ul > li:first-child > a > span.icon {
+  margin-left: 0 !important;
+}
 .is-border {
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -2407,4 +2473,297 @@ li.is-flex {
 }
 div.head-form > ul > li > a.is-flex > div.dropdown {
   align-items: center;
+}
+li.is-border {
+  border: 1px solid #fff;
+  border-radius: 6px;
+}
+
+div.head-form > ul > li:last-child > ul > li {
+  display: none;
+}
+#to {
+  background-color: #ecf0ff;
+  border-radius: 4px;
+}
+#CC {
+  background-color: #ecf0ff;
+  border-radius: 4px;
+}
+
+#BCC {
+  background-color: #ecf0ff;
+  border-radius: 4px;
+}
+
+#to div.control div.dropdown-trigger:not(.is-border) a:hover,
+#CC div.control div.dropdown-trigger:not(.is-border) a:hover,
+#BCC div.control div.dropdown-trigger:not(.is-border) a:hover {
+  font-weight: 600;
+}
+
+#to > ul > li:first-child,
+#CC > ul > li:first-child,
+#BCC > ul > li:first-child {
+  width: fit-content;
+}
+
+.float-right {
+  float: right;
+}
+.float-left {
+  float: left;
+}
+.is-wrap-flex {
+  flex-wrap: wrap;
+}
+div.control.is-flex.float-right > a {
+  padding: 6px;
+}
+div.control.is-flex.float-right > a:not(.is-link, .is-danger):hover {
+  background-color: #e2e2e2;
+  border-radius: 5px;
+}
+#to li div.dropdown.is_active .dropdown-menu:not(.is-right-dropdown),
+#CC li div.dropdown.is_active .dropdown-menu:not(.is-right-dropdown),
+#BCC li div.dropdown.is_active .dropdown-menu:not(.is-right-dropdown) {
+  display: block;
+}
+#to li div.dropdown.is_active a.button:not(.is-link),
+#CC li div.dropdown.is_active a.button:not(.is-link),
+#BCC li div.dropdown.is_active a.button:not(.is-link) {
+  font-weight: 600;
+}
+#to li .dropdown.is_active li div.dropdown-menu ul.is-flex > li.is-flex,
+#CC li .dropdown.is_active li div.dropdown-menu ul.is-flex > li.is-flex,
+#BCC li .dropdown.is_active li div.dropdown-menu ul.is-flex > li.is-flex {
+  justify-content: center;
+}
+#to li div.dropdown.is_active li.is_active .dropdown-menu.is-right-dropdown,
+#CC li div.dropdown.is_active li.is_active .dropdown-menu.is-right-dropdown,
+#BCC li div.dropdown.is_active li.is_active .dropdown-menu.is-right-dropdown {
+  display: block;
+}
+.dropdown-divider {
+  background-color: #363636;
+  border: none;
+  display: block;
+  height: 1px;
+  margin: 0.5rem 0;
+}
+hr {
+  background-color: #363636;
+  height: 1px;
+  border: none;
+  display: block;
+  margin: 1.5rem 0;
+  width: 100%;
+}
+.my-2 {
+  margin-top: 0.5rem !important;
+  margin-bottom: 0.5rem !important;
+}
+
+#to li div.dropdown.is_active li span.icon.py-3,
+#CC li div.dropdown.is_active li span.icon.py-3,
+#BCC li div.dropdown.is_active li span.icon.py-3 {
+  position: absolute;
+  right: 0;
+}
+
+#to div.is_active div.scroll > ul {
+  align-items: center;
+}
+#title_mail > input {
+  background-color: #ecf0ff;
+  border: none;
+  font-family: "Inter";
+}
+
+#title_mail > input::placeholder {
+  font-style: italic;
+}
+
+#title_mail > input:not(:placeholder-shown) {
+  font-style: normal;
+}
+/* end head-form */
+
+/* start content-form */
+/* start survey */
+div.content-form > textarea {
+  border: none;
+}
+div.content-form > textarea::placeholder {
+  font-style: italic;
+}
+
+div.content-form > textarea:not(:placeholder-shown) {
+  font-style: normal;
+}
+
+#title_survey:focus {
+  border: 1px solid #355caa;
+  outline: none;
+}
+
+#title_survey::placeholder {
+  font-style: italic;
+  font-size: 13px;
+}
+
+#title_survey:not(:placeholder-shown),
+#question_survey input:not(:placeholder-shown) {
+  font-style: normal;
+  font-family: "Inter";
+  font-size: 13px;
+}
+
+div.field.is-grouped > div.column.field.has-addons:last-child > div.field.is-grouped {
+  align-items: center;
+}
+
+div.field.is-grouped > div.column.field.has-addons:last-child {
+  width: fit-content;
+  float: right;
+}
+
+#question_survey {
+  background-color: #ecf0ff;
+  border-radius: 4px;
+}
+
+#question_survey input {
+  background-color: #ecf0ff;
+  padding: 9px;
+  border-radius: 4px;
+}
+
+#question_survey input::placeholder {
+  font-size: 13px;
+  font-family: "Inter";
+}
+
+#question_survey div > ul {
+  align-items: center;
+}
+#question_survey .radio {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+}
+#question_survey .radio > input {
+  cursor: pointer;
+}
+#question_survey .radio > span {
+  padding-left: 6px;
+}
+
+#question_survey > div > ul > li:last-child > div.control {
+  display: inline-block;
+  float: right;
+}
+
+#question_survey > div > ul:first-child > li:last-child {
+  width: fit-content;
+}
+
+#question_survey > div > ul > li:last-child > div.control:not(.column) {
+  width: 120px;
+  flex-wrap: nowrap;
+}
+
+#question_survey > div > div:last-child > a.button.is-vcentered:hover {
+  font-weight: 500;
+}
+
+#question_survey > div > div:last-child > a.button.is-vcentered.has-text-link {
+  width: fit-content;
+}
+#question_survey > div:last-child > a.button.is-vcentered:hover {
+  font-weight: 500;
+}
+
+#question_survey > div:last-child > div.has-text-link > a.button.is-vcentered {
+  width: fit-content;
+}
+
+#question_survey > div:last-child > div.has-text-link {
+  justify-content: center;
+}
+.button.button-is-link {
+  color: #fff;
+}
+
+.button.button-is-link:hover {
+  background-color: #3082c5;
+}
+
+/* Show Survey Reviewer */
+.showSurveyTitle div:last-child > ul {
+  float: right;
+  width: fit-content;
+}
+.showSurveyTitle div:last-child > ul li {
+  float: right;
+  width: fit-content;
+}
+.showSurvey div > ul li {
+  width: fit-content;
+}
+
+.signature {
+  font-size: 15px;
+  font-weight: 600;
+}
+/* footer form mail */
+.footer-form > div:first-child > ul > li {
+  width: fit-content;
+}
+/* css date picker */
+div.input > span > input {
+  border: none;
+  outline: none;
+}
+
+.datepicker > input {
+  border: none;
+  cursor: pointer;
+  width: 70px;
+  outline: none;
+}
+.hour > input {
+  border: none;
+  cursor: pointer;
+  width: 45px;
+  outline: none;
+}
+.hour div.daterangepicker div.calendar-table {
+  display: none;
+}
+
+.hour .daterangepicker {
+  right: 30px !important;
+}
+.applyBtn {
+  background-color: var(--color-main);
+  color: #fff;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  padding: 8px !important;
+}
+.applyBtn:hover {
+  background-color: #3082c5 !important;
+}
+.cancelBtn {
+  background-color: #fff;
+  border-radius: 4px;
+  border: none !important;
+  cursor: pointer;
+  padding: 8px !important;
+}
+
+.cancelBtn:hover {
+  background-color: #ecf0ff;
 }

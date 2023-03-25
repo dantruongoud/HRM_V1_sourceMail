@@ -26,3 +26,5 @@ D:\myC#\testAPP\obj\Debug\net6.0\testApp.pdb
 D:\myC#\testAPP\obj\Debug\net6.0\testApp.genruntimeconfig.cache
 D:\myC#\testAPP\obj\Debug\net6.0\ref\testApp.dll
 D:\myC#\testAPP\bin\Debug\net6.0\omnisharp.json
+D:\myC#\testAPP\bin\Debug\net6.0\BlazorDateRangePicker.dll
+D:\myC#\testAPP\obj\Debug\net6.0\testApp.csproj.CopyComplete

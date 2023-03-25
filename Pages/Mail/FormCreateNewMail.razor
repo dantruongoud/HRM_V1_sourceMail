@@ -1,10 +1,11 @@
+@inject IJSRuntime JSRuntime;
 @page "/email/createMail"
 
 <section class="main">
   <div class="columm head-form">
     <ul class="column is-flex">
       <li class="column p-8 is-flex">
-        <a href="/email/receivedMail" class="icon-text button is-link weight500">
+        <a href="/email/receivedMail" class="icon-text button has-text-link weight500">
           <span class="icon">
             <i class="material-icons material-icons-outlined is-size-6">arrow_back</i>
           </span>
@@ -40,22 +41,22 @@
       <li class="column p-8 is-flex @fillWarningText">
         <a class="is-flex" @onclick="openfillWarning">
           <span class="mr-2 is-flex">
-            @if (fillWarning == true)
+            @if (fillWarning == false)
             {
               <i class="has-text-warning is-size-6 material-icons material-icons-outlined">
-                star
+                star_border
               </i>
             } else {
               <i class="has-text-warning is-size-6 material-icons material-icons-outlined">
-                star_border
+                star
               </i>
             }
           </span>
           <span>Đánh dấu quan trọng</span>
         </a>
       </li>
-      <li class="column p-8 @openStickMenu">
-        <a class="is-flex">
+      <li class="column p-8 @openStickMenu is-flex">
+        <a class="is-flex mr-2">
           <span class="mr-2 is-flex has-text-danger" @onclick="ToggleStickMenu">
             <i class="is-size-5 material-symbols-outlined">
             label
@@ -68,70 +69,1523 @@
             <div class="dropdown-menu is-right-dropdown" style="width: 250px;">
               <div class="dropdown-content">
                 <a class="dropdown-item has-text-weight-bold">Danh sách nhãn</a>
-                <a class="dropdown-item">
-                  <ul class="column is-flex">
-                    <li class="column">
-                      <input class="input" type="checkbox">   
-                    </li>
-                    <li class="column">
-                      <span class="icon has-text-danger pt-2">
-                        <i class="is-size-6 material-icons material-icons">
-                        label
-                        </i>
-                      </span>
-                    </li>
-                    <li class="column font_13 weight500">Nhân sự Brando</li>
-                  </ul>
-                </a>
-                <a class="dropdown-item">
-                  <ul class="column is-flex">
-                    <li class="column">
-                      <input class="input" type="checkbox">   
-                    </li>
-                    <li class="column">
-                      <span class="icon has-text-link pt-2">
-                        <i class="is-size-6 material-icons material-icons">
-                        label
-                        </i>
-                      </span>
-                    </li>
-                    <li class="column font_13 weight500">Nhân sự Conando</li>
-                  </ul>
-                </a>
+                @foreach (var sticky in StyleStickyList)
+                {
+                  <a class="dropdown-item">
+                    <ul class="column is-flex">
+                      <li class="column">
+                        <input class="input" type="checkbox" @onclick="ToggleSticky">   
+                      </li>
+                      <li class="column">
+                        <span class="icon @sticky.Class_color pt-2">
+                          <i class="is-size-6 material-icons material-icons">
+                          label
+                          </i>
+                        </span>
+                      </li>
+                      <li class="column font_13 weight500">@sticky.nameSticky</li>
+                    </ul>
+                  </a>      
+                }
               </div>
             </div>
           </div>
         </a>
+        <ul class="column gap_5 is-flex">
+          <li class="column @activeSticky p-3 is-border" style="background-color: red;">
+            <span>Nhân sự Conando</span>
+            <a class="is-flex" onclick="@ToggleSticky">
+              <span class="icon has-text-grey">
+                <span class="is-size-5 material-icons material-icons">
+                cancel
+                </span>
+              </span>
+            </a>
+          </li>
+        </ul>
       </li>
     </ul>
+    @if (FormCC_BCC == false)
+    {
+      <div class="columm mt-10">
+        <div class="columm">
+          <ul id="mail-to" class="column is-flex">
+            <li class="column p-8" style="width: 10%;">To</li>
+            <li id="to" class="column p-8">
+              <ul class="column is-flex">
+                <li class="column"></li>
+                <li class="column font_13 is-flex">
+                  <div class="control">
+                    <div class="dropdown @openFormAddUserReceived">
+                      <div class="dropdown-trigger">
+                        <a class="p-3 button is-flex has-text-link mr-2" @onclick="openFormUser">
+                          <span class="icon">
+                            <i class="is-size-6 material-icons material-icons-outlined">
+                            add
+                            </i>
+                          </span>
+                          <span>Thêm người nhận</span>
+                        </a>
+                      </div>
+                      <div class="dropdown-menu mt-10" style="width: 350px;">
+                        <div class="dropdown-content p-3">
+                          <ul class="column is-flex is-wrap-flex">
+                            <li class="col-half p-8 font_13">Cập nhật người dùng</li>
+                            <li class="col-half is-flex is-centered @choseDepartmentInFormAddUserReceived">
+                               <div class="control">
+                                <div class="dropdown is-right">
+                                  <div class="dropdown-trigger is-border" style="width: 150px;">
+                                    <a class="has-text-link is-flex p-3 font_13" @onclick="@choseDepartment">
+                                      <span class="">@selectDepartmentMail</span>
+                                      <span class="icon has-text-link py-3">
+                                        <i class="is-size-18 material-icons material-icons-outlined">arrow_drop_down</i>
+                                      </span>
+                                    </a>
+                                  </div>
+                                  <div class="dropdown-menu is-right-dropdown" style="width: 200px;">
+                                    <div class="dropdown-content">
+                                      <a class="dropdown-item font_13" @onclick='() => OnSelectDepartmentValueChanged("Tất cả phòng ban")'>Tất cả phòng ban</a>
+                                      <a class="dropdown-item font_13" @onclick='() => OnSelectDepartmentValueChanged("DoCorp")'>DoCorp</a>
+                                      <a class="dropdown-item font_13" @onclick='() => OnSelectDepartmentValueChanged("Brando")'>Brando</a>
+                                      <a class="dropdown-item font_13" @onclick='() => OnSelectDepartmentValueChanged("SEODO")'>SEODO</a>
+                                      <a class="dropdown-item font_13" @onclick='() => OnSelectDepartmentValueChanged("FastDo")'>FastDo</a>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </li>
+                            <li class="column p-8">
+                              <div class="control has-icon-right">
+                                <input type="text" id="search_member" class="input is-small is-rounded" placeholder="Tìm người dùng">
+                                <span class="icon is-right-dropdown">
+                                  <span class="is-size-5 material-icons material-icons-outlined">
+                                  search
+                                  </span>
+                                </span> 
+                              </div>
+                            </li>
+                          </ul>
+                          <div class="scroll py-1" style="max-height: 250px;">
+                            <hr class="my-2">
+                            <a class="icon-text has-text-link mb-1" @onclick='() => checkbox_member = !checkbox_member'>
+                              <span class="icon">
+                                @if (checkbox_member == false)
+                                {
+                                  <i class="is-size-6 material-icons material-icons-outlined">
+                                  check_box_outline_blank
+                                  </i>
+                                }
+                                else
+                                {
+                                  <i class="is-size-6 material-icons material-icons-outlined">
+                                  check_box
+                                  </i>
+                                }
+                              </span>
+                              <span class="has-text-weight-semibold ml-2 font_13">Chọn tất cả</span>
+                            </a>
+                            @foreach (var user in UserItemsList)
+                            {
+                              <ul class="column is-flex is-vcenterd mb-5">
+                                <li class="">
+                                  <a class="icon is-small has-text-info p-3">
+                                    <i class="is-size-6 material-icons material-icons-outlined">
+                                    add_circle_outline
+                                    </i>
+                                  </a>
+                                </li>
+                                <li class="column py-3">
+                                  <div class="icon-text is-flex">
+                                    <span class="image is-rounded is-24x24">
+                                      <img src="@user.linkIMG" alt="AVT">
+                                    </span>
+                                    <span class="ml-2" style="flex-grow: 1;">@user.nameEdu</span>
+                                  </div>
+                                </li>
+                              </ul> 
+                            }
+                          </div>
+                          <hr class="dropdown-divider">
+                          <div class="control is-flex float-right pr-5">
+                            <a class="button is-link is-flex is-radius-4">
+                              <span class="icon">
+                                <i class="is-size-5 material-icons material-icons-outlined">
+                                done
+                                </i>
+                              </span>
+                              <span class="font_13">Hoàn tất</span>
+                            </a>
+                            <a class="button is-danger is-flex is-radius-4" @onclick='@openFormUser'>
+                              <span class="icon">
+                                <i class="is-size-5 material-icons material-icons-outlined">
+                                close
+                                </i>
+                              </span>
+                              <span class="font_13">Huỷ</span>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="control">
+                    <div class="dropdown @openGroupUserReceived">
+                      <div class="dropdown-trigger">
+                        <a class="p-3 button is-flex has-text-link" @onclick='() => isGroupReceived = !isGroupReceived'>
+                          <span class="icon">
+                            <i class="is-size-6 material-icons material-icons-outlined">
+                            add
+                            </i>
+                          </span>
+                          <span>Thêm nhóm người nhận</span>
+                        </a>
+                      </div>
+                       <div class="dropdown-menu mt-10" style="width: 350px;">
+                        <div class="dropdown-content p-3">
+                          <div class="columm p-8">
+                            <span class="weight500">Thêm nhóm người nhận</span>
+                          </div>
+                          <div class="scroll py-1" style="max-height: 250px;">
+                            <hr class="my-2">
+                            <a class="icon-text has-text-link mb-1" @onclick='() => checkbox_member = !checkbox_member'>
+                              <span class="icon">
+                                @if (checkbox_member == false)
+                                {
+                                  <i class="is-size-6 material-icons material-icons-outlined">
+                                  check_box_outline_blank
+                                  </i>
+                                }
+                                else
+                                {
+                                  <i class="is-size-6 material-icons material-icons-outlined">
+                                  check_box
+                                  </i>
+                                }
+                              </span>
+                              <span class="has-text-weight-semibold ml-2 font_13">Chọn tất cả</span>
+                            </a>
+                            @foreach (var department in DeparmentList)
+                            {
+                              <ul class="column is-flex is-vcenterd mb-5">
+                                <li class="">
+                                  <a class="icon is-small has-text-info p-3">
+                                    <i class="is-size-6 material-icons material-icons-outlined">
+                                    add_circle_outline
+                                    </i>
+                                  </a>
+                                </li>
+                                <li class="column py-3">
+                                  <div class="icon-text">
+                                    <span class="ml-2 weight500" style="flex-grow: 1;">@department.nameSticky</span>
+                                  </div>
+                                </li>
+                              </ul> 
+                            }
+                          </div>
+                          <hr class="dropdown-divider">
+                          <div class="control is-flex float-right pr-5">
+                            <a class="button is-link is-flex is-radius-4">
+                              <span class="icon">
+                                <i class="is-size-5 material-icons material-icons-outlined">
+                                done
+                                </i>
+                              </span>
+                              <span class="font_13">Hoàn tất</span>
+                            </a>
+                            <a class="button is-danger is-flex is-radius-4" @onclick='() => isGroupReceived = !isGroupReceived'>
+                              <span class="icon">
+                                <i class="is-size-5 material-icons material-icons-outlined">
+                                close
+                                </i>
+                              </span>
+                              <span class="font_13">Huỷ</span>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </li>
+            <li class="column" style="width: 20%;">
+              <div class="control float-right is-flex">
+                <a class="button has-text-link float-right" @onclick='() => FormCC_BCC = !FormCC_BCC'>
+                  <span>CC</span>
+                </a>
+                <a class="button has-text-link float-right" @onclick='() => FormCC_BCC =!FormCC_BCC'>
+                  <span>BCC</span>
+                </a>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="columm mt-10 mb-3">
+        <div class="columm">
+          <ul id="mail-to" class="column is-flex">
+            <li class="column p-9" style="width: 8.5%;">Tiêu đề</li>
+            <li id="title_mail" class="column">
+              <input class="columm input p-9 is-radius-4" type="text" placeholder="Tiêu đề thư">
+            </li>
+          </ul>
+        </div>
+      </div>
+      <hr class="dropdown-divider">
+      <div class="columm mt-10 content-form">
+        <textarea class="textarea" placeholder="Nhập nội dung thư" style="height: 300px;"></textarea>
+      </div>
+      <div class="columm mt-10 has-text-danger" style="opacity: 0.5;">*Validation</div>
+      <div class="columm mt-10 mb-3">
+        @if (@isSurveyButton == false)
+        {
+          <div class="control">
+            <div class="dropdown">
+              <a class="button is-link is-radius-4 is-flex p-7" @onclick="() => isSurveyButton = !isSurveyButton">
+                <span class="icon">
+                  <i class="is-size-5 material-icons material-icons-outlined">
+                  poll
+                  </i>
+                </span>
+                <span>Tạo khảo sát</span>
+              </a>
+            </div>
+          </div>
+        } 
+        else
+        {
+          <div class="columm mt-10 survey">
+            @if (formIsEdit)
+            {
+              <div class="field is-grouped gap_8">
+                <div class="column field has-addons py-8">
+                  <div class="control is-expanded has-icon-left">
+                    <input id="title_survey" @bind="questionModels.title" type="text" class="input" placeholder="Nhập tiêu đề khảo sát...">
+                    <span class="icon is-left has-text-grey">
+                      <i class="is-size-5 material-icons material-icons-outlined">
+                      mode_edit
+                      </i>
+                    </span>
+                  </div>  
+                </div>
+                <div class="column field has-addons">
+                  <div class="field is-grouped gap_8">
+                    <div class="control has-text-grey">Thời gian kết thúc: </div>
+                    <div class="control is-expended">
+                      <a class="icon-text">
+                        <span class="icon is-small mr-1">
+                          <i class="is-size-6 material-icons material-icons-outlined">
+                          calendar_today
+                          </i>
+                        </span>
+                        <span class="datepicker weight500">
+                          <DateRangePicker SingleDatePicker="true" class="form-control form-control-sm" placeholder="dd/mm/yyyy"/>                      
+                        </span>
+                      </a>
+                    </div>
+
+                    <div class="control is-expended">
+                      <a class="icon-text">
+                        <span class="icon is-small mr-1">
+                          <i class="is-size-5 material-icons material-icons-outlined">
+                          schedule  
+                          </i>
+                        </span>
+                        <span class="hour">
+                          <DateRangePicker SingleDatePicker="true" class="form-control form-control-sm" placeholder="hh:mm" TimePicker="true"  ShowTimePicker="true" ShowCalendar="false" ShowMonthPicker="false"/> 
+                        </span>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="columm">
+                <div id="question_survey" class="mt-10 mb-1">
+                  @foreach (var question in QuestionList)
+                  {
+                    <div class="column p-8">
+                      <ul class="column is-flex">
+                        <li class="column p-8" style="flex: 1;">
+                          <span class="has-text-right has-text-weight-medium">@(QuestionList.FindIndex(i => i.ID == question.ID) + 1).</span>
+                        </li>
+                        <li class="column p-8">
+                          <div class="control">
+                            <input type="text" @bind="question.name" class="input" placeholder="Nhập câu hỏi khảo sát">
+                          </div>
+                        </li>
+                        <li class="column p-8">
+                          <div class="control">
+                            <a class="button is-danger p-8 is-radius-4 is-flex" @onclick="() => OnDeleteClick(QuestionList, question.ID)">
+                              <span class="icon">
+                                <i class="is-size-5 material-icons material-icons-outlined">
+                                delete_outline
+                                </i>
+                              </span>
+                              <span>Xoá câu hỏi</span>
+                            </a>
+                          </div>
+                        </li>
+                      </ul>
+                      <ul class="column is-flex">
+                        <li class="p-8" style="width: 10%;">
+                          <span class="columm has-text-grey">Loại khảo sát:</span>
+                        </li>
+                        <li class="column p-8">
+                          <div class="is-flex">
+                          <a class="button has-text-grey is-flex mr-3" @onclick="(() => ChangeQuestionType(question))">
+                            <span class="icon">
+                              @if (question.typeQuestion == false)
+                              {
+                                <i class="is-size-6 material-icons material-icons-outlined">
+                                radio_button_checked
+                                </i> 
+                              } 
+                              else
+                              {
+                                <i class="is-size-6 material-icons material-icons-outlined">
+                                radio_button_unchecked
+                                </i> 
+                              }
+                              </span>
+                              <span>Một đáp án</span>
+                          </a>
+                          <a class="button has-text-grey is-flex" @onclick="(() => ChangeQuestionType(question))">
+                            <span class="icon">
+                              @if (question.typeQuestion == false)
+                              {
+                                <i class="is-size-6 material-icons material-icons-outlined">
+                                radio_button_unchecked
+                                </i> 
+                              } 
+                              else
+                              {
+                                <i class="is-size-6 material-icons material-icons-outlined">
+                                radio_button_checked
+                                </i> 
+                              }
+                            </span>
+                            <span>Nhiều đáp án</span>                 
+                          </a>
+                          </div>
+                        </li>
+                      </ul>
+                      @foreach (var answer in question.answers)
+                      {
+                        <ul class="column is-flex">
+                          <li class="column p-8" style="width: fit-content;">
+                            <span class="icon has-text-grey is-flex is-vcentered p-8">
+                              <i class="is-size-5 material-icons material-icons-outlined">
+                              drag_indicator
+                              </i>
+                            </span>
+                          </li>
+                          <li class="column p-8" style="width: fit-content;">
+                            <a class="button has-text-grey is-flex is-vcentered p-8">
+                              <span class="icon">
+                                @if (question.typeQuestion == false)
+                                {
+                                  <i class="is-size-6 material-icons material-icons-outlined">
+                                  radio_button_unchecked
+                                  </i> 
+                                } 
+                                else
+                                {
+                                  <i class="is-size-6 material-icons material-icons-outlined">
+                                  check_box_outline_blank
+                                  </i> 
+                                }
+                              </span>
+                            </a>
+                          </li>
+                          <li class="column p-8">
+                            <div class="control column">
+                              <input type="text" @bind="@answer.name" class="input" placeholder="Lựa chọn @(question.answers.FindIndex(i => i.ID == answer.ID) + 1)">
+                            </div>
+                          </li>
+                          <li class="column p-8" style="width: fit-content;">
+                            <a class="has-text-danger is-flex is-vcentered" @onclick="@(() => question.answers.Remove(answer))">
+                            <span class="icon">
+                              <i class="is-size-5 material-icons material-icons-outlined">
+                                delete_outline
+                              </i>
+                            </span>
+                            </a>
+                          </li>
+                        </ul>
+                      }
+                      <div class="column control p-8">
+                        <a class="button has-text-link is-flex is-vcentered p-8" @onclick="(() => AddAnswer(question))">
+                          <span class="icon">
+                            <i class="is-size-6 material-icons material-icons-outlined">
+                            add
+                            </i>
+                          </span>
+                          <span>Thêm lựa chọn</span>
+                        </a>
+                      </div>
+                    </div>
+                  }
+                  <div class="columm p-8">
+                    <div class="has-text-link is-flex">
+                      <a class="button has-text-link p-8 is-flex is-vcentered" @onclick="AddQuestion">
+                        <span class="icon">
+                          <i class="is-size-6 material-icons material-icons-outlined">
+                            add
+                          </i>
+                        </span>
+                        <span>Thêm câu hỏi</span>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+                <div class="columm p-8 pl-0 mt-10">
+                  <div class="is-flex p-7 pl-4">
+                    <a class="button button-is-link is-flex p-7 mr-3 is-vcentered" @onclick="() => formIsEdit = !formIsEdit">
+                      <span class="icon">
+                        <i class="is-size-6 material-icons material-icons-outlined">
+                        done
+                        </i>
+                      </span>
+                      <span>Cập nhật</span>
+                    </a>
+                    <a class="button is-flex p-7 is-vcentered" @onclick="@CancelCreateFormSurvey">
+                      <span class="icon has-text-danger">
+                        <i class="is-size-6 material-icons material-icons-outlined">
+                        cancel
+                        </i>
+                      </span>
+                      <span class="has-text-link">Huỷ</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            }
+            else
+            {
+              <div class="field is-grouped is-vcentered p-8 showSurveyTitle">
+                <div class="col-half">
+                    <span class="weight500 is-size-14">@questionModels.title</span>
+                </div>
+                <div class="col-half">
+                  <ul class="column is-flex is-vcentered">
+                    <li class="column p-8">
+                      <a class="icon-text has-text-grey" title="Khi kết thúc thời gian khảo sát, bạn sẽ không thể thực hiện bình chọn !">
+                        <span class="icon">
+                          <i class="is-size-6 material-icons material-icons-outlined">
+                          error_outline
+                          </i>
+                        </span>
+                      </a>
+                    </li>
+                    <li class="column p-8">
+                      <div class="control has-text-grey">Thời gian kết thúc: </div>
+                    </li>
+                    <li class="column p-8">
+                      <div class="control is-expended p-8">
+                        <a class="icon-text">
+                          <span class="icon is-small mr-1">
+                            <i class="is-size-6 material-icons material-icons-outlined">
+                            calendar_today
+                            </i>
+                          </span>
+                          <span class="datepicker weight500">  
+                            <DateRangePicker SingleDatePicker="true" class="form-control form-control-sm" placeholder="dd/mm/yyyy"/>                      
+                          </span>
+                        </a>
+                      </div>
+                    </li>
+                    <li class="column">
+                        <span class="icon-text">
+                          <span class="icon is-small mr-1">
+                            <i class="is-size-5 material-icons material-icons-outlined">
+                            schedule  
+                            </i>
+                          </span>
+                          <span class="hour">
+                            <DateRangePicker SingleDatePicker="true" class="form-control form-control-sm" placeholder="hh:mm" TimePicker="true"  ShowTimePicker="true" ShowCalendar="false" ShowMonthPicker="false"/> 
+                          </span>
+                        </span>
+                    </li>
+                  </ul>
+
+                </div>
+              </div>
+
+
+              <div class="columm">
+                <div id="question_survey" class="mt-10 mb-1 showSurvey">
+                  @foreach (var question in QuestionList)
+                  {
+                    <div class="column p-8">
+                      <ul class="column is-flex">
+                        <li class="column p-8">
+                          <span class="has-text-right has-text-weight-medium">@(QuestionList.FindIndex(i => i.ID == question.ID) + 1).</span>
+                        </li>
+                        <li class="column p-8">
+                          <span class="weight500">
+                            @question.name
+                          </span>
+                        </li>
+                      </ul>
+                      @foreach (var answer in question.answers)
+                      {
+                        <ul class="column is-flex">
+                          <li class="column" style="width: fit-content;">
+                            <a class="button has-text-grey is-flex is-vcentered p-8">
+                              <span class="icon">
+                                @if (question.typeQuestion == false)
+                                {
+                                  <i class="is-size-6 material-icons material-icons-outlined">
+                                  radio_button_unchecked
+                                  </i> 
+                                } 
+                                else
+                                {
+                                  <i class="is-size-6 material-icons material-icons-outlined">
+                                  check_box_outline_blank
+                                  </i> 
+                                }
+                              </span>
+                            </a>
+                          </li>
+                          <li class="column">
+                            <span class="icon-text">
+                              @answer.name
+                            </span>
+                          </li>
+                        </ul>
+                      }
+                    </div>
+                  }
+
+                </div>
+                <div class="columm p-8 pl-0 mt-10">
+                  <div class="is-flex p-7 pl-4">
+                    <a class="button button-is-link is-flex p-7 mr-3 is-vcentered" @onclick="() => formIsEdit =!formIsEdit">
+                      <span class="icon">
+                        <i class="is-size-6 material-icons material-icons-outlined">
+                        edit
+                        </i>
+                      </span>
+                      <span>Chỉnh sửa</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            }
+          </div>
+        }
+      </div>
+      
+      <hr class="dropdown-divider">
+    } 
+    else 
+    {
+      <div class="columm mt-10">
+        <div class="columm">
+          <ul id="mail-to" class="column is-flex">
+            <li class="column p-8" style="width: 10%;">To</li>
+            <li id="to" class="column p-8">
+              <ul class="column is-flex">
+                <li class="column"></li>
+                <li class="column font_13 is-flex">
+                  <div class="control">
+                    <div class="dropdown @openFormAddUserReceived">
+                      <div class="dropdown-trigger">
+                        <a class="button is-flex has-text-link mr-2" @onclick="openFormUser">
+                          <span class="icon">
+                            <i class="is-size-6 material-icons material-icons-outlined">
+                            add
+                            </i>
+                          </span>
+                          <span>Thêm người nhận</span>
+                        </a>
+                      </div>
+                      <div class="dropdown-menu mt-10" style="width: 350px;">
+                        <div class="dropdown-content p-3">
+                          <ul class="column is-flex is-wrap-flex">
+                            <li class="col-half p-8 font_13">Cập nhật người dùng</li>
+                            <li class="col-half is-flex is-centered @choseDepartmentInFormAddUserReceived">
+                               <div class="control">
+                                <div class="dropdown is-right">
+                                  <div class="dropdown-trigger is-border" style="width: 150px;">
+                                    <a class="has-text-link is-flex p-3 font_13" @onclick="@choseDepartment">
+                                      <span class="">@selectDepartmentMail</span>
+                                      <span class="icon has-text-link py-3">
+                                        <i class="is-size-18 material-icons material-icons-outlined">arrow_drop_down</i>
+                                      </span>
+                                    </a>
+                                  </div>
+                                  <div class="dropdown-menu is-right-dropdown" style="width: 200px;">
+                                    <div class="dropdown-content">
+                                      <a class="dropdown-item font_13" @onclick='() => OnSelectDepartmentValueChanged("Tất cả phòng ban")'>Tất cả phòng ban</a>
+                                      <a class="dropdown-item font_13" @onclick='() => OnSelectDepartmentValueChanged("DoCorp")'>DoCorp</a>
+                                      <a class="dropdown-item font_13" @onclick='() => OnSelectDepartmentValueChanged("Brando")'>Brando</a>
+                                      <a class="dropdown-item font_13" @onclick='() => OnSelectDepartmentValueChanged("SEODO")'>SEODO</a>
+                                      <a class="dropdown-item font_13" @onclick='() => OnSelectDepartmentValueChanged("FastDo")'>FastDo</a>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </li>
+                            <li class="column p-8">
+                              <div class="control has-icon-right">
+                                <input type="text" id="search_member" class="input is-small is-rounded" placeholder="Tìm người dùng">
+                                <span class="icon is-right-dropdown">
+                                  <span class="is-size-5 material-icons material-icons-outlined">
+                                  search
+                                  </span>
+                                </span> 
+                              </div>
+                            </li>
+                          </ul>
+                          <div class="scroll py-1" style="max-height: 250px;">
+                            <hr class="my-2">
+                            <a class="icon-text has-text-link mb-1" @onclick='() => checkbox_member = !checkbox_member'>
+                              <span class="icon">
+                                @if (checkbox_member == false)
+                                {
+                                  <i class="is-size-6 material-icons material-icons-outlined">
+                                  check_box_outline_blank
+                                  </i>
+                                }
+                                else
+                                {
+                                  <i class="is-size-6 material-icons material-icons-outlined">
+                                  check_box
+                                  </i>
+                                }
+                              </span>
+                              <span class="has-text-weight-semibold ml-2 font_13">Chọn tất cả</span>
+                            </a>
+                            @foreach (var user in UserItemsList)
+                            {
+                              <ul class="column is-flex is-vcenterd mb-5">
+                                <li class="">
+                                  <a class="icon is-small has-text-info p-3">
+                                    <i class="is-size-6 material-icons material-icons-outlined">
+                                    add_circle_outline
+                                    </i>
+                                  </a>
+                                </li>
+                                <li class="column py-3">
+                                  <div class="icon-text is-flex">
+                                    <span class="image is-rounded is-24x24">
+                                      <img src="@user.linkIMG" alt="AVT">
+                                    </span>
+                                    <span class="ml-2" style="flex-grow: 1;">@user.nameEdu</span>
+                                  </div>
+                                </li>
+                              </ul> 
+                            }
+                          </div>
+                          <hr class="dropdown-divider">
+                          <div class="control is-flex float-right pr-5">
+                            <a class="button is-link is-flex is-radius-4">
+                              <span class="icon">
+                                <i class="is-size-5 material-icons material-icons-outlined">
+                                done
+                                </i>
+                              </span>
+                              <span class="font_13">Hoàn tất</span>
+                            </a>
+                            <a class="button is-danger is-flex is-radius-4" @onclick='@openFormUser'>
+                              <span class="icon">
+                                <i class="is-size-5 material-icons material-icons-outlined">
+                                close
+                                </i>
+                              </span>
+                              <span class="font_13">Huỷ</span>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="control">
+                    <div class="dropdown @openGroupUserReceived">
+                      <div class="dropdown-trigger">
+                        <a class="button is-flex has-text-link" @onclick='() => isGroupReceived = !isGroupReceived'>
+                          <span class="icon">
+                            <i class="is-size-6 material-icons material-icons-outlined">
+                            add
+                            </i>
+                          </span>
+                          <span>Thêm nhóm người nhận</span>
+                        </a>
+                      </div>
+                       <div class="dropdown-menu mt-10" style="width: 350px;">
+                        <div class="dropdown-content p-3">
+                          <div class="columm p-8">
+                            <span class="weight500">Thêm nhóm người nhận</span>
+                          </div>
+                          <div class="scroll py-1" style="max-height: 250px;">
+                            <hr class="my-2">
+                            <a class="icon-text has-text-link mb-1" @onclick='() => checkbox_member = !checkbox_member'>
+                              <span class="icon">
+                                @if (checkbox_member == false)
+                                {
+                                  <i class="is-size-6 material-icons material-icons-outlined">
+                                  check_box_outline_blank
+                                  </i>
+                                }
+                                else
+                                {
+                                  <i class="is-size-6 material-icons material-icons-outlined">
+                                  check_box
+                                  </i>
+                                }
+                              </span>
+                              <span class="has-text-weight-semibold ml-2 font_13">Chọn tất cả</span>
+                            </a>
+                            @foreach (var department in DeparmentList)
+                            {
+                              <ul class="column is-flex is-vcenterd mb-5">
+                                <li class="">
+                                  <a class="icon is-small has-text-info p-3">
+                                    <i class="is-size-6 material-icons material-icons-outlined">
+                                    add_circle_outline
+                                    </i>
+                                  </a>
+                                </li>
+                                <li class="column py-3">
+                                  <div class="icon-text">
+                                    <span class="ml-2 weight500" style="flex-grow: 1;">@department.nameSticky</span>
+                                  </div>
+                                </li>
+                              </ul> 
+                            }
+                          </div>
+                          <hr class="dropdown-divider">
+                          <div class="control is-flex float-right pr-5">
+                            <a class="button is-link is-flex is-radius-4">
+                              <span class="icon">
+                                <i class="is-size-5 material-icons material-icons-outlined">
+                                done
+                                </i>
+                              </span>
+                              <span class="font_13">Hoàn tất</span>
+                            </a>
+                            <a class="button is-danger is-flex is-radius-4" @onclick='() => isGroupReceived = !isGroupReceived'>
+                              <span class="icon">
+                                <i class="is-size-5 material-icons material-icons-outlined">
+                                close
+                                </i>
+                              </span>
+                              <span class="font_13">Huỷ</span>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="columm mt-10">
+        <div class="columm">
+          <ul id="mail-to" class="column is-flex">
+            <li class="column p-8" style="width: 10%;">CC</li>
+            <li id="CC" class="column p-8">
+              <ul class="column is-flex">
+                <li class="column"></li>
+                <li class="column font_13 is-flex">
+                  <div class="control">
+                    <div class="dropdown @openFormAddUserReceivedinCC">
+                      <div class="dropdown-trigger">
+                        <a class="button is-flex has-text-link mr-2" @onclick="() => isAddUserReceivedinCC = !isAddUserReceivedinCC">
+                          <span class="icon">
+                            <i class="is-size-6 material-icons material-icons-outlined">
+                            add
+                            </i>
+                          </span>
+                          <span>Thêm người nhận</span>
+                        </a>
+                      </div>
+                      <div class="dropdown-menu mt-10" style="width: 350px;">
+                        <div class="dropdown-content p-3">
+                          <ul class="column is-flex is-wrap-flex">
+                            <li class="col-half p-8 font_13">Cập nhật người dùng</li>
+                            <li class="col-half is-flex is-centered @choseDepartmentInFormAddUserReceived">
+                               <div class="control">
+                                <div class="dropdown is-right">
+                                  <div class="dropdown-trigger is-border" style="width: 150px;">
+                                    <a class="has-text-link is-flex p-3 font_13" @onclick="@choseDepartment">
+                                      <span class="">@selectDepartmentMail</span>
+                                      <span class="icon has-text-link py-3">
+                                        <i class="is-size-18 material-icons material-icons-outlined">arrow_drop_down</i>
+                                      </span>
+                                    </a>
+                                  </div>
+                                  <div class="dropdown-menu is-right-dropdown" style="width: 200px;">
+                                    <div class="dropdown-content">
+                                      <a class="dropdown-item font_13" @onclick='() => OnSelectDepartmentValueChanged("Tất cả phòng ban")'>Tất cả phòng ban</a>
+                                      <a class="dropdown-item font_13" @onclick='() => OnSelectDepartmentValueChanged("DoCorp")'>DoCorp</a>
+                                      <a class="dropdown-item font_13" @onclick='() => OnSelectDepartmentValueChanged("Brando")'>Brando</a>
+                                      <a class="dropdown-item font_13" @onclick='() => OnSelectDepartmentValueChanged("SEODO")'>SEODO</a>
+                                      <a class="dropdown-item font_13" @onclick='() => OnSelectDepartmentValueChanged("FastDo")'>FastDo</a>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </li>
+                            <li class="column p-8">
+                              <div class="control has-icon-right">
+                                <input type="text" id="search_member" class="input is-small is-rounded" placeholder="Tìm người dùng">
+                                <span class="icon is-right-dropdown">
+                                  <span class="is-size-5 material-icons material-icons-outlined">
+                                  search
+                                  </span>
+                                </span> 
+                              </div>
+                            </li>
+                          </ul>
+                          <div class="scroll py-1" style="max-height: 250px;">
+                            <hr class="my-2">
+                            <a class="icon-text has-text-link mb-1" @onclick='() => checkbox_member = !checkbox_member'>
+                              <span class="icon">
+                                @if (checkbox_member == false)
+                                {
+                                  <i class="is-size-6 material-icons material-icons-outlined">
+                                  check_box_outline_blank
+                                  </i>
+                                }
+                                else
+                                {
+                                  <i class="is-size-6 material-icons material-icons-outlined">
+                                  check_box
+                                  </i>
+                                }
+                              </span>
+                              <span class="has-text-weight-semibold ml-2 font_13">Chọn tất cả</span>
+                            </a>
+                            @foreach (var user in UserItemsList)
+                            {
+                              <ul class="column is-flex is-vcenterd mb-5">
+                                <li class="">
+                                  <a class="icon is-small has-text-info p-3">
+                                    <i class="is-size-6 material-icons material-icons-outlined">
+                                    add_circle_outline
+                                    </i>
+                                  </a>
+                                </li>
+                                <li class="column py-3">
+                                  <div class="icon-text is-flex">
+                                    <span class="image is-rounded is-24x24">
+                                      <img src="@user.linkIMG" alt="AVT">
+                                    </span>
+                                    <span class="ml-2" style="flex-grow: 1;">@user.nameEdu</span>
+                                  </div>
+                                </li>
+                              </ul> 
+                            }
+                          </div>
+                          <hr class="dropdown-divider">
+                          <div class="control is-flex float-right pr-5">
+                            <a class="button is-link is-flex is-radius-4">
+                              <span class="icon">
+                                <i class="is-size-5 material-icons material-icons-outlined">
+                                done
+                                </i>
+                              </span>
+                              <span class="font_13">Hoàn tất</span>
+                            </a>
+                            <a class="button is-danger is-flex is-radius-4" @onclick="() => isAddUserReceivedinCC = !isAddUserReceivedinCC">
+                              <span class="icon">
+                                <i class="is-size-5 material-icons material-icons-outlined">
+                                close
+                                </i>
+                              </span>
+                              <span class="font_13">Huỷ</span>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="control">
+                    <div class="dropdown @openGroupUserReceivedinCC">
+                      <div class="dropdown-trigger">
+                        <a class="button is-flex has-text-link" @onclick='() => isGroupReceivedinCC = !isGroupReceivedinCC'>
+                          <span class="icon">
+                            <i class="is-size-6 material-icons material-icons-outlined">
+                            add
+                            </i>
+                          </span>
+                          <span>Thêm nhóm người nhận</span>
+                        </a>
+                      </div>
+                       <div class="dropdown-menu mt-10" style="width: 350px;">
+                        <div class="dropdown-content p-3">
+                          <div class="columm p-8">
+                            <span class="weight500">Thêm nhóm người nhận</span>
+                          </div>
+                          <div class="scroll py-1" style="max-height: 250px;">
+                            <hr class="my-2">
+                            <a class="icon-text has-text-link mb-1" @onclick='() => checkbox_member = !checkbox_member'>
+                              <span class="icon">
+                                @if (checkbox_member == false)
+                                {
+                                  <i class="is-size-6 material-icons material-icons-outlined">
+                                  check_box_outline_blank
+                                  </i>
+                                }
+                                else
+                                {
+                                  <i class="is-size-6 material-icons material-icons-outlined">
+                                  check_box
+                                  </i>
+                                }
+                              </span>
+                              <span class="has-text-weight-semibold ml-2 font_13">Chọn tất cả</span>
+                            </a>
+                            @foreach (var department in DeparmentList)
+                            {
+                              <ul class="column is-flex is-vcenterd mb-5">
+                                <li class="">
+                                  <a class="icon is-small has-text-info p-3">
+                                    <i class="is-size-6 material-icons material-icons-outlined">
+                                    add_circle_outline
+                                    </i>
+                                  </a>
+                                </li>
+                                <li class="column py-3">
+                                  <div class="icon-text">
+                                    <span class="ml-2 weight500" style="flex-grow: 1;">@department.nameSticky</span>
+                                  </div>
+                                </li>
+                              </ul> 
+                            }
+                          </div>
+                          <hr class="dropdown-divider">
+                          <div class="control is-flex float-right pr-5">
+                            <a class="button is-link is-flex is-radius-4">
+                              <span class="icon">
+                                <i class="is-size-5 material-icons material-icons-outlined">
+                                done
+                                </i>
+                              </span>
+                              <span class="font_13">Hoàn tất</span>
+                            </a>
+                            <a class="button is-danger is-flex is-radius-4" @onclick='() => isGroupReceivedinCC = !isGroupReceivedinCC'>
+                              <span class="icon">
+                                <i class="is-size-5 material-icons material-icons-outlined">
+                                close
+                                </i>
+                              </span>
+                              <span class="font_13">Huỷ</span>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="columm mt-10">
+        <div class="columm">
+          <ul id="mail-to" class="column is-flex">
+            <li class="column p-8" style="width: 10%;">BCC</li>
+            <li id="BCC" class="column p-8">
+              <ul class="column is-flex">
+                <li class="column"></li>
+                <li class="column font_13 is-flex">
+                  <div class="control">
+                    <div class="dropdown @openFormAddUserReceivedinBCC">
+                      <div class="dropdown-trigger">
+                        <a class="button is-flex has-text-link mr-2" @onclick='() => isAddUserReceivedinBCC = !isAddUserReceivedinBCC'>
+                          <span class="icon">
+                            <i class="is-size-6 material-icons material-icons-outlined">
+                            add
+                            </i>
+                          </span>
+                          <span>Thêm người nhận</span>
+                        </a>
+                      </div>
+                      <div class="dropdown-menu mt-10" style="width: 350px;">
+                        <div class="dropdown-content p-3">
+                          <ul class="column is-flex is-wrap-flex">
+                            <li class="col-half p-8 font_13">Cập nhật người dùng</li>
+                            <li class="col-half is-flex is-centered @choseDepartmentInFormAddUserReceived">
+                               <div class="control">
+                                <div class="dropdown is-right">
+                                  <div class="dropdown-trigger is-border" style="width: 150px;">
+                                    <a class="has-text-link is-flex p-3 font_13" @onclick="@choseDepartment">
+                                      <span class="">@selectDepartmentMail</span>
+                                      <span class="icon has-text-link py-3">
+                                        <i class="is-size-18 material-icons material-icons-outlined">arrow_drop_down</i>
+                                      </span>
+                                    </a>
+                                  </div>
+                                  <div class="dropdown-menu is-right-dropdown" style="width: 200px;">
+                                    <div class="dropdown-content">
+                                      <a class="dropdown-item font_13" @onclick='() => OnSelectDepartmentValueChanged("Tất cả phòng ban")'>Tất cả phòng ban</a>
+                                      <a class="dropdown-item font_13" @onclick='() => OnSelectDepartmentValueChanged("DoCorp")'>DoCorp</a>
+                                      <a class="dropdown-item font_13" @onclick='() => OnSelectDepartmentValueChanged("Brando")'>Brando</a>
+                                      <a class="dropdown-item font_13" @onclick='() => OnSelectDepartmentValueChanged("SEODO")'>SEODO</a>
+                                      <a class="dropdown-item font_13" @onclick='() => OnSelectDepartmentValueChanged("FastDo")'>FastDo</a>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </li>
+                            <li class="column p-8">
+                              <div class="control has-icon-right">
+                                <input type="text" id="search_member" class="input is-small is-rounded" placeholder="Tìm người dùng">
+                                <span class="icon is-right-dropdown">
+                                  <span class="is-size-5 material-icons material-icons-outlined">
+                                  search
+                                  </span>
+                                </span> 
+                              </div>
+                            </li>
+                          </ul>
+                          <div class="scroll py-1" style="max-height: 250px;">
+                            <hr class="my-2">
+                            <a class="icon-text has-text-link mb-1" @onclick='() => checkbox_member = !checkbox_member'>
+                              <span class="icon">
+                                @if (checkbox_member == false)
+                                {
+                                  <i class="is-size-6 material-icons material-icons-outlined">
+                                  check_box_outline_blank
+                                  </i>
+                                }
+                                else
+                                {
+                                  <i class="is-size-6 material-icons material-icons-outlined">
+                                  check_box
+                                  </i>
+                                }
+                              </span>
+                              <span class="has-text-weight-semibold ml-2 font_13">Chọn tất cả</span>
+                            </a>
+                            @foreach (var user in UserItemsList)
+                            {
+                              <ul class="column is-flex is-vcenterd mb-5">
+                                <li class="">
+                                  <a class="icon is-small has-text-info p-3">
+                                    <i class="is-size-6 material-icons material-icons-outlined">
+                                    add_circle_outline
+                                    </i>
+                                  </a>
+                                </li>
+                                <li class="column py-3">
+                                  <div class="icon-text is-flex">
+                                    <span class="image is-rounded is-24x24">
+                                      <img src="@user.linkIMG" alt="AVT">
+                                    </span>
+                                    <span class="ml-2" style="flex-grow: 1;">@user.nameEdu</span>
+                                  </div>
+                                </li>
+                              </ul> 
+                            }
+                          </div>
+                          <hr class="dropdown-divider">
+                          <div class="control is-flex float-right pr-5">
+                            <a class="button is-link is-flex is-radius-4">
+                              <span class="icon">
+                                <i class="is-size-5 material-icons material-icons-outlined">
+                                done
+                                </i>
+                              </span>
+                              <span class="font_13">Hoàn tất</span>
+                            </a>
+                            <a class="button is-danger is-flex is-radius-4" @onclick='() => isAddUserReceivedinBCC = !isAddUserReceivedinBCC'>
+                              <span class="icon">
+                                <i class="is-size-5 material-icons material-icons-outlined">
+                                close
+                                </i>
+                              </span>
+                              <span class="font_13">Huỷ</span>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="control">
+                    <div class="dropdown @openGroupUserReceivedinBCC">
+                      <div class="dropdown-trigger">
+                        <a class="button is-flex has-text-link" @onclick='() => isGroupReceivedinBCC = !isGroupReceivedinBCC'>
+                          <span class="icon">
+                            <i class="is-size-6 material-icons material-icons-outlined">
+                            add
+                            </i>
+                          </span>
+                          <span>Thêm nhóm người nhận</span>
+                        </a>
+                      </div>
+                       <div class="dropdown-menu mt-10" style="width: 350px;">
+                        <div class="dropdown-content p-3">
+                          <div class="columm p-8">
+                            <span class="weight500">Thêm nhóm người nhận</span>
+                          </div>
+                          <div class="scroll py-1" style="max-height: 250px;">
+                            <hr class="my-2">
+                            <a class="icon-text has-text-link mb-1" @onclick='() => checkbox_member = !checkbox_member'>
+                              <span class="icon">
+                                @if (checkbox_member == false)
+                                {
+                                  <i class="is-size-6 material-icons material-icons-outlined">
+                                  check_box_outline_blank
+                                  </i>
+                                }
+                                else
+                                {
+                                  <i class="is-size-6 material-icons material-icons-outlined">
+                                  check_box
+                                  </i>
+                                }
+                              </span>
+                              <span class="has-text-weight-semibold ml-2 font_13">Chọn tất cả</span>
+                            </a>
+                            @foreach (var department in DeparmentList)
+                            {
+                              <ul class="column is-flex is-vcenterd mb-5">
+                                <li class="">
+                                  <a class="icon is-small has-text-info p-3">
+                                    <i class="is-size-6 material-icons material-icons-outlined">
+                                    add_circle_outline
+                                    </i>
+                                  </a>
+                                </li>
+                                <li class="column py-3">
+                                  <div class="icon-text">
+                                    <span class="ml-2 weight500" style="flex-grow: 1;">@department.nameSticky</span>
+                                  </div>
+                                </li>
+                              </ul> 
+                            }
+                          </div>
+                          <hr class="dropdown-divider">
+                          <div class="control is-flex float-right pr-5">
+                            <a class="button is-link is-flex is-radius-4">
+                              <span class="icon">
+                                <i class="is-size-5 material-icons material-icons-outlined">
+                                done
+                                </i>
+                              </span>
+                              <span class="font_13">Hoàn tất</span>
+                            </a>
+                            <a class="button is-danger is-flex is-radius-4" @onclick='() => isGroupReceivedinBCC = !isGroupReceivedinBCC'>
+                              <span class="icon">
+                                <i class="is-size-5 material-icons material-icons-outlined">
+                                close
+                                </i>
+                              </span>
+                              <span class="font_13">Huỷ</span>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    }
+    <div class="columm mt-10 mb-3 footer-form">
+
+      <div class="columm p-6">
+        <ul class="gap_10 column is-flex is-vcentered">
+          <li class="column">
+            <span class="has-text-grey">Chữ ký:</span>
+          </li>
+          <li class="column font_13">
+            <div class="dropdown is-hoverable">
+              <div class="dropdown-trigger">
+                <a class="button is-border is-radius-4 px-2 is-iflex p-6">
+                  <span>@selectSignatureMail</span>
+                  <span class="icon is-small">
+                    <i class="material-icons is-size-5 material-icons-outlined">
+                      arrow_drop_down
+                    </i>
+                  </span>
+                </a>
+              </div>
+              <div class="dropdown-menu font_13" style="width: fit-content">
+                <div class="dropdown-content">
+                  <a class="dropdown-item" @onclick='() => OnSelectSignatureValueChanged("Không có chữ ký")'>Không có chữ ký</a>
+                  <a class="dropdown-item" @onclick='() => OnSelectSignatureValueChanged("Chữ ký 1")'>Chữ ký 1</a>
+                  <a class="dropdown-item" @onclick='() => OnSelectSignatureValueChanged("Chữ ký 2")'>Chữ ký 2</a>
+              </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      @if (selectSignatureMail == "Chữ ký 1")
+      {
+        <div class="columm py-8">
+          <ul class="column signature">
+            <li class="columm">-------------------------------------</li>
+            <li class="columm">DOCROP JSC</li>
+            <li class="columm">CÔNG TY CỔ PHẦN DOCORP</li>
+            <li class="columm">Address: Số 23 Trường Thi 1, Phường Hoà Thuận Tây, QUận Hải Châu, Thành phố Đà Nẵng</li>
+            <li class="columm">Phone: 0905.043.312 (Ms Thuý Phượng)</li>
+          </ul>
+        </div>
+      }
+    </div>
   </div>
+
   <div class="columm foot-form">
 
   </div>
 </section>
 
 @code {
+  private bool FormCC_BCC {get; set;} = false;
   private string selectSortFormMail {get; set;} = "Vận hành";
+  private string selectDepartmentMail {get; set;} = "Tất cả phòng ban";
+  private string selectSignatureMail {get; set;} = "Không có chữ ký";
   private bool openChoseTypeSort = false;
   private bool fillWarning = false; 
+  private bool checkbox_member = false; 
+  private bool checkbox_answer = false;
   private bool isStickMenu = false;
+  private bool isSticky = false;
+  private bool isSurveyButton = false;
+  private bool isAddUserReceived = false;
+  private bool isAddUserReceivedinCC = false;
+  private bool isAddUserReceivedinBCC = false;
+  private bool isGroupReceived = false;
+  private bool isGroupReceivedinCC = false;
+  private bool isGroupReceivedinBCC = false;
+  private bool isChoseDepartmentInFormAddUserReceived = false;
+
+  private string choseDepartmentInFormAddUserReceived => isChoseDepartmentInFormAddUserReceived ? "is_active" : "";
+  private string openFormAddUserReceived => isAddUserReceived ? "is_active" : "";
+  private string openFormAddUserReceivedinCC => isAddUserReceivedinCC ? "is_active" : "";
+  private string openFormAddUserReceivedinBCC => isAddUserReceivedinBCC ? "is_active" : "";
+  private string openGroupUserReceived => isGroupReceived ? "is_active" : "";
+  private string openGroupUserReceivedinCC => isGroupReceivedinCC ? "is_active" : "";
+  private string openGroupUserReceivedinBCC => isGroupReceivedinBCC ? "is_active" : "";
   private string openStickMenu => isStickMenu ? "is_active" : "";
   private string fillWarningText => fillWarning ? "is_active" : "";
   private string openSort => openChoseTypeSort ? "is_active" : "";
+  private string activeSticky => isSticky ? "is-flex" : "";
+  private List<TypeColorStickyMailModels> StyleStickyList = new();
+  private List<TypeColorStickyMailModels> ToFormList = new();
+  private List<TypeColorStickyMailModels> DeparmentList = new();
+  private List<EducateModels> UserItemsList = new();
+  private List<CreateFormMailModels> QuestionList = new();
+  private CreateFormMailModels questionModels = new CreateFormMailModels();
+  private bool formIsEdit = true;
   public void choseTypeSort() 
   {
     openChoseTypeSort = !openChoseTypeSort;
   }
-   public void openfillWarning() 
+  public void choseDepartment() 
+  {
+    isChoseDepartmentInFormAddUserReceived = !isChoseDepartmentInFormAddUserReceived;
+  }
+  public void openfillWarning() 
   {
     fillWarning = !fillWarning;
+  }
+  public void openFormUser()
+  {
+    isAddUserReceived = !isAddUserReceived;
   }
   public void OnSelectTypeSortValueChanged(string value) 
   {
     selectSortFormMail = value;
   }
-   public void ToggleStickMenu()
+  public void OnSelectSignatureValueChanged(string value) 
+  {
+    selectSignatureMail = value;
+  }
+  public void OnSelectDepartmentValueChanged(string value) 
+  {
+    selectDepartmentMail = value;
+  }
+  public void ToggleStickMenu()
   {
     isStickMenu = !isStickMenu;
+  }
+  public void ToggleSticky()
+  {
+    isSticky = !isSticky;
+  }
+  protected override void OnInitialized() 
+  {
+    ListStyleSticky();
+    ListToFormMail();
+    ListUserItems();
+    ListDepartments();
+  }
+  public void ListToFormMail() {
+    ToFormList = new() {
+      new  TypeColorStickyMailModels() {
+        nameSticky = "To"
+      },
+      new  TypeColorStickyMailModels() {
+        nameSticky = "CC"
+      },
+      new  TypeColorStickyMailModels() {
+        nameSticky = "BCC"
+      },
+    };
+  }
+  public void AddAnswer(CreateFormMailModels question)
+  {
+    question.answers.Add(new() {
+      ID = Guid.NewGuid().ToString(),
+      name = "",
+      isEditAnswer = true,
+    });
+  }
+  public void AddQuestion()
+  {
+    string newID = Guid.NewGuid().ToString();
+    QuestionList.Add(
+      new CreateFormMailModels() {
+        ID = newID,
+        name = "",
+        typeQuestion = false,
+        isEditQuestion = true,
+        answers = new() {
+            new() {
+              ID = Guid.NewGuid().ToString(),
+              name = "",
+              isEditAnswer = true,
+            }
+        },
+      }
+    );
+  }
+
+  public void CancelCreateFormSurvey() {
+    isSurveyButton = !isSurveyButton;
+    QuestionList = new ();
+  }
+  private async Task OnDeleteClick(List<CreateFormMailModels> list, string id)
+  {
+      bool confirmDelete = await JSRuntime.InvokeAsync<bool>("confirm", "Bạn có chắc chắn muốn xoá dữ liệu này?");
+      if (confirmDelete)
+      {
+          // Xoá dữ liệu ở đây
+          list.RemoveAll(x => x.ID == id);
+      }
+  }
+
+  public void ChangeQuestionType(CreateFormMailModels question) {
+    question.typeQuestion = !question.typeQuestion;
+  }
+  public void ListStyleSticky()
+  {
+    StyleStickyList = new() {
+      new TypeColorStickyMailModels() {
+        id = "0",
+        Class_color = "has-text-link",
+        nameSticky = "Nhân sự Conando",
+      },
+      new TypeColorStickyMailModels() {
+        id = "1",
+        Class_color = "has-text-warning",
+        nameSticky = "Nhân sự Brando",
+      },
+      new TypeColorStickyMailModels() {
+        id = "2",
+        Class_color = "has-text-danger",
+        nameSticky = "Nhân sự Fastdo",
+      },
+      new TypeColorStickyMailModels() {
+        id = "3",
+        Class_color = "has-text-grey",
+        nameSticky = "Nhân sự Seodo",
+      },
+      new TypeColorStickyMailModels() {
+        id = "4",
+        Class_color = "has-text-dark",
+        nameSticky = "Nhân sự DoCorp",
+      },
+    };
+  }
+
+  public void ListUserItems() {
+    UserItemsList = new () {
+      new EducateModels() {
+        linkIMG = "/img/test4.jpg",
+        nameEdu = "Nguyễn Đan Trường"
+      },
+      new EducateModels() {
+        linkIMG = "/img/favicon.png",
+        nameEdu = "Nguyễn Đan Trường"
+      },
+      new EducateModels() {
+        linkIMG = "/img/test4.jpg",
+        nameEdu = "Nguyễn Đan Trường"
+      },
+      new EducateModels() {
+        linkIMG = "/img/test4.jpg",
+        nameEdu = "Nguyễn Đan Trường"
+      },
+      new EducateModels() {
+        linkIMG = "/img/test4.jpg",
+        nameEdu = "Nguyễn Đan Trường"
+      },
+      new EducateModels() {
+        linkIMG = "/img/test4.jpg",
+        nameEdu = "Nguyễn Đan Trường"
+      },
+      new EducateModels() {
+        linkIMG = "/img/test4.jpg",
+        nameEdu = "Nguyễn Hữu Học"
+      },
+      new EducateModels() {
+        linkIMG = "/img/test4.jpg",
+        nameEdu = "Thanh Thắng"
+      },
+      new EducateModels() {
+        linkIMG = "/img/test4.jpg",
+        nameEdu = "Trần Xuân Tấn"
+      },
+      new EducateModels() {
+        linkIMG = "/img/favicon.png",
+        nameEdu = "Admin Conando"
+      },
+      new EducateModels() {
+        linkIMG = "/img/test4.jpg",
+        nameEdu = "Nguyễn Đan Trường"
+      },
+      new EducateModels() {
+        linkIMG = "/img/test4.jpg",
+        nameEdu = "Đặng Thị Thuý Diễm"
+      },
+    };
+  }
+
+  public void ListDepartments() {
+    DeparmentList = new() {
+      new TypeColorStickyMailModels() {
+        nameSticky = "HEADBOM",
+      },
+      new TypeColorStickyMailModels() {
+        nameSticky = "SBOM",
+      },
+      new TypeColorStickyMailModels() {
+        nameSticky = "Vận hành",
+      },
+      new TypeColorStickyMailModels() {
+        nameSticky = "Hangout",
+      },
+      new TypeColorStickyMailModels() {
+        nameSticky = "Kế toán",
+      },
+    };
   }
 }

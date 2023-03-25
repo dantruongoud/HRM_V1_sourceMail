@@ -1,0 +1,3 @@
+- form tạo mới mail
+- các sự kiện click câu hỏi và câu trả lời
+- vị trí các element

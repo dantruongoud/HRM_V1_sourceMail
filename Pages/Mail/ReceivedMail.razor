@@ -1,3 +1,4 @@
+@using BlazorDateRangePicker
 @page "/email"
 @page "/email/receivedMail"
 @inherits LayoutComponentBase
@@ -28,7 +29,9 @@
                 </i>
               </span>
               <div class="input is-link is-family-code">
-                <span>24/02/2023 - 24/02/2023</span>
+                <span>
+                 <DateRangePicker/>
+                </span>
               </div>
             </div>
           </div>

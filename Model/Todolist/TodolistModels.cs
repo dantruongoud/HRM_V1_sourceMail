@@ -24,5 +24,6 @@ namespace testApp.Model
 
     public bool isDelete { get; set; }
     public bool IsNameValid { get; set; }
+    public bool IsAnswer { get; set; }
   }
 }
