@@ -104,51 +104,11 @@
     <span class="content-logout">Đăng xuất</span>
   </a>
 </section>
-
-@if (navigation.Uri.Contains("email"))
-{
-  <section id="sidebarmail" class="@menuClassMail">
-    <ul class="nav-header">
-        <a class="" @onclick="ToggleMail">
-            <span class="gi-menu material-symbols-outlined">
-                menu
-            </span>
-        </a>
-    </ul>
-    <nav class="nav-main">
-      <a href="/email/createMail" class="button-is-link" title="Tạo thư mới">
-        <span class="gi-menu material-symbols-outlined">
-              Add
-        </span>
-        <span class="content">Tạo thư mới</span>
-      </a>
-      @foreach (var navMail in NavMailList) 
-      {
-            <li class='@(navMail.id == menuMail ? "is_active" : "")'>
-              <a href="@navMail.href" class="item-menu" @onclick="() => menuMail = navMail.id" title="@navMail.nameNav">
-                  <span class="gi material-icons material-icons-outlined">
-                  @navMail.iconNav  
-                  </span>
-                <span class="content">@navMail.nameNav</span>
-                <span class="number">@navMail.number</span>
-              </a>
-            </li>
-      }
-    </nav>
-    <a class="nav-setting item-menu" title="Cài đặt">
-      <span class="gi material-icons material-icons-outlined">
-        settings
-      </span>
-      <span class="content-setting">Cài đặt</span>
-    </a>
-  </section>
-}
-
 @code {
+  [CascadingParameter]
+  public MainLayout Layout { get; set; }
   private bool isOpenMenu = false;
   private string menuClass => isOpenMenu ? "is_less" : "";
-  private bool isOpenMenuMail = false;
-  private string menuClassMail => isOpenMenuMail ? "is_less" : "";
 
   private string menuMail = "0";
   public void Toggle()
@@ -156,15 +116,8 @@
     isOpenMenu = !isOpenMenu;
   }
   private List<SidebarModels> NavList = new();
-  private List<SidebarModels> NavMailList = new();
-
-  public void ToggleMail()
-  {
-    isOpenMenuMail = !isOpenMenuMail;
-  }
 
   protected override void OnInitialized() {
-    CreateNavMail();
     CreateNav();
   }
   public void clearActiveNavlist() {
@@ -189,7 +142,6 @@
   }
 
   protected override void OnParametersSet() {
-
     var url = navigation.Uri.Replace(navigation.BaseUri, "");
     foreach (var main in NavList)
     {
@@ -508,50 +460,6 @@
         active = false,
         iconArrow = "",
         Childs = new () {},
-      },
-    };
-  }
-  private void CreateNavMail() {
-    NavMailList = new() {
-      new SidebarModels() {
-        id = "0",
-        href = "email/receivedMail",
-        nameNav = "Hộp thư đến",
-        iconNav = "inbox",
-        active = false,
-        number = 7
-      },
-      new SidebarModels() {
-        id = "1",
-        href = "email/sendMail",
-        nameNav = "Thư đã gửi",
-        iconNav = "send",
-        active = false,
-        number = 0
-      },      
-      new SidebarModels() {
-        id = "2",
-        href = "email/starMail",
-        nameNav = "Thư quan trọng",
-        iconNav = "star",
-        active = false,
-        number = 2
-      },
-      new SidebarModels() {
-        id = "3",
-        href = "email/draftMail",
-        nameNav = "Thư nháp",
-        iconNav = "drafts",
-        active = false,
-        number = 0
-      },
-      new SidebarModels() {
-        id = "4",
-        href = "email/deleteMail",
-        nameNav = "Thùng rác",
-        iconNav = "delete",
-        active = false,
-        number = 0
       },
     };
   }

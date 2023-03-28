@@ -19,6 +19,14 @@ build_property._RazorSourceGeneratorDebug =
 build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/myC\#/testAPP/Pages/AddGroupUserComponent.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRkR3JvdXBVc2VyQ29tcG9uZW50LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/myC\#/testAPP/Pages/AddUserComponent.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRkVXNlckNvbXBvbmVudC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/myC\#/testAPP/Pages/Counter.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ291bnRlci5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
@@ -43,10 +51,6 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWFpbFxEcmFmdE1haWwucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/myC\#/testAPP/Pages/Mail/FooterMail.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWFpbFxGb290ZXJNYWlsLnJhem9y
-build_metadata.AdditionalFiles.CssScope = 
-
 [D:/myC\#/testAPP/Pages/Mail/FormCreateNewMail.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWFpbFxGb3JtQ3JlYXRlTmV3TWFpbC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
@@ -63,12 +67,28 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWFpbFxTdGFyTWFpbC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/myC\#/testAPP/Pages/Mail/SurveyComponent.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWFpbFxTdXJ2ZXlDb21wb25lbnQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/myC\#/testAPP/Pages/Settings/Setting.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2V0dGluZ3NcU2V0dGluZy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/myC\#/testAPP/Pages/Todolist.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVG9kb2xpc3QucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/myC\#/testAPP/Shared/FooterMail.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXEZvb3Rlck1haWwucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/myC\#/testAPP/Shared/HeaderMain.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXEhlYWRlck1haW4ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/myC\#/testAPP/Shared/NavMail.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXE5hdk1haWwucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/myC\#/testAPP/Shared/SurveyPrompt.razor]

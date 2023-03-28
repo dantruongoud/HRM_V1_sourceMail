@@ -79,24 +79,25 @@ body {
   /* font-size: 14px; */
   font-weight: 400;
 }
-#sidebarmail + #content {
-  width: calc(100% - 400px);
+.main-layout {
+  display: flex;
 }
-#sidebarmail.is_less + #content {
-  width: calc(100% - 260px);
-}
-#sidebar.is_less + #sidebarmail.is_less + #content {
-  width: calc(100% - 120px);
-}
+
 #sidebar.is_less {
   width: 60px;
   overflow: hidden;
 }
-
 .is_less + #content {
   width: calc(100% - 60px);
 }
+#sidebarmail + .columm {
+  width: calc(100% - 200px);
+  overflow: hidden;
+}
 
+#sidebarmail.is_less + .columm {
+  width: calc(100% - 60px);
+}
 #sidebar a {
   text-decoration: none;
   color: var(--color-bg);
@@ -338,7 +339,7 @@ body {
 #sidebar li .sub-okrs {
   margin-left: 24px;
   margin-bottom: 0px;
-  font-size: 13px;
+  font-size: 12px;
   list-style: none;
   position: relative;
   margin-top: 8px;
@@ -933,7 +934,9 @@ a {
 .is-vcentered {
   margin: -4px;
 }
-
+.is-acentered {
+  align-items: center;
+}
 .card-content {
   padding: 0px 8px 24px 8px;
 }
@@ -1331,6 +1334,9 @@ li.column.is-narrow.p-8 > a:hover {
   align-items: center;
 }
 
+.is-border-bottom > tr:nth-child(even) {
+  border-bottom: 1px solid #ccc;
+}
 .control.has-icon-left .icon.is-left {
   left: 0;
 }
@@ -1898,7 +1904,6 @@ textarea:focus {
 
 hr {
   opacity: 0.3;
-  width: 1618px;
   margin: 2px 0px;
 }
 .table .is-flex + .is-flex {
@@ -2057,6 +2062,9 @@ a.delete:hover {
   max-height: 3em;
 }
 
+.is-outline {
+  border: ;
+}
 /* start css mail */
 
 /* scrolly sidebar mail  */
@@ -2119,9 +2127,6 @@ a.delete:hover {
 #sidebarmail .nav-header > a :hover {
   background-color: #ecf0ff;
   border-radius: 5px;
-}
-.is_less + #sidebarmail + #content {
-  width: calc(100% - 260px);
 }
 
 #sidebarmail.is_less .nav-header {
@@ -2188,6 +2193,7 @@ a.delete:hover {
   font-family: "Inter";
   font-weight: 400;
   padding: 8px;
+  color: #7a7a7a;
 }
 #sidebarmail.is_less .nav-setting {
   justify-content: center;
@@ -2199,7 +2205,7 @@ a.delete:hover {
 }
 
 #sidebarmail > nav.nav-main {
-  border-bottom: 1px solid #575e72;
+  border-bottom: 1px solid #7a7a7a;
 }
 
 #sidebarmail.is_less .nav-main li.is_active > a {
@@ -2211,6 +2217,12 @@ a.delete:hover {
   background-color: #ecf0ff;
   border-radius: 5px;
   color: #355caa;
+}
+
+#sidebarmail > a.is_active {
+  color: #355caa;
+  background-color: #ecf0ff;
+  border-radius: 5px;
 }
 
 /* start main mail for page */
@@ -2316,6 +2328,9 @@ div.columm.mt-10.is-sticky-109 > ul:last-child {
 .is-border-bot li.is_active {
   color: #3082c5;
   border-bottom-color: #3082c5;
+}
+.is-border-bottom {
+  border-bottom: 1px solid #ccc;
 }
 div.columm.mt-10.is-sticky-109 > ul:first-child li {
   width: 15px;
@@ -2441,10 +2456,9 @@ div.pagination > ul > li:hover {
 }
 
 /* form create mail */
-div.foot-form {
-  position: fixed;
+.head-form {
+  padding-bottom: 50px;
 }
-
 div.head-form > ul > li:first-child:hover {
   background-color: #e2e2e2;
   border-radius: 5px;
@@ -2720,6 +2734,36 @@ div.field.is-grouped > div.column.field.has-addons:last-child {
 .footer-form > div:first-child > ul > li {
   width: fit-content;
 }
+
+.foot-form {
+  background-color: #fff;
+  position: fixed;
+  bottom: 10px;
+  box-shadow: 0px 4px 8px 3px rgba(0, 0, 0, 0.15), 0px 1px 3px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  z-index: 5;
+  width: calc(100% - 248px);
+}
+#sidebar.is_less + #content > .main > .foot-form {
+  width: calc(100% - 108px);
+}
+.foot-form > div:first-child {
+  justify-content: space-between;
+}
+
+.foot-form a.button-is-link {
+  justify-content: center;
+  align-items: center;
+  width: 80px;
+  color: #fff;
+}
+.foot-form a.button-is-link:hover {
+  background-color: #3082c5;
+}
+.foot-form a.button.is-link:hover {
+  background-color: #ecf0ff !important;
+}
+
 /* css date picker */
 div.input > span > input {
   border: none;

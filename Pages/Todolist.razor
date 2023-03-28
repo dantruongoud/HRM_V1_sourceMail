@@ -81,7 +81,7 @@
           <th width="100px" align="center">Tình trạng</th>
         </tr>
       </thead>
-      <tbody> 
+      <tbody class="is-border-bottom"> 
         @foreach (var todo in listTodolist)
         {
           if (todo.isEdit)
@@ -202,7 +202,6 @@
                 </div>
               </td> 
             </tr>
-            <hr>
           } else {
 
             <tr>
@@ -263,16 +262,22 @@
             <tr>
               <td colspan="3" class="is-not-pl">
                 <div class="is-flex">
+                @if (todo.description != null)
+                {
                   <label class="td-label is-show">Chi tiết:</label>
                   <div class="td-value is-word-break">
                     <div class="text_2_line is-show">@todo.description</div>
-                  </div>
+                  </div> 
+                }
                 </div>
                 <div class="is-flex">
-                  <label class="td-label is-show">Kết quả:</label>
-                  <div class="td-value is-word-break">
-                    <div class="text_2_line is-show">@todo.result</div>
-                  </div>
+                  @if (todo.result != null)
+                  {
+                    <label class="td-label is-show">Kết quả:</label>
+                    <div class="td-value is-word-break">
+                      <div class="text_2_line is-show">@todo.result</div>
+                    </div>  
+                  }
                 </div>
               </td> 
               <td colspan="3" valign="bottom">
@@ -297,7 +302,6 @@
                 </div>
               </td> 
             </tr>
-            <hr>
           }
         }
       </tbody>
@@ -600,6 +604,8 @@
   </div>
 </section>
 @code {
+  [CascadingParameter]
+  public MainLayout Layout { get; set; }
   private string SelectedValue { get; set; } = "Todo";
   private string SelectedColor { get; set; } = "";
   private bool is_dropdownMenu = false;
@@ -634,6 +640,8 @@
         timeStart = "08:30",
         timeEnd = "17:30",
         status = "Todo",
+        description = "",
+        result = "",
         isEdit = true
       }
     );

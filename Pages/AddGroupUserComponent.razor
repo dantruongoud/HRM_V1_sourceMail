@@ -1,0 +1,110 @@
+<div class="dropdown @openGroupUserReceivedinBCC">
+  <div class="dropdown-trigger">
+    <a class="button is-flex has-text-link" @onclick='() => isGroupReceivedinBCC = !isGroupReceivedinBCC'>
+      <span class="icon">
+        <i class="is-size-6 material-icons material-icons-outlined">
+        add
+        </i>
+      </span>
+      <span>Thêm nhóm người nhận</span>
+    </a>
+  </div>
+  <div class="dropdown-menu mt-10" style="width: 350px;">
+    <div class="dropdown-content p-3">
+    <div class="columm p-8">
+      <span class="weight500">Thêm nhóm người nhận</span>
+    </div>
+    <div class="scroll py-1" style="max-height: 250px;">
+      <hr class="my-2">
+      <a class="icon-text has-text-link mb-1" @onclick='() => checkbox_member = !checkbox_member'>
+        <span class="icon">
+          @if (checkbox_member == false)
+          {
+            <i class="is-size-6 material-icons material-icons-outlined">
+            check_box_outline_blank
+            </i>
+          }
+          else
+          {
+            <i class="is-size-6 material-icons material-icons-outlined">
+            check_box
+            </i>
+          }
+        </span>
+        <span class="has-text-weight-semibold ml-2 font_13">Chọn tất cả</span>
+      </a>
+      @foreach (var department in DepartmentList)
+      {
+        <ul class="column is-flex is-vcenterd mb-5">
+          <li class="">
+            <a class="icon is-small has-text-info p-3">
+              <i class="is-size-6 material-icons material-icons-outlined">
+              add_circle_outline
+              </i>
+            </a>
+          </li>
+          <li class="column py-3">
+            <div class="icon-text">
+              <span class="ml-2 weight500" style="flex-grow: 1;">@department.nameSticky</span>
+            </div>
+          </li>
+        </ul> 
+      }
+    </div>
+    <hr class="dropdown-divider">
+      <div class="control is-flex float-right pr-5">
+        <a class="button is-link is-flex is-radius-4">
+          <span class="icon">
+            <i class="is-size-5 material-icons material-icons-outlined">
+            done
+            </i>
+          </span>
+          <span class="font_13">Hoàn tất</span>
+        </a>
+        <a class="button is-danger is-flex is-radius-4" @onclick='() => isGroupReceivedinBCC = !isGroupReceivedinBCC'>
+          <span class="icon">
+            <i class="is-size-5 material-icons material-icons-outlined">
+            close
+            </i>
+          </span>
+          <span class="font_13">Huỷ</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+@code 
+{
+  private bool isGroupReceived = false;
+  private bool isGroupReceivedinCC = false;
+  private bool isGroupReceivedinBCC = false;
+  private bool checkbox_member = false;
+  private string openGroupUserReceived => isGroupReceived ? "is_active" : "";
+  private string openGroupUserReceivedinCC => isGroupReceivedinCC ? "is_active" : "";
+  private string openGroupUserReceivedinBCC => isGroupReceivedinBCC ? "is_active" : "";
+  private List<TypeColorStickyMailModels> DepartmentList = new();
+  protected override void OnInitialized() 
+  {
+    ListDepartments();
+  }
+  public void ListDepartments() {
+    DepartmentList = new() {
+      new TypeColorStickyMailModels() {
+        nameSticky = "HEADBOM",
+      },
+      new TypeColorStickyMailModels() {
+        nameSticky = "SBOM",
+      },
+      new TypeColorStickyMailModels() {
+        nameSticky = "Vận hành",
+      },
+      new TypeColorStickyMailModels() {
+        nameSticky = "Hangout",
+      },
+      new TypeColorStickyMailModels() {
+        nameSticky = "Kế toán",
+      },
+    };
+  }
+}

@@ -1,14 +1,31 @@
 ﻿@inherits LayoutComponentBase
 @inject NavigationManager navigation
-@* <CascadingValue Value="this"> *@
+<CascadingValue Value="this">
   <main id="main">
       <NavMenu />
       <section id="content">
-        <HeaderMain />
-        @Body
+          @if (navigation.Uri.Contains("email") && navigation.Uri.Replace(navigation.BaseUri, "") != "email/create")
+          {
+           <section class="main-layout">
+              <NavMail />
+              <section class="columm">
+                <HeaderMain />
+                @Body
+                @if (navigation.Uri.Replace(navigation.BaseUri, "") != "email/setting")
+                {
+                <FooterMail />
+                }
+              </section>
+            </section>
+          } 
+          else 
+          {
+            <HeaderMain />
+            @Body
+          }
       </section>
   </main>
-@* </CascadingValue> *@
+</CascadingValue>
 
 @code {
   public bool loadPage = true;

@@ -1,0 +1,195 @@
+<div class="dropdown @openFormAddUserReceived">
+  <div class="dropdown-trigger">
+    <a class="p-3 button is-flex has-text-link mr-2" @onclick="openFormUser">
+      <span class="icon">
+        <i class="is-size-6 material-icons material-icons-outlined">
+        add
+        </i>
+      </span>
+      <span>Thêm người nhận</span>
+    </a>
+  </div>
+  <div class="dropdown-menu mt-10" style="width: 350px;">
+    <div class="dropdown-content p-3">
+      <ul class="column is-flex is-wrap-flex">
+        <li class="col-half p-8 font_13">Cập nhật người dùng</li>
+        <li class="col-half is-flex is-centered @choseDepartmentInFormAddUserReceived">
+            <div class="control">
+            <div class="dropdown is-right">
+              <div class="dropdown-trigger is-border" style="width: 150px;">
+                <a class="has-text-link is-flex p-3 font_13" @onclick="@choseDepartment">
+                  <span class="">@selectDepartmentMail</span>
+                  <span class="icon has-text-link py-3">
+                    <i class="is-size-18 material-icons material-icons-outlined">arrow_drop_down</i>
+                  </span>
+                </a>
+              </div>
+              <div class="dropdown-menu is-right-dropdown" style="width: 200px;">
+                <div class="dropdown-content">
+                  <a class="dropdown-item font_13" @onclick='() => OnSelectDepartmentValueChanged("Tất cả phòng ban")'>Tất cả phòng ban</a>
+                  <a class="dropdown-item font_13" @onclick='() => OnSelectDepartmentValueChanged("DoCorp")'>DoCorp</a>
+                  <a class="dropdown-item font_13" @onclick='() => OnSelectDepartmentValueChanged("Brando")'>Brando</a>
+                  <a class="dropdown-item font_13" @onclick='() => OnSelectDepartmentValueChanged("SEODO")'>SEODO</a>
+                  <a class="dropdown-item font_13" @onclick='() => OnSelectDepartmentValueChanged("FastDo")'>FastDo</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li class="column p-8">
+          <div class="control has-icon-right">
+            <input type="text" id="search_member" class="input is-small is-rounded" placeholder="Tìm người dùng">
+            <span class="icon is-right-dropdown">
+              <span class="is-size-5 material-icons material-icons-outlined">
+              search
+              </span>
+            </span> 
+          </div>
+        </li>
+      </ul>
+      <div class="scroll py-1" style="max-height: 250px;">
+        <hr class="my-2">
+        <a class="icon-text has-text-link mb-1" @onclick='() => checkbox_member = !checkbox_member'>
+          <span class="icon">
+            @if (checkbox_member == false)
+            {
+              <i class="is-size-6 material-icons material-icons-outlined">
+              check_box_outline_blank
+              </i>
+            }
+            else
+            {
+              <i class="is-size-6 material-icons material-icons-outlined">
+              check_box
+              </i>
+            }
+          </span>
+          <span class="has-text-weight-semibold ml-2 font_13">Chọn tất cả</span>
+        </a>
+        @foreach (var user in UserItemsList)
+        {
+          <ul class="column is-flex is-vcenterd mb-5">
+            <li class="">
+              <a class="icon is-small has-text-info p-3">
+                <i class="is-size-6 material-icons material-icons-outlined">
+                add_circle_outline
+                </i>
+              </a>
+            </li>
+            <li class="column py-3">
+              <div class="icon-text is-flex">
+                <span class="image is-rounded is-24x24">
+                  <img src="@user.linkIMG" alt="AVT">
+                </span>
+                <span class="ml-2" style="flex-grow: 1;">@user.nameEdu</span>
+              </div>
+            </li>
+          </ul> 
+        }
+      </div>
+      <hr class="dropdown-divider">
+
+      <div class="control is-flex float-right pr-5">
+        <a class="button is-link is-flex is-radius-4">
+          <span class="icon">
+            <i class="is-size-5 material-icons material-icons-outlined">
+            done
+            </i>
+          </span>
+          <span class="font_13">Hoàn tất</span>
+        </a>
+        <a class="button is-danger is-flex is-radius-4" @onclick='@openFormUser'>
+          <span class="icon">
+            <i class="is-size-5 material-icons material-icons-outlined">
+
+            close
+            </i>
+          </span>
+          <span class="font_13">Huỷ</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+@code {
+  private bool isAddUserReceived = false;
+  private bool isAddUserReceivedinCC = false;
+  private bool isAddUserReceivedinBCC = false;
+  private bool checkbox_member = false;
+  private bool isChoseDepartmentInFormAddUserReceived = false;
+  private string selectDepartmentMail {get; set;} = "Tất cả phòng ban";
+  private string choseDepartmentInFormAddUserReceived => isChoseDepartmentInFormAddUserReceived ? "is_active" : "";
+  private string openFormAddUserReceived => isAddUserReceived ? "is_active" : "";
+  private string openFormAddUserReceivedinCC => isAddUserReceivedinCC ? "is_active" : "";
+  private string openFormAddUserReceivedinBCC => isAddUserReceivedinBCC ? "is_active" : "";
+  private List<EducateModels> UserItemsList = new();
+  public void OnSelectDepartmentValueChanged(string value) 
+  {
+    selectDepartmentMail = value;
+  }
+  public void openFormUser()
+  {
+    isAddUserReceived = !isAddUserReceived;
+  }
+  public void choseDepartment() 
+  {
+    isChoseDepartmentInFormAddUserReceived = !isChoseDepartmentInFormAddUserReceived;
+  }
+  protected override void OnInitialized() 
+  {
+    ListUserItems();
+  }
+  public void ListUserItems() {
+    UserItemsList = new () {
+      new EducateModels() {
+        linkIMG = "/img/test4.jpg",
+        nameEdu = "Nguyễn Đan Trường"
+      },
+      new EducateModels() {
+        linkIMG = "/img/favicon.png",
+        nameEdu = "Nguyễn Đan Trường"
+      },
+      new EducateModels() {
+        linkIMG = "/img/test4.jpg",
+        nameEdu = "Nguyễn Đan Trường"
+      },
+      new EducateModels() {
+        linkIMG = "/img/test4.jpg",
+        nameEdu = "Nguyễn Đan Trường"
+      },
+      new EducateModels() {
+        linkIMG = "/img/test4.jpg",
+        nameEdu = "Nguyễn Đan Trường"
+      },
+      new EducateModels() {
+        linkIMG = "/img/test4.jpg",
+        nameEdu = "Nguyễn Đan Trường"
+      },
+      new EducateModels() {
+        linkIMG = "/img/test4.jpg",
+        nameEdu = "Nguyễn Hữu Học"
+      },
+      new EducateModels() {
+        linkIMG = "/img/test4.jpg",
+        nameEdu = "Thanh Thắng"
+      },
+      new EducateModels() {
+        linkIMG = "/img/test4.jpg",
+        nameEdu = "Trần Xuân Tấn"
+      },
+      new EducateModels() {
+        linkIMG = "/img/favicon.png",
+        nameEdu = "Admin Conando"
+      },
+      new EducateModels() {
+        linkIMG = "/img/test4.jpg",
+        nameEdu = "Nguyễn Đan Trường"
+      },
+      new EducateModels() {
+        linkIMG = "/img/test4.jpg",
+        nameEdu = "Đặng Thị Thuý Diễm"
+      },
+    };
+  }
+  
+}

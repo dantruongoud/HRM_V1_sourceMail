@@ -1,0 +1,118 @@
+@inject NavigationManager navigation
+
+<section id="sidebarmail" class='@(isOpenMenuMail ? "is_less" : "")'>
+  <ul class="nav-header">
+      <a class="" @onclick="ToggleMail">
+          <span class="gi-menu material-symbols-outlined">
+              menu
+          </span>
+      </a>
+  </ul>
+  <nav class="nav-main">
+    <a href="/email/create" class="button-is-link" title="Tạo thư mới">
+      <span class="gi-menu material-symbols-outlined">
+            Add
+      </span>
+      <span class="content">Tạo thư mới</span>
+    </a>
+    @foreach (var navMail in NavMailList) 
+    {
+      <li class='@(navMail.active ? "is_active" : "")'>
+        <a href="@navMail.href" class="item-menu">
+            <span class="gi material-icons material-icons-outlined">
+            @navMail.iconNav  
+            </span>
+          <span class="content">@navMail.nameNav</span>
+          <span class="number">@navMail.number</span>
+        </a>
+      </li>
+    }
+  </nav>
+  <a href="/email/setting" class="nav-setting item-menu @(active_settings ? "is_active" : "")" title="Cài đặt">
+    <span class="gi material-icons material-icons-outlined">
+      settings
+    </span>
+    <span class="content-setting">Cài đặt</span>
+  </a>
+</section>
+@code {
+  [CascadingParameter]
+  public MainLayout Layout { get; set; }
+  private bool isOpenMenuMail = false;
+  private bool isOpenSetting_Mail = false;
+  private List<SidebarModels> NavMailList = new();
+  private string menuMail = "0";
+  private bool active_settings = false;
+  public void ToggleMail()
+  {
+    isOpenMenuMail = !isOpenMenuMail;
+  }
+
+  protected override void OnInitialized()
+  {
+    CreateNavMail();
+  }
+  protected override void OnParametersSet()
+  {
+    var url = navigation.Uri.Replace(navigation.BaseUri, "");
+    Console.WriteLine(url);
+    foreach (var main in NavMailList)
+    {
+      if (url == "email")
+      {
+       NavMailList[0].active = true;
+      }
+      else 
+      {
+        main.active = url.StartsWith(main.href);
+      }
+    }
+    active_settings = url.StartsWith("email/setting");
+  }
+
+  private void CreateNavMail()
+  {
+    NavMailList = new() {
+      new SidebarModels() {
+        id = "0",
+        href = "email/receivedMail",
+        nameNav = "Hộp thư đến",
+        iconNav = "inbox",
+        active = false,
+        number = 7
+      },
+      new SidebarModels() {
+        id = "1",
+        href = "email/sendMail",
+        nameNav = "Thư đã gửi",
+        iconNav = "send",
+        active = false,
+        number = 0
+      },      
+      new SidebarModels() {
+        id = "2",
+        href = "email/starMail",
+        nameNav = "Thư quan trọng",
+        iconNav = "star",
+        active = false,
+        number = 2
+      },
+      new SidebarModels() {
+        id = "3",
+        href = "email/draftMail",
+        nameNav = "Thư nháp",
+        iconNav = "drafts",
+        active = false,
+        number = 0
+      },
+      new SidebarModels() {
+        id = "4",
+        href = "email/deleteMail",
+        nameNav = "Thùng rác",
+        iconNav = "delete",
+        active = false,
+        number = 0
+      },
+    };
+  }
+}

@@ -3,237 +3,235 @@
 @page "/email/receivedMail"
 @inherits LayoutComponentBase
 
-<section class="main ">
-  <div class="columm is-sticky-68">
-    <ul class="column is-flex">
-      <li class="column">
-        <span class="has-text-titleMail">Hộp thư đến</span>
-      </li>
-      <li class="column is-narrow is-one-quarter" style="width: 650px;">
-        <div class="control has-icon-left has-icon-right has-suggest">
-          <input type="text" class="input is-rounded is_bg" placeholder="Tiêu đề, nội dung, người gửi...">
-          <span class="icon is-left">
-            <i class="is-14 material-icons material-icons-outlined">
-              search
-            </i>
-          </span>
-        </div>
-      </li>
-       <li class="column is-narrow">
-        <div class="field has-addons">
-          <div class="control has-icons-left">
-            <div id="" title="Chọn ngày">
-              <span class="icon is-left has-text-link">
-                <i class="material-icons is-size-5 material-icons-outlined">
-                  event
+
+    <section class="main">
+      <div class="columm is-sticky-68">
+        <ul class="column is-flex">
+          <li class="column ellipsis">
+            <span class="has-text-titleMail">Hộp thư đến</span>
+          </li>
+          <li class="column is-narrow is-one-quarter" style="width: 550px;">
+            <div class="control has-icon-left has-icon-right has-suggest">
+              <input type="text" class="input is-rounded is_bg" placeholder="Tiêu đề, nội dung, người gửi...">
+              <span class="icon is-left">
+                <i class="is-14 material-icons material-icons-outlined">
+                  search
                 </i>
               </span>
-              <div class="input is-link is-family-code">
-                <span>
-                 <DateRangePicker/>
-                </span>
+            </div>
+          </li>
+          <li class="column is-narrow">
+            <div class="field has-addons">
+              <div class="control has-icons-left">
+                <div id="" title="Chọn ngày">
+                  <span class="icon is-left has-text-link">
+                    <i class="material-icons is-size-5 material-icons-outlined">
+                      event
+                    </i>
+                  </span>
+                  <div class="input is-link is-family-code">
+                    <span>
+                    <DateRangePicker/>
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="control is-boder boder-radius-right">
+                <div class="dropdown is-hoverable is-right">
+                  <div class="dropdown-trigger">
+                    <a class="icon-text p-7">
+                      <span class="has-text-weight-medium">@selectTimevalue</span>
+                      <span class="icon">
+                        <i class="material-icons material-icons-outlined is-size-5">arrow_drop_down</i>
+                      </span>
+                    </a>
+                  </div>
+                  <div class="dropdown-menu is-right-dropdown" style="width: 170px;">
+                    <div class="dropdown-content">
+                      <a class="dropdown-item" @onclick='() => OnSelectValueChanged("Tất cả")'>Tất cả</a>
+                      <a class="dropdown-item" @onclick='() => OnSelectValueChanged("Hơn 1 tuần trước")'>Hơn 1 tuần trước</a>
+                      <a class="dropdown-item" @onclick='() => OnSelectValueChanged("Hơn 1 tháng trước")'>Hơn 1 tháng trước</a>
+                      <a class="dropdown-item" @onclick='() => OnSelectValueChanged("Hơn 6 tháng trước")'>Hơn 6 tháng trước</a>
+                      <a class="dropdown-item" @onclick='() => OnSelectValueChanged("Hơn 1 năm trước")'>Hơn 1 năm trước</a>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="control is-boder boder-radius-right">
+          </li>
+          <li class="column is-narrow has-text-right" style="width: 140px;">
             <div class="dropdown is-hoverable is-right">
               <div class="dropdown-trigger">
-                <a class="icon-text p-7">
-                  <span class="has-text-weight-medium">@selectTimevalue</span>
+                <a class="icon-text">
+                  <span class="has-text-weight-medium">@selectStatusvalue</span>
                   <span class="icon">
                     <i class="material-icons material-icons-outlined is-size-5">arrow_drop_down</i>
                   </span>
                 </a>
               </div>
-              <div class="dropdown-menu is-right-dropdown" style="width: 170px;">
+              <div class="dropdown-menu is-right-dropdown" style="width: 130px;">
                 <div class="dropdown-content">
-                  <a class="dropdown-item" @onclick='() => OnSelectValueChanged("Tất cả")'>Tất cả</a>
-                  <a class="dropdown-item" @onclick='() => OnSelectValueChanged("Hơn 1 tuần trước")'>Hơn 1 tuần trước</a>
-                  <a class="dropdown-item" @onclick='() => OnSelectValueChanged("Hơn 1 tháng trước")'>Hơn 1 tháng trước</a>
-                  <a class="dropdown-item" @onclick='() => OnSelectValueChanged("Hơn 6 tháng trước")'>Hơn 6 tháng trước</a>
-                  <a class="dropdown-item" @onclick='() => OnSelectValueChanged("Hơn 1 năm trước")'>Hơn 1 năm trước</a>
+                  <a class="dropdown-item" @onclick='() => OnSelectStatusValueChanged("Tất cả")'>Tất cả</a>
+                  <a class="dropdown-item" @onclick='() => OnSelectStatusValueChanged("Thư đã đọc")'>Thư đã đọc</a>
+                  <a class="dropdown-item" @onclick='() => OnSelectStatusValueChanged("Thư chưa đọc")'>Thư chưa đọc</a>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-      </li>
-      <li class="column is-narrow has-text-right" style="width: 140px;">
-        <div class="dropdown is-hoverable is-right">
-          <div class="dropdown-trigger">
-            <a class="icon-text">
-              <span class="has-text-weight-medium">@selectStatusvalue</span>
-              <span class="icon">
-                <i class="material-icons material-icons-outlined is-size-5">arrow_drop_down</i>
-              </span>
-            </a>
-          </div>
-          <div class="dropdown-menu is-right-dropdown" style="width: 130px;">
-            <div class="dropdown-content">
-              <a class="dropdown-item" @onclick='() => OnSelectStatusValueChanged("Tất cả")'>Tất cả</a>
-              <a class="dropdown-item" @onclick='() => OnSelectStatusValueChanged("Thư đã đọc")'>Thư đã đọc</a>
-              <a class="dropdown-item" @onclick='() => OnSelectStatusValueChanged("Thư chưa đọc")'>Thư chưa đọc</a>
-            </div>
-          </div>
-        </div>
-      </li>
-      <li class="column is-narrow has-text-right" style="width: 140px;">
-        <div class="dropdown is-right @openStickMenu">
-          <div class="dropdown-trigger">
-            <a class="icon-text" @onclick="ToggleStickMenu">
-              <span class="has-text-weight-medium">Nhãn</span>
-              <span class="icon">
-                <i class="material-icons material-icons-outlined is-size-5">arrow_drop_down</i>
-              </span>
-            </a>
-          </div>
-          <div class="dropdown-menu is-right-dropdown" style="width: 250px;">
-            <div class="dropdown-content">
-              <a class="dropdown-item has-text-weight-bold">Nhãn cần lọc</a>
-              <a class="dropdown-item">
-                <ul class="column is-flex">
-                  <li class="column">
-                    <input class="input" type="checkbox">   
-                  </li>
-                  <li class="column">
-                    <span class="icon has-text-danger pt-2">
-                      <i class="is-size-6 material-icons material-icons">
-                      label
-                      </i>
-                    </span>
-                  </li>
-                  <li class="column font_13 weight500">Nhân sự Brando</li>
-                </ul>
-              </a>
-              <a class="dropdown-item">
-                <ul class="column is-flex">
-                  <li class="column">
-                    <input class="input" type="checkbox">   
-                  </li>
-                  <li class="column">
-                    <span class="icon has-text-link pt-2">
-                      <i class="is-size-6 material-icons material-icons">
-                      label
-                      </i>
-                    </span>
-                  </li>
-                  <li class="column font_13 weight500">Nhân sự Conando</li>
-                </ul>
-              </a>
-              <a class="dropdown-item">
-                <ul class="column is-flex">
-                  <li class="column">
-                    <input class="input" type="checkbox">   
-                  </li>
-                  <li class="column">
-                    <span class="icon has-text-success pt-2">
-                      <i class="is-size-6 material-icons material-icons">
-                      label
-                      </i>
-                    </span>
-                  </li>
-                  <li class="column font_13 weight500">Nhân sự Docorp</li>
-                </ul>
-              </a>
-              <a class="dropdown-item">
-                <ul class="column is-flex">
-                  <li class="column">
-                    <input class="input" type="checkbox">   
-                  </li>
-                  <li class="column">
-                    <span class="icon has-text-success pt-2">
-                      <i class="is-size-6 material-icons material-icons">
-                      label
-                      </i>
-                    </span>
-                  </li>
-                  <li class="column font_13 weight500">Nhân sự Fastdo</li>
-                </ul>
-              </a>
-              <a class="dropdown-item">
-                <ul class="column is-flex">
-                  <li class="column">
-                    <input class="input" type="checkbox">   
-                  </li>
-                  <li class="column">
-                    <span class="icon has-text-grey pt-2">
-                      <i class="is-size-6 material-icons material-icons">
-                      label
-                      </i>
-                    </span>
-                  </li>
-                  <li class="column font_13 weight500">Nhân sự Docorp</li>
-                </ul>
-              </a>
-              <div class="control is-flex pt-5">
-                <a class="button is-link is-flex is-radius-4"> 
-                  <span class="icon has-text-white">
-                    <i class="material-icons material-icons-outlined is-size-6">
-                    filter_alt
-                    </i>
-                  </span>
-                  <span class="pr-5">Lọc</span>
-                </a>
-                <a class="button has-text-link is-flex is-radius-4" @onclick="ToggleStickMenu">
-                  <span class="icon has-text-danger">
-                    <span class="material-icons material-icons-outlined is-size-5">
-                    cancel
-                    </span>
-                  </span>
-                  <span>Huỷ</span>
-                </a>    
-              </div>
-            </div>
-          </div>
-        </div>
-      </li>
-    </ul>
-    <div class="columm mt-10 is-sticky-109 is-flex">
-      <ul class="column is-flex p-8">
-        <li class="column is-flex">
-          <input type="checkbox">
-        </li>
-        <li class="column">Chọn tất cả</li>
-      </ul>
-      <ul class="column is-flex is-border-bot">
-        @foreach (var mail in sortListMail)
-        {
-          <li class="column has-text-centered p-8 @(mail.id == tabId ? "is_active" : "")" @onclick="() => tabId = mail.id">
-            <a class="has-text-weight-semibold">
-              @mail.name
-            </a>
           </li>
-        }
-        <li class="column is-flex p-8 @choseTypeSortMail">
-          <div class="control">
-            <div class="dropdown is-right">
+          <li class="column is-narrow has-text-right" style="width: 140px;">
+            <div class="dropdown is-right @openStickMenu">
               <div class="dropdown-trigger">
-                <a class="has-text-weight-semibold has-text-link is-flex" @onclick="choseTypeSort">
-                  <span class="">@selectSortMail</span>
-                  <span class="icon has-text-link">
+                <a class="icon-text" @onclick="ToggleStickMenu">
+                  <span class="has-text-weight-medium">Nhãn</span>
+                  <span class="icon">
                     <i class="material-icons material-icons-outlined is-size-5">arrow_drop_down</i>
                   </span>
                 </a>
               </div>
-              <div class="dropdown-menu is-right-dropdown mt-10" style="width: 170px;">
+              <div class="dropdown-menu is-right-dropdown" style="width: 250px;">
                 <div class="dropdown-content">
-                  <a class="dropdown-item has-text-weight-semibold font_13 disable-hover">Danh sách danh mục</a>
-                  <a class="dropdown-item font_13" @onclick='() => OnSelectTypeSortValueChanged("Tuyển dụng")'>Tuyển dụng</a>
-                  <a class="dropdown-item font_13" @onclick='() => OnSelectTypeSortValueChanged("Lịch họp")'>Lịch họp</a>
-                  <a class="dropdown-item font_13" @onclick='() => OnSelectTypeSortValueChanged("OKRs")'>OKRs</a>
-                  <a class="dropdown-item font_13" @onclick='() => OnSelectTypeSortValueChanged("Khác")'>Khác</a>
+                  <a class="dropdown-item has-text-weight-bold">Nhãn cần lọc</a>
+                  <a class="dropdown-item">
+                    <ul class="column is-flex">
+                      <li class="column">
+                        <input class="input" type="checkbox">   
+                      </li>
+                      <li class="column">
+                        <span class="icon has-text-danger pt-2">
+                          <i class="is-size-6 material-icons material-icons">
+                          label
+                          </i>
+                        </span>
+                      </li>
+                      <li class="column font_13 weight500">Nhân sự Brando</li>
+                    </ul>
+                  </a>
+                  <a class="dropdown-item">
+                    <ul class="column is-flex">
+                      <li class="column">
+                        <input class="input" type="checkbox">   
+                      </li>
+                      <li class="column">
+                        <span class="icon has-text-link pt-2">
+                          <i class="is-size-6 material-icons material-icons">
+                          label
+                          </i>
+                        </span>
+                      </li>
+                      <li class="column font_13 weight500">Nhân sự Conando</li>
+                    </ul>
+                  </a>
+                  <a class="dropdown-item">
+                    <ul class="column is-flex">
+                      <li class="column">
+                        <input class="input" type="checkbox">   
+                      </li>
+                      <li class="column">
+                        <span class="icon has-text-success pt-2">
+                          <i class="is-size-6 material-icons material-icons">
+                          label
+                          </i>
+                        </span>
+                      </li>
+                      <li class="column font_13 weight500">Nhân sự Docorp</li>
+                    </ul>
+                  </a>
+                  <a class="dropdown-item">
+                    <ul class="column is-flex">
+                      <li class="column">
+                        <input class="input" type="checkbox">   
+                      </li>
+                      <li class="column">
+                        <span class="icon has-text-success pt-2">
+                          <i class="is-size-6 material-icons material-icons">
+                          label
+                          </i>
+                        </span>
+                      </li>
+                      <li class="column font_13 weight500">Nhân sự Fastdo</li>
+                    </ul>
+                  </a>
+                  <a class="dropdown-item">
+                    <ul class="column is-flex">
+                      <li class="column">
+                        <input class="input" type="checkbox">   
+                      </li>
+                      <li class="column">
+                        <span class="icon has-text-grey pt-2">
+                          <i class="is-size-6 material-icons material-icons">
+                          label
+                          </i>
+                        </span>
+                      </li>
+                      <li class="column font_13 weight500">Nhân sự Docorp</li>
+                    </ul>
+                  </a>
+                  <div class="control is-flex pt-5">
+                    <a class="button is-link is-flex is-radius-4"> 
+                      <span class="icon has-text-white">
+                        <i class="material-icons material-icons-outlined is-size-6">
+                        filter_alt
+                        </i>
+                      </span>
+                      <span class="pr-5">Lọc</span>
+                    </a>
+                    <a class="button has-text-link is-flex is-radius-4" @onclick="ToggleStickMenu">
+                      <span class="icon has-text-danger">
+                        <span class="material-icons material-icons-outlined is-size-5">
+                        cancel
+                        </span>
+                      </span>
+                      <span>Huỷ</span>
+                    </a>    
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </li>
-      </ul>
-    </div>
-  </div>
-</section>
-<FooterMail />
-
-
+          </li>
+        </ul>
+        <div class="columm mt-10 is-sticky-109 is-flex">
+          <ul class="column is-flex p-8">
+            <li class="column is-flex">
+              <input type="checkbox">
+            </li>
+            <li class="column ellipsis">Chọn tất cả</li>
+          </ul>
+          <ul class="column is-flex is-border-bot font_13">
+            @foreach (var mail in sortListMail)
+            {
+              <li class="column ellipsis has-text-centered p-8 @(mail.id == tabId ? "is_active" : "")" @onclick="() => tabId = mail.id">
+                <a class="has-text-weight-semibold">
+                  @mail.name
+                </a>
+              </li>
+            }
+            <li class="column ellipsis is-flex p-8 @choseTypeSortMail">
+              <div class="control">
+                <div class="dropdown is-right">
+                  <div class="dropdown-trigger">
+                    <a class="has-text-weight-semibold has-text-link is-flex" @onclick="choseTypeSort">
+                      <span class="">@selectSortMail</span>
+                      <span class="icon has-text-link">
+                        <i class="material-icons material-icons-outlined is-size-5">arrow_drop_down</i>
+                      </span>
+                    </a>
+                  </div>
+                  <div class="dropdown-menu is-right-dropdown mt-10" style="width: 170px;">
+                    <div class="dropdown-content">
+                      <a class="dropdown-item has-text-weight-semibold font_13 disable-hover">Danh sách danh mục</a>
+                      <a class="dropdown-item font_13" @onclick='() => OnSelectTypeSortValueChanged("Tuyển dụng")'>Tuyển dụng</a>
+                      <a class="dropdown-item font_13" @onclick='() => OnSelectTypeSortValueChanged("Lịch họp")'>Lịch họp</a>
+                      <a class="dropdown-item font_13" @onclick='() => OnSelectTypeSortValueChanged("OKRs")'>OKRs</a>
+                      <a class="dropdown-item font_13" @onclick='() => OnSelectTypeSortValueChanged("Khác")'>Khác</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
 @code {
   private List<TypeSortMailModels> sortListMail = new();
   private string tabId = "0";

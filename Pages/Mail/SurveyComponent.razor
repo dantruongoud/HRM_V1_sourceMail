@@ -1,0 +1,394 @@
+@inject IJSRuntime JSRuntime;
+
+<div class="columm mt-10 mb-3">
+  @if (@isSurveyButton == false)
+  {
+    <div class="control">
+      <div class="dropdown">
+        <a class="button is-link is-radius-4 is-flex p-7" @onclick="() => isSurveyButton = !isSurveyButton">
+          <span class="icon">
+            <i class="is-size-5 material-icons material-icons-outlined">
+            poll
+            </i>
+          </span>
+          <span>Tạo khảo sát</span>
+        </a>
+      </div>
+    </div>
+  } 
+  else
+  {
+    <div class="columm mt-10 survey">
+      @if (formIsEdit)
+      {
+        <div class="field is-grouped gap_8">
+          <div class="column field has-addons py-8">
+            <div class="control is-expanded has-icon-left">
+              <input id="title_survey" @bind="questionModels.title" type="text" class="input" placeholder="Nhập tiêu đề khảo sát...">
+              <span class="icon is-left has-text-grey">
+                <i class="is-size-5 material-icons material-icons-outlined">
+                mode_edit
+                </i>
+              </span>
+            </div>  
+          </div>
+          <div class="column field has-addons">
+            <div class="field is-grouped gap_8">
+              <div class="control has-text-grey">Thời gian kết thúc: </div>
+              <div class="control is-expended">
+                <a class="icon-text">
+                  <span class="icon is-small mr-1">
+                    <i class="is-size-6 material-icons material-icons-outlined">
+                    calendar_today
+                    </i>
+                  </span>
+                  <span class="datepicker weight500">
+                    <DateRangePicker SingleDatePicker="true" class="form-control form-control-sm" placeholder="dd/mm/yyyy"/>                      
+                  </span>
+                </a>
+              </div>
+
+              <div class="control is-expended">
+                <a class="icon-text">
+                  <span class="icon is-small mr-1">
+                    <i class="is-size-5 material-icons material-icons-outlined">
+                    schedule  
+                    </i>
+                  </span>
+                  <span class="hour">
+                    <DateRangePicker SingleDatePicker="true" class="form-control form-control-sm" placeholder="hh:mm" TimePicker="true"  ShowTimePicker="true" ShowCalendar="false" ShowMonthPicker="false"/> 
+                  </span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="columm">
+          <div id="question_survey" class="mt-10 mb-1">
+            @foreach (var question in QuestionList)
+            {
+              <div class="column p-8">
+                <ul class="column is-flex">
+                  <li class="column p-8" style="flex: 1;">
+                    <span class="has-text-right has-text-weight-medium">@(QuestionList.FindIndex(i => i.ID == question.ID) + 1).</span>
+                  </li>
+                  <li class="column p-8">
+                    <div class="control">
+                      <input type="text" @bind="question.name" class="input" placeholder="Nhập câu hỏi khảo sát">
+                    </div>
+                  </li>
+                  <li class="column p-8">
+                    <div class="control">
+                      <a class="button is-danger p-8 is-radius-4 is-flex" @onclick="() => OnDeleteClick(QuestionList, question.ID)">
+                        <span class="icon">
+                          <i class="is-size-5 material-icons material-icons-outlined">
+                          delete_outline
+                          </i>
+                        </span>
+                        <span>Xoá câu hỏi</span>
+                      </a>
+                    </div>
+                  </li>
+                </ul>
+                <ul class="column is-flex">
+                  <li class="p-8" style="width: 10%;">
+                    <span class="columm has-text-grey">Loại khảo sát:</span>
+                  </li>
+                  <li class="column p-8">
+                    <div class="is-flex">
+                    <a class="button has-text-grey is-flex mr-3" @onclick="(() => ChangeQuestionType(question))">
+                      <span class="icon">
+                        @if (question.typeQuestion == false)
+                        {
+                          <i class="is-size-6 material-icons material-icons-outlined">
+                          radio_button_checked
+                          </i> 
+                        } 
+                        else
+                        {
+                          <i class="is-size-6 material-icons material-icons-outlined">
+                          radio_button_unchecked
+                          </i> 
+                        }
+                        </span>
+                        <span>Một đáp án</span>
+                    </a>
+                    <a class="button has-text-grey is-flex" @onclick="(() => ChangeQuestionType(question))">
+                      <span class="icon">
+                        @if (question.typeQuestion == false)
+                        {
+                          <i class="is-size-6 material-icons material-icons-outlined">
+                          radio_button_unchecked
+                          </i> 
+                        } 
+                        else
+                        {
+                          <i class="is-size-6 material-icons material-icons-outlined">
+                          radio_button_checked
+                          </i> 
+                        }
+                      </span>
+                      <span>Nhiều đáp án</span>                 
+                    </a>
+                    </div>
+                  </li>
+                </ul>
+                @foreach (var answer in question.answers)
+                {
+                  <ul class="column is-flex">
+                    <li class="column p-8" style="width: fit-content;">
+                      <span class="icon has-text-grey is-flex is-vcentered p-8">
+                        <i class="is-size-5 material-icons material-icons-outlined">
+                        drag_indicator
+                        </i>
+                      </span>
+                    </li>
+                    <li class="column p-8" style="width: fit-content;">
+                      <a class="button has-text-grey is-flex is-vcentered p-8">
+                        <span class="icon">
+                          @if (question.typeQuestion == false)
+                          {
+                            <i class="is-size-6 material-icons material-icons-outlined">
+                            radio_button_unchecked
+                            </i> 
+                          } 
+                          else
+                          {
+                            <i class="is-size-6 material-icons material-icons-outlined">
+                            check_box_outline_blank
+                            </i> 
+                          }
+                        </span>
+                      </a>
+                    </li>
+                    <li class="column p-8">
+                      <div class="control column">
+                        <input type="text" @bind="@answer.name" class="input" placeholder="Lựa chọn @(question.answers.FindIndex(i => i.ID == answer.ID) + 1)">
+                      </div>
+                    </li>
+                    <li class="column p-8" style="width: fit-content;">
+                      <a class="has-text-danger is-flex is-vcentered" @onclick="@(() => question.answers.Remove(answer))">
+                      <span class="icon">
+                        <i class="is-size-5 material-icons material-icons-outlined">
+                          delete_outline
+                        </i>
+                      </span>
+                      </a>
+                    </li>
+                  </ul>
+                }
+                <div class="column control p-8">
+                  <a class="button has-text-link is-flex is-vcentered p-8" @onclick="(() => AddAnswer(question))">
+                    <span class="icon">
+                      <i class="is-size-6 material-icons material-icons-outlined">
+                      add
+                      </i>
+                    </span>
+                    <span>Thêm lựa chọn</span>
+                  </a>
+                </div>
+              </div>
+            }
+            <div class="columm p-8">
+              <div class="has-text-link is-flex">
+                <a class="button has-text-link p-8 is-flex is-vcentered" @onclick="AddQuestion">
+                  <span class="icon">
+                    <i class="is-size-6 material-icons material-icons-outlined">
+                      add
+                    </i>
+                  </span>
+                  <span>Thêm câu hỏi</span>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="columm p-8 pl-0 mt-10">
+            <div class="is-flex p-7 pl-4">
+              <a class="button button-is-link is-flex p-7 mr-3 is-vcentered" @onclick="() => formIsEdit = !formIsEdit">
+                <span class="icon">
+                  <i class="is-size-6 material-icons material-icons-outlined">
+                  done
+                  </i>
+                </span>
+                <span>Cập nhật</span>
+              </a>
+              <a class="button is-flex p-7 is-vcentered" @onclick="@CancelCreateFormSurvey">
+                <span class="icon has-text-danger">
+                  <i class="is-size-6 material-icons material-icons-outlined">
+                  cancel
+                  </i>
+                </span>
+                <span class="has-text-link">Huỷ</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      }
+      else
+      {
+        <div class="field is-grouped is-vcentered p-8 showSurveyTitle">
+          <div class="col-half">
+              <span class="weight500 is-size-14">@questionModels.title</span>
+          </div>
+          <div class="col-half">
+            <ul class="column is-flex is-vcentered">
+              <li class="column p-8">
+                <a class="icon-text has-text-grey" title="Khi kết thúc thời gian khảo sát, bạn sẽ không thể thực hiện bình chọn !">
+                  <span class="icon">
+                    <i class="is-size-6 material-icons material-icons-outlined">
+                    error_outline
+                    </i>
+                  </span>
+                </a>
+              </li>
+              <li class="column p-8">
+                <div class="control has-text-grey">Thời gian kết thúc: </div>
+              </li>
+              <li class="column p-8">
+                <div class="control is-expended p-8">
+                  <a class="icon-text">
+                    <span class="icon is-small mr-1">
+                      <i class="is-size-6 material-icons material-icons-outlined">
+                      calendar_today
+                      </i>
+                    </span>
+                    <span class="datepicker weight500">  
+                      <DateRangePicker SingleDatePicker="true" class="form-control form-control-sm" placeholder="dd/mm/yyyy"/>                      
+                    </span>
+                  </a>
+                </div>
+              </li>
+              <li class="column">
+                  <span class="icon-text">
+                    <span class="icon is-small mr-1">
+                      <i class="is-size-5 material-icons material-icons-outlined">
+                      schedule  
+                      </i>
+                    </span>
+                    <span class="hour">
+                      <DateRangePicker SingleDatePicker="true" class="form-control form-control-sm" placeholder="hh:mm" TimePicker="true"  ShowTimePicker="true" ShowCalendar="false" ShowMonthPicker="false"/> 
+                    </span>
+                  </span>
+              </li>
+            </ul>
+
+          </div>
+        </div>
+
+
+        <div class="columm">
+          <div id="question_survey" class="mt-10 mb-1 showSurvey">
+            @foreach (var question in QuestionList)
+            {
+              <div class="column p-8">
+                <ul class="column is-flex">
+                  <li class="column p-8">
+                    <span class="has-text-right has-text-weight-medium">@(QuestionList.FindIndex(i => i.ID == question.ID) + 1).</span>
+                  </li>
+                  <li class="column p-8">
+                    <span class="weight500">
+                      @question.name
+                    </span>
+                  </li>
+                </ul>
+                @foreach (var answer in question.answers)
+                {
+                  <ul class="column is-flex">
+                    <li class="column" style="width: fit-content;">
+                      <a class="button has-text-grey is-flex is-vcentered p-8">
+                        <span class="icon">
+                          @if (question.typeQuestion == false)
+                          {
+                            <i class="is-size-6 material-icons material-icons-outlined">
+                            radio_button_unchecked
+                            </i> 
+                          } 
+                          else
+                          {
+                            <i class="is-size-6 material-icons material-icons-outlined">
+                            check_box_outline_blank
+                            </i> 
+                          }
+                        </span>
+                      </a>
+                    </li>
+                    <li class="column">
+                      <span class="icon-text">
+                        @answer.name
+                      </span>
+                    </li>
+                  </ul>
+                }
+              </div>
+            }
+          </div>
+          <div class="columm p-8 pl-0 mt-10">
+            <div class="is-flex p-7 pl-4">
+              <a class="button button-is-link is-flex p-7 mr-3 is-vcentered" @onclick="() => formIsEdit =!formIsEdit">
+                <span class="icon">
+                  <i class="is-size-6 material-icons material-icons-outlined">
+                  edit
+                  </i>
+                </span>
+                <span>Chỉnh sửa</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>
+
+@code 
+{
+  private bool isSurveyButton = false;
+  private bool formIsEdit = true;
+  private CreateFormMailModels questionModels = new CreateFormMailModels();
+  private List<CreateFormMailModels> QuestionList = new();
+  public void AddAnswer(CreateFormMailModels question)
+  {
+    question.answers.Add(new() {
+      ID = Guid.NewGuid().ToString(),
+      name = "",
+      isEditAnswer = true,
+    });
+  }
+  public void AddQuestion()
+  {
+    string newID = Guid.NewGuid().ToString();
+    QuestionList.Add(
+      new CreateFormMailModels() {
+        ID = newID,
+        name = "",
+        typeQuestion = false,
+        isEditQuestion = true,
+        answers = new() {
+            new() {
+              ID = Guid.NewGuid().ToString(),
+              name = "",
+              isEditAnswer = true,
+            }
+        },
+      }
+    );
+  }
+  public void CancelCreateFormSurvey() {
+    isSurveyButton = !isSurveyButton;
+    QuestionList = new ();
+  }
+  private async Task OnDeleteClick(List<CreateFormMailModels> list, string id)
+  {
+      bool confirmDelete = await JSRuntime.InvokeAsync<bool>("confirm", "Bạn có chắc chắn muốn xoá dữ liệu này?");
+      if (confirmDelete)
+      {
+          // Xoá dữ liệu ở đây
+          list.RemoveAll(x => x.ID == id);
+      }
+  }
+
+  public void ChangeQuestionType(CreateFormMailModels question) {
+    question.typeQuestion = !question.typeQuestion;
+  }
+}
