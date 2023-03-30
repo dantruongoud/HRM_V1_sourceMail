@@ -11,10 +11,6 @@
               <section class="columm">
                 <HeaderMain />
                 @Body
-                @if (navigation.Uri.Replace(navigation.BaseUri, "") != "email/setting")
-                {
-                <FooterMail />
-                }
               </section>
             </section>
           } 
@@ -29,4 +25,5 @@
 
 @code {
   public bool loadPage = true;
+  private MailItemModels mailList = new MailItemModels();
 }

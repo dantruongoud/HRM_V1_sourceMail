@@ -28,7 +28,7 @@
       </li>
     }
   </nav>
-  <a href="/email/setting" class="nav-setting item-menu @(active_settings ? "is_active" : "")" title="Cài đặt">
+  <a href="/email/setting" class='nav-setting item-menu @(active_settings ? "is_active" : "")' title="Cài đặt">
     <span class="gi material-icons material-icons-outlined">
       settings
     </span>
@@ -55,7 +55,6 @@
   protected override void OnParametersSet()
   {
     var url = navigation.Uri.Replace(navigation.BaseUri, "");
-    Console.WriteLine(url);
     foreach (var main in NavMailList)
     {
       if (url == "email")

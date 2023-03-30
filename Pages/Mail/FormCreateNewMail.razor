@@ -317,6 +317,8 @@
 </section>
 
 @code {
+  [CascadingParameter]
+  public MainLayout Layout { get; set; }
   private bool FormCC_BCC {get; set;} = false;
   private string selectSortFormMail {get; set;} = "Vận hành";
   private string selectSignatureMail {get; set;} = "Không có chữ ký";

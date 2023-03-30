@@ -191,7 +191,7 @@
                     </span>
                     <span>Cập nhật</span>
                   </a>
-                  <a class="icon-text has-text-danger">
+                  <a class="icon-text has-text-danger" @onclick="() => OnDeleteClick(listTodolist, todo.ID)">
                     <span class="icon">
                       <i class="is-size-5 material-icons material-icons-outlined">
                         delete_outline
@@ -262,7 +262,7 @@
             <tr>
               <td colspan="3" class="is-not-pl">
                 <div class="is-flex">
-                @if (todo.description != null)
+                @if (todo.description != String.Empty)
                 {
                   <label class="td-label is-show">Chi tiết:</label>
                   <div class="td-value is-word-break">
@@ -271,7 +271,7 @@
                 }
                 </div>
                 <div class="is-flex">
-                  @if (todo.result != null)
+                  @if (todo.result != String.Empty)
                   {
                     <label class="td-label is-show">Kết quả:</label>
                     <div class="td-value is-word-break">
@@ -394,7 +394,7 @@
             <a class="button is-links">Thêm</a>
           </div>
         </div>
-        <div class="@(string.IsNullOrEmpty(pendingTitle) ? "is-hidden" : "field")">
+        <div class='@(string.IsNullOrEmpty(pendingTitle) ? "is-hidden" : "field")'>
           <textarea name="" id="checklist_detail" rows="2" class="textarea is-auto" placeholder="Nhập mô tả công việc..."></textarea>
         </div>
         <ul class="scrolly"></ul>
@@ -700,7 +700,7 @@
     return new SelectTypeModel();
   }
   
-   public static List<SelectPriotyModel> TypeListPrioty()
+  public static List<SelectPriotyModel> TypeListPrioty()
   {
     var list = new List<SelectPriotyModel>();
     list.Add(

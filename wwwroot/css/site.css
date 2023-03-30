@@ -8,14 +8,227 @@
   --color-bg: #f1f7f7;
 }
 
+.crud-group.p-4 > ul > li,
+.crud-options.p-4 > ul > li {
+  padding: 8px 0px;
+}
+/* List item mail */
+.item-mail {
+  font-family: "Inter";
+  font-size: 13px;
+  cursor: pointer;
+  border-bottom: 1px solid #ecf0ff;
+  position: relative;
+}
+
+.item-mail:hover {
+  box-shadow: inset 1px 0 0 #dadce0, inset -1px 0 0 #dadce0, 0 1px 2px 0 rgba(60, 64, 67, 0.3),
+    0 1px 3px 1px rgba(60, 64, 67, 0.15);
+}
+.item-mail:hover > ul:first-child > .labelStick,
+.item-mail:hover > ul:first-child > li:last-child {
+  display: none;
+}
+div.item-mail li:nth-child(4) {
+  min-width: 0;
+  flex: 1 1 0%;
+}
+.item-mail .buttonControl {
+  display: none;
+}
+.buttonControl div a.button.has-text-grey:hover {
+  background-color: inherit;
+}
+.item-mail:hover .buttonControl {
+  display: block;
+  position: absolute;
+  top: 10px;
+  background-color: inherit;
+  right: 5px;
+}
+div.item-mail > ul li {
+  display: flex;
+  align-items: center;
+  width: fit-content;
+}
+div.item-mail > ul li > a.button.is-border:not(.is-flex) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+}
+
+.label_survey {
+  width: 36px;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  background-color: #fff962;
+  justify-content: center;
+  border-radius: 4px;
+  padding: 5px;
+}
+
+.label-sticky {
+  border-radius: 8px;
+}
+
+.bg-link {
+  background-color: #ecf0ff;
+}
+.bg-grey {
+  background-color: #ccc;
+}
 #setting-mail {
   /* background-color: var(--color-bg); */
 }
-.crud-group {
+
+/* section group */
+.crud-group,
+.crud-options {
   border: 1px solid #ccc;
   background-color: #fff;
   border-radius: 8px;
 }
 .crud-group > ul > li:last-child > div > a:last-child {
   float: right;
+}
+.crud-group > div.has-text-grey > a.button.is-border {
+  width: fit-content;
+}
+.crud-group > div.has-text-grey > a.button.is-border:hover {
+  background-color: #ecf0ff;
+  color: var(--color-main);
+  border-color: var(--color-main);
+}
+.crud-group span.icon.is-right {
+  top: 0 !important;
+  right: 1px !important;
+  padding: 4px;
+}
+.crud-group div.control > .group {
+  position: absolute;
+  padding: 4px;
+  top: 5px;
+  left: 5px;
+}
+.group {
+  color: #000;
+  font-weight: 400;
+}
+div.columm > .group {
+  font-weight: 500;
+}
+.crud-group div.has-icon-right > input:not(.is-rounded) {
+  padding-left: 60px;
+}
+.crud-group div.columm div.has-icon-right > input:not(.is-small):placeholder-shown {
+  font-style: italic;
+}
+.crud-group div.has-icon-right > input:not(.is-small):valid {
+  font-family: "Inter";
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.crud-group > div:first-child .footer-mail {
+  display: flex;
+  font-size: 13px;
+  font-family: "Inter";
+  font-weight: 300;
+  justify-content: space-between;
+}
+.footer-mail {
+  display: flex;
+  justify-content: space-between;
+}
+.crud-group > .form-group > div:last-child > div.control.is-flex {
+  color: #fff;
+  justify-content: end;
+}
+.crud-group > .form-group > div:last-child > div.control.is-flex > a:first-child:hover {
+  background-color: #ccc !important;
+}
+.crud-group > .form-group > div:last-child > div.control.is-flex > a:last-child:hover {
+  background-color: #3082c5 !important;
+}
+.dropdown.is_active > .dropdown-menu {
+  display: block;
+}
+.form-group div.is-flex > .dropdown.is_active > .dropdown-menu {
+  right: 0;
+}
+.form-group > div > div.dropdown > div.dropdown-trigger > a:only-child {
+  margin-right: 0px !important;
+}
+.group-list > li {
+  padding: 8px !important;
+}
+.group-list > li.is-flex {
+  justify-content: end;
+}
+.group-list:hover {
+  background-color: #f1f7f7;
+}
+.text-wrapper {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 150px;
+}
+.group-list > li:first-child {
+  width: 150px;
+}
+
+.form-edit-group {
+  justify-content: end;
+  width: fit-content;
+}
+.form-edit-group > a.button.is-link {
+  border-radius: 3px;
+  padding: 8px;
+}
+.form-edit-group > a.button.is-link:hover,
+.form-edit-group > a.button.has-text-danger:hover {
+  background-color: #ccc;
+}
+.form-edit-group > a.button.has-text-danger {
+  border-radius: 3px;
+  padding: 8px;
+}
+/* end group section */
+
+/* start options section */
+.crud-options > ul li:nth-child(3),
+.crud-options > ul li:last-child {
+  width: fit-content;
+}
+.up-down-btn:hover {
+  background-color: #ccc;
+  border-radius: 4px;
+}
+.up-down-btn {
+  padding: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+/* .footer-mail */
+.footer-mail > ul > li.column.is-flex {
+  width: fit-content;
+}
+
+.footer-mail > div > div.dropdown.is_active .dropdown-menu {
+  display: block;
+}
+.footer-mail > div {
+  padding-right: 10px;
+}
+.footer-mail > div.control > a:first-child:hover,
+.footer-mail > div.control > div.is_active a.button {
+  background-color: #ecf0ff !important;
+}
+
+.footer-mail > div.control > a:last-child:hover {
+  background-color: #f03a5f !important;
 }

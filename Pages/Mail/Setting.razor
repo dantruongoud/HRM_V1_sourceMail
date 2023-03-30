@@ -1,0 +1,504 @@
+@inherits LayoutComponentBase
+@inject IJSRuntime JSRuntime;
+@using System
+@page "/email/setting"
+<section class="p-4">
+  <section class="crud-group p-4">
+    @if (isOpenFormCreateGroup == false && isOpenFormEditGroup == false)
+    {
+      <ul class="column is-flex is-acentered mb-3">
+        <li class="column">
+          <h2 class="is-size-5 has-text-weight has-text-info">QUẢN LÝ NHÓM</h2>
+        </li>
+        <li class="column">
+          <div class="control">
+            <a class="button button-is-link is-flex p-8" @onclick="() => isOpenFormCreateGroup = !isOpenFormCreateGroup">
+              <span class="icon">
+                <span class="is-size-6 material-icons material-icons-outlined">
+                add
+                </span>
+              </span>
+              <span>Thêm nhóm</span>
+            </a>
+          </div>
+        </li>
+      </ul>
+
+      @foreach (var group in listGroup)
+      {
+        <ul class="column is-flex is-acentered group-list">
+          <li class="column">
+            <div class="font_15 text-wrapper weight500">@group.name</div>
+          </li>
+          <li class="column">
+            <a class="is-flex has-text-link weight500" @onclick="() => editformGroup(group)">
+              <span class="number mr-4">@group.UsersList.Count()</span>
+              <span class="">thành viên</span>
+            </a>
+          </li>
+          <li class="column is-flex">
+            <a class="has-text-danger" @onclick="() => OnDeleteClick(listGroup, group.ID, group.name)">
+              <span class="icon">
+                <i class="is-size-6 material-icons material-icons-outlined">
+                delete_outline
+                </i>
+              </span>
+            </a>
+          </li>
+        </ul>
+      }
+    }
+    else
+    {
+    <div class="columm has-text-grey p-8 form-group">
+      @if (isOpenFormEditGroup == true)
+      {
+        <div class="columm is-flex is-acentered" style="justify-content: space-between;">
+          <a class="button is-flex is-radius-4 is-border p-8 is-acentered" @onclick="() => isOpenFormEditGroup = !isOpenFormEditGroup">
+            <span class="icon">
+              <span class="is-size-5 material-icons material-icons-outlined">
+              chevron_left
+              </span> 
+            </span>
+            <span>Quay lại</span>
+          </a>
+          <AddUserComponent/>
+        </div>
+        <div class="columm py-8 mt-10">
+          <span class="group">Tên nhóm</span>
+          <div class="column field has-addons py-2">
+            <div class="column is-flex is-acentered gap_5 is-expanded has-icon-right">
+              @if (isOpenInputInFormEditGroup == false)
+              {
+               <span class="group">Nhóm</span>
+                <div class="columm group weight500" style="width: fit-content;">@groupEdit.name</div>
+                <a class="button is-flex is-link disable-hover" @onclick="() => isOpenInputInFormEditGroup = !isOpenInputInFormEditGroup">
+                  <span class="icon">
+                    <i class="is-size-6 material-icons material-icons-outlined">
+                    mode_edit
+                    </i>
+                  </span>
+                </a>   
+              } 
+              else
+              {
+                <div class="column field has-addons py-2">
+                  <div class="control is-expanded has-icon-right">
+                    <span class="group">Nhóm</span>
+                    <input class="input column" @bind="nameGroup" type="text" placeholder="Nhập tên nhóm...">
+                  </div>
+                </div>
+                <div class="is-flex is-acentered form-edit-group">
+                  <a class="button is-link" @onclick="saveInputInformEditGroup">
+                    <span class="icon">
+                      <i class="is-size-6 material-icons material-icons-outlined">
+                      done
+                      </i>
+                    </span>
+                  </a>
+                  <a class="button has-text-danger" @onclick="cancelInputInformEditGroup">
+                    <span class="icon">
+                      <i class="is-size-6 material-icons material-icons-outlined">
+                      close
+                      </i>
+                    </span>
+                  </a>
+                </div>
+              }
+            </div>
+          </div>
+        </div> 
+        <div class="columm py-8 mt-10">
+          <span class="group">Thành viên</span>
+        </div> 
+        @if (listUserInGroup.Count > 0)
+        {
+          @foreach (var user in listUserInGroup)
+          {
+              <ul class="column is-flex is-acentered p-8 gap_10 is-border-bottom">
+                <li class="column" style="flex: 1;">
+                  <div class="is-image">
+                    <img src="@user.linkIMG" class="image is-24x24" alt="IMG">
+                  </div>
+                </li>
+                <li class="column">
+                  <span class="group">@user.name</span>
+                </li>
+                <li class="column is-flex" style="width: fit-content;">
+                  <a class="has-text-danger" @onclick="() => OnDeleteClick(listUserInGroup, user.ID, user.name)">
+                    <span class="icon">
+                      <i class="is-size-6 material-icons material-icons-outlined">
+                      delete_outline
+                      </i>
+                    </span>
+                  </a>
+                </li>
+              </ul>
+          }
+        }
+        else
+        {
+        <div colspan="4" class="is-italic has-text-grey">Không có thành viên nào</div>
+        }
+      } 
+      @if (isOpenFormCreateGroup == true)
+      {
+        <div class="columm is-flex">
+          <a class="button is-flex is-radius-4 is-border p-8 is-acentered" @onclick="() => isOpenFormCreateGroup = !isOpenFormCreateGroup">
+            <span class="icon">
+              <span class="is-size-5 material-icons material-icons-outlined">
+              chevron_left
+              </span> 
+            </span>
+            <span>Quay lại</span>
+          </a>
+        </div>
+
+        <div class="columm py-8 mt-10">
+          <span class="group">Tên nhóm</span>
+          <div class="column field has-addons py-2">
+            <div class="control is-expanded has-icon-right">
+              <span class="group">Nhóm</span>
+              <input class="input" type="text" placeholder="Nhập tên nhóm...">
+              <span class="icon is-right has-text-grey">
+                <i class="is-size-6 material-icons material-icons-outlined">
+                mode_edit
+                </i>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="columm py-8 mt-10">
+          <span class="group">Thành viên</span>
+          <div class="column field has-addons py-2">
+          <AddUserComponent/>
+          </div>
+        </div>
+        <div class="columm py-8">
+          <div class="control is-flex">
+            <a class="button has-text-danger pr-5 is-radius-4 is-flex" @onclick="() => isOpenFormCreateGroup = !isOpenFormCreateGroup">
+              <span class="icon">
+                <i class="is-size-6 material-icons material-icons-outlined">
+                close
+                </i>
+              </span>
+              <span>Huỷ</span>
+            </a>
+            <a class="button-is-link is-flex p-7 is-radius-4">
+              <span class="icon">
+                <i class="is-size-6 material-icons material-icons-outlined">
+                done
+                </i>
+              </span>
+              <span class="font_13">Cập nhật</span>
+            </a>
+          </div>
+        </div>
+
+      }
+    </div>
+    }
+  </section>
+</section>
+
+<section class="p-4">
+  <section class="crud-options p-4">
+    <div class="columm py-8">
+      <h2 class="is-size-5 has-text-weight has-text-info">QUẢN LÝ DANH MỤC</h2>
+    </div>
+    @foreach (var option in optionsList)
+    {
+      <ul class="column is-flex is-acentered gap_10 is-border-bottom mt-10">
+        <li class="column" style="flex: 1;">
+          <a class="button is-flex">
+            <span class="icon has-text-grey">
+              <i class="is-size-5 material-icons material-icons-outlined">
+              drag_indicator
+              </i>
+            </span>
+          </a>
+        </li>
+        <li class="column">
+          <div class="columm">
+            <span class="group">@option.name</span>
+          </div>
+        </li>
+        <li class="column">
+          <a class="button up-down-btn">
+            <span class="icon">
+              <i class="is-size-5 material-icons material-icons-outlined">
+              north
+              </i>
+            </span>
+          </a>
+        </li>
+        <li class="column">
+          <a class="button up-down-btn">
+            <span class="icon">
+              <i class="is-size-5 material-icons material-icons-outlined">
+              south
+              </i>
+            </span>
+          </a>
+        </li>
+      </ul>
+    }
+    <div class="columm is-border-bottom p-8">
+      <a class="button">
+        <span class="group weight500">Khác</span>
+      </a>
+    </div>
+  </section>
+</section>
+<section class="p-4">
+  <section class="crud-options p-4">
+    <div class="columm py-8">
+      <h2 class="is-size-5 has-text-weight has-text-info">QUẢN LÝ DANH MỤC</h2>
+    </div>
+    @foreach (var option in optionsList)
+    {
+      <ul class="column is-flex is-acentered gap_10 is-border-bottom mt-10">
+        <li class="column" style="flex: 1;">
+          <a class="button is-flex">
+            <span class="icon has-text-grey">
+              <i class="is-size-5 material-icons material-icons-outlined">
+              drag_indicator
+              </i>
+            </span>
+          </a>
+        </li>
+        <li class="column">
+          <div class="columm">
+            <span class="group">@option.name</span>
+          </div>
+        </li>
+        <li class="column">
+          <a class="button up-down-btn">
+            <span class="icon">
+              <i class="is-size-5 material-icons material-icons-outlined">
+              north
+              </i>
+            </span>
+          </a>
+        </li>
+        <li class="column">
+          <a class="button up-down-btn">
+            <span class="icon">
+              <i class="is-size-5 material-icons material-icons-outlined">
+              south
+              </i>
+            </span>
+          </a>
+        </li>
+      </ul>
+    }
+    <div class="columm is-border-bottom p-8">
+      <a class="button">
+        <span class="group weight500">Khác</span>
+      </a>
+    </div>
+  </section>
+</section>
+@code {
+  private bool isOpenFormCreateGroup = false;
+  private bool isOpenFormEditGroup = false;
+  private bool isOpenInputInFormEditGroup = false;
+  private string nameGroup = "";
+  private List<CreateFormMailModels> listGroup = new();
+  private List<CreateFormMailModels.listUsers> listUserInGroup = new();
+  private CreateFormMailModels groupEdit = new CreateFormMailModels();
+  private List<CreateFormMailModels> optionsList = new();
+  protected override void OnInitialized() 
+  {
+    GroupList();
+    OptionList();
+  }
+  private void cancelInputInformEditGroup()
+  {
+    nameGroup = groupEdit.name;
+    isOpenInputInFormEditGroup = !isOpenInputInFormEditGroup;
+  }
+  private void saveInputInformEditGroup()
+  {
+    groupEdit.name = nameGroup;
+    isOpenInputInFormEditGroup = !isOpenInputInFormEditGroup;
+  }
+  public void editformGroup(CreateFormMailModels models)
+  {
+    isOpenFormEditGroup = !isOpenFormEditGroup;
+    nameGroup = models.name;
+    listUserInGroup = models.UsersList;
+    groupEdit = models;
+  }
+  private async Task OnDeleteClick(List<CreateFormMailModels> list, string id, string department)
+  {
+      bool confirmDelete = await JSRuntime.InvokeAsync<bool>("confirm", "Bạn có chắc chắn muốn xoá thư của " + department + " ?");
+      if (confirmDelete)
+      {
+          // Xoá dữ liệu ở đây
+          list.RemoveAll(x => x.ID == id);
+      }
+  } 
+  private async Task OnDeleteClick(List<CreateFormMailModels.listUsers> list, string id, string name)
+  {
+      bool confirmDelete = await JSRuntime.InvokeAsync<bool>("confirm", "Bạn có chắc chắn muốn xoá thư của " + name + " ?");
+      if (confirmDelete)
+      {
+          // Xoá dữ liệu ở đây
+          list.RemoveAll(x => x.ID == id);
+      }
+  } 
+  public void OptionList() 
+  {
+    Guid guid = new Guid();
+    optionsList = new() {
+      new CreateFormMailModels() {
+        ID = guid.ToString(),
+        name = "Nhân sự",
+      },
+      new CreateFormMailModels() {
+        ID = guid.ToString(),
+        name = "Vận hành",
+      },
+      new CreateFormMailModels() {
+        ID = guid.ToString(),
+        name = "Kế toán",
+      },
+      new CreateFormMailModels() {
+        ID = guid.ToString(),
+        name = "Marketing",
+      },
+      new CreateFormMailModels() {
+        ID = guid.ToString(),
+        name = "Truyền thông",
+      },
+      
+    };
+
+  }
+  public void GroupList() 
+  {
+    listGroup = new () {
+      new CreateFormMailModels() {
+        ID = DateTime.Now.Ticks.ToString(),
+        name = "HEADBOM",
+        number = 5,
+        UsersList = new () {
+          new CreateFormMailModels.listUsers() {
+            ID = DateTime.Now.Ticks.ToString(),
+            name = "Nguyen Dan Truong",
+            linkIMG = "img/favicon.png"
+          },
+          new CreateFormMailModels.listUsers() {
+            ID = DateTime.Now.Ticks.ToString(),
+            name = "Nguyen Dan Truong",
+            linkIMG = "img/favicon.png"
+          },
+          new CreateFormMailModels.listUsers() {
+            ID = DateTime.Now.Ticks.ToString(),
+            name = "Tran Xuan Tan",
+            linkIMG = "img/favicon.png"
+          },
+          new CreateFormMailModels.listUsers() {
+            ID = DateTime.Now.Ticks.ToString(),
+            name = "Nguyen Dan Truong",
+            linkIMG = "img/favicon.png"
+          },
+          new CreateFormMailModels.listUsers() {
+            ID = DateTime.Now.Ticks.ToString(),
+            name = "Nguyen Dan Truong",
+            linkIMG = "img/favicon.png"
+          },
+        },
+      },
+      new CreateFormMailModels() {
+        ID = DateTime.Now.Ticks.ToString(),
+        name = "SBOM",
+        UsersList = new () {
+          new CreateFormMailModels.listUsers() {
+            ID = DateTime.Now.Ticks.ToString(),
+            name = "Nguyen Dan Truong",
+            linkIMG = "img/favicon.png"
+          },
+          new CreateFormMailModels.listUsers() {
+            ID = DateTime.Now.Ticks.ToString(),
+            name = "Nguyen Dan Truong",
+            linkIMG = "img/favicon.png"
+          },
+          new CreateFormMailModels.listUsers() {
+            ID = DateTime.Now.Ticks.ToString(),
+            name = "Thanh Thang",
+            linkIMG = "img/favicon.png"
+          },
+          new CreateFormMailModels.listUsers() {
+            ID = DateTime.Now.Ticks.ToString(),
+            name = "Nguyen Dan Truong",
+            linkIMG = "img/favicon.png"
+          },
+        },
+      },
+      new CreateFormMailModels() {
+        ID = DateTime.Now.Ticks.ToString(),
+        name = "Phòng nhân sự",
+        UsersList = new () {
+          new CreateFormMailModels.listUsers() {
+            ID = DateTime.Now.Ticks.ToString(),
+            name = "Huu Hoc",
+            linkIMG = "img/favicon.png"
+          },
+          new CreateFormMailModels.listUsers() {
+            ID = DateTime.Now.Ticks.ToString(),
+            name = "Nguyen Dan Truong",
+            linkIMG = "img/favicon.png"
+          },
+        },
+      },
+      new CreateFormMailModels() {
+        ID = DateTime.Now.Ticks.ToString(),
+        name = "Phòng Kiểm thử",
+        UsersList = new () {
+          new CreateFormMailModels.listUsers() {
+            ID = DateTime.Now.Ticks.ToString(),
+            name = "Nguyen Dan Truong",
+            linkIMG = "img/favicon.png"
+          },
+          new CreateFormMailModels.listUsers() {
+            ID = DateTime.Now.Ticks.ToString(),
+            name = "Le Quang Huy",
+            linkIMG = "img/favicon.png"
+          },
+          new CreateFormMailModels.listUsers() {
+            ID = DateTime.Now.Ticks.ToString(),
+            name = "Nguyen Dan Truong",
+            linkIMG = "img/favicon.png"
+          },
+        },
+      },
+      new CreateFormMailModels() {
+        ID = DateTime.Now.Ticks.ToString(),
+        name = "Phòng Kế Toán",
+        UsersList = new () {
+          new CreateFormMailModels.listUsers() {
+            ID = DateTime.Now.Ticks.ToString(),
+            name = "Nguyen Dan Truong",
+            linkIMG = "img/favicon.png"
+          },
+          new CreateFormMailModels.listUsers() {
+            ID = DateTime.Now.Ticks.ToString(),
+            name = "Kim Nguyen",
+            linkIMG = "img/favicon.png"
+          },
+          new CreateFormMailModels.listUsers() {
+            ID = DateTime.Now.Ticks.ToString(),
+            name = "Nguyen Dan Truong",
+            linkIMG = "img/favicon.png"
+          },
+        },
+      },
+      new CreateFormMailModels() {
+        ID = DateTime.Now.Ticks.ToString(),
+        name = "Head Office",
+      },
+    };
+  }
+}

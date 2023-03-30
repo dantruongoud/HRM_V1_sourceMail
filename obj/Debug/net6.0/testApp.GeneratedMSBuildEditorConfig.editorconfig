@@ -47,8 +47,16 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWFpbFxEZWxldGVNYWlsLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/myC\#/testAPP/Pages/Mail/DetailsGroupSetting.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWFpbFxEZXRhaWxzR3JvdXBTZXR0aW5nLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/myC\#/testAPP/Pages/Mail/DraftMail.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWFpbFxEcmFmdE1haWwucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/myC\#/testAPP/Pages/Mail/FooterMail.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWFpbFxGb290ZXJNYWlsLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/myC\#/testAPP/Pages/Mail/FormCreateNewMail.razor]
@@ -63,6 +71,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWFpbFxTZW5kTWFpbC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/myC\#/testAPP/Pages/Mail/Setting.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWFpbFxTZXR0aW5nLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/myC\#/testAPP/Pages/Mail/StarMail.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWFpbFxTdGFyTWFpbC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
@@ -71,16 +83,16 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWFpbFxTdXJ2ZXlDb21wb25lbnQucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/myC\#/testAPP/Pages/Settings/Setting.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2V0dGluZ3NcU2V0dGluZy5yYXpvcg==
+[D:/myC\#/testAPP/Pages/Mail/TabSortMail.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWFpbFxUYWJTb3J0TWFpbC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/myC\#/testAPP/Pages/Mail/TickComponent.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWFpbFxUaWNrQ29tcG9uZW50LnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/myC\#/testAPP/Pages/Todolist.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVG9kb2xpc3QucmF6b3I=
-build_metadata.AdditionalFiles.CssScope = 
-
-[D:/myC\#/testAPP/Shared/FooterMail.razor]
-build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXEZvb3Rlck1haWwucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/myC\#/testAPP/Shared/HeaderMain.razor]
