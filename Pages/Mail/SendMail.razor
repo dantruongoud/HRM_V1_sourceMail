@@ -407,32 +407,46 @@ else
 
 @code {
   private string selectTimevalue { get; set; } = "Thời gian";
+
   private string selectStatusvalue { get; set; } = "Trạng thái";
+
   private string selectSortMail {get; set;} = "Khác (+3)";
+
   private string notitleMail { get; set; } = "(Không có chủ đề)";
+
   private bool isStickMenu = false;
+
   private bool openMenu = false;
+
   private string openStickMenu => isStickMenu ? "is_active" : "";
+
   public List<MailItemModels> mailList = new();
+
   public List<DetailsMail> FilesList = new();
+
   private List<string> selectedMail = new();
+
   public void ToggleStickMenu()
   {
     isStickMenu = !isStickMenu;
   }
+
   private void OnSelectValueChanged(string value)
   {
     selectTimevalue = value;
   }
+
   private void OnSelectStatusValueChanged(string value)
   {
     selectStatusvalue = value;
   }
+
   private void OnSelectTypeSortValueChanged(string value)
   {
     selectSortMail = value;
   }
-    private async Task OnDeleteClick(List<MailItemModels> list, string id, string usersent)
+
+  private async Task OnDeleteClick(List<MailItemModels> list, string id, string usersent)
   {
       bool confirmDelete = await JSRuntime.InvokeAsync<bool>("confirm", "Bạn có chắc chắn muốn xoá thư của " + usersent + " ?");
       if (confirmDelete)
@@ -441,6 +455,7 @@ else
           list.RemoveAll(x => x.ID == id);
       }
   }
+
   protected override void OnInitialized()
   {
     listMail();

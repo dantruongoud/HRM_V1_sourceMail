@@ -268,18 +268,31 @@ else
 }
 @code {
   private List<TypeSortMailModels> sortListMail = new();
+
   private string tabId = "0";
+
   private string selectTimevalue { get; set; } = "Thời gian";
+
   private string selectStatusvalue { get; set; } = "Trạng thái";
+
   private string selectSortMail {get; set;} = "Khác (+3)";
+
   private string notitleMail { get; set; } = "(Không có chủ đề)";
+
   private bool isStickMenu = false;
+
   private string openStickMenu => isStickMenu ? "is_active" : "";
+
   private bool isTypeSortMail = false;
+
   private string choseTypeSortMail => isTypeSortMail ? "is_active" : "";
+
   private List<string> selectedMail = new();
+
   public List<MailItemModels> mailList = new();
+
   public List<DetailsMail> FilesList = new();
+    
   public void ToggleStickMenu()
   {
     isStickMenu = !isStickMenu;
@@ -339,31 +352,37 @@ else
       },
     };
   }
+
   public void choseTypeSort()
   {
     isTypeSortMail = !isTypeSortMail;
   }
+
   private void OnSelectValueChanged(string value)
   {
     selectTimevalue = value;
   }
+
   private void OnSelectStatusValueChanged(string value)
   {
     selectStatusvalue = value;
   }
+
   private void OnSelectTypeSortValueChanged(string value)
   {
     selectSortMail = value;
   }
+
   private async Task OnDeleteClick(List<MailItemModels> list, string id, string usersent)
   {
-      bool confirmDelete = await JSRuntime.InvokeAsync<bool>("confirm", "Bạn có chắc chắn muốn xoá thư của " + usersent + " ?");
-      if (confirmDelete)
-      {
-          // Xoá dữ liệu ở đây
-          list.RemoveAll(x => x.ID == id);
-      }
+    bool confirmDelete = await JSRuntime.InvokeAsync<bool>("confirm", "Bạn có chắc chắn muốn xoá thư của " + usersent + " ?");
+    if (confirmDelete)
+    {
+        // Xoá dữ liệu ở đây
+        list.RemoveAll(x => x.ID == id);
+    }
   }
+
   private void CheckTicked(string id) 
   {
     if(selectedMail.Contains(id)){
@@ -374,6 +393,7 @@ else
       selectedMail.Add(id);
     }
   }
+
   public void listMail() 
   {
     mailList = new() {
@@ -479,6 +499,7 @@ else
       },
     };
   }
+
   public void listFile()
   {
     FilesList = new() {
@@ -499,4 +520,5 @@ else
       },
     };
   }
+
 }

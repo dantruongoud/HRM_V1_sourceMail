@@ -1,5 +1,6 @@
 @inject IJSRuntime JSRuntime;
 @page "/todolist"
+
 <section class="p-4">
   <ul class="column is-multiline is-title">
     <li class="column">
@@ -606,32 +607,45 @@
 @code {
   [CascadingParameter]
   public MainLayout Layout { get; set; }
+
   private string SelectedValue { get; set; } = "Todo";
+
   private string SelectedColor { get; set; } = "";
+
   private bool is_dropdownMenu = false;
+
   private string is_dropdown => is_dropdownMenu ? "is_active" : "";
   
   private string pendingTitle = "";
+
   private bool showCheckinbtn = false;
 
   private bool showCheckoutbtn = false;
+
   private bool showWorkPending = false;
+
   private string isShowWorkPending => showWorkPending ? "is_active" : "";
+
   private List<TodolistModels> listTodolist = new();
+
   public TodolistModels todolist = new TodolistModels();
+
   public void setIsDropdown() {
     is_dropdownMenu = !is_dropdownMenu;
   }
+
   public void setShowWorkPending() {
     showWorkPending = !showWorkPending;
   }
+
   private void OnSelectValueChanged(string value, string className)
   {
     SelectedValue = value;
     SelectedColor = className;
   }
   
-  public void addTodo() {
+  public void addTodo() 
+  {
     listTodolist.Add(
       new  TodolistModels() {
         ID = "" + DateTime.Now.Ticks,
@@ -738,7 +752,7 @@
     return new SelectPriotyModel();
   }
 
-    public static List<SelectStatusModel> StatusList()
+  public static List<SelectStatusModel> StatusList()
   {
     var list = new List<SelectStatusModel>();
     list.Add(

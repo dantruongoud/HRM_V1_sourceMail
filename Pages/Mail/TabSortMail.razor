@@ -64,23 +64,32 @@
 
 @code {
   private string tabId = "0";
+  
   private bool isTypeSortMail = false;
+
   private bool is_checkItemMail = false;
+
   private string selectSortMail {get; set;} = "Khác (+3)";
+
   private string choseTypeSortMail => isTypeSortMail ? "is_active" : "";
+
   private List<TypeSortMailModels> sortListMail = new();
+
   public void choseTypeSort()
   {
     isTypeSortMail = !isTypeSortMail;
   }
+
   private void OnSelectTypeSortValueChanged(string value)
   {
     selectSortMail = value;
   }
+
   protected override void OnInitialized() 
   {
     CreateListSortMail();
   }
+  
   public void CreateListSortMail()
   {
     sortListMail = new()

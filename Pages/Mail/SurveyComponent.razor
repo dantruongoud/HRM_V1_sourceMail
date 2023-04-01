@@ -344,9 +344,13 @@
 @code 
 {
   private bool isSurveyButton = false;
+
   private bool formIsEdit = true;
+
   private CreateFormMailModels questionModels = new CreateFormMailModels();
+
   private List<CreateFormMailModels> QuestionList = new();
+
   public void AddAnswer(CreateFormMailModels question)
   {
     question.answers.Add(new() {
@@ -355,6 +359,7 @@
       isEditAnswer = true,
     });
   }
+
   public void AddQuestion()
   {
     string newID = Guid.NewGuid().ToString();
@@ -374,10 +379,12 @@
       }
     );
   }
+
   public void CancelCreateFormSurvey() {
     isSurveyButton = !isSurveyButton;
     QuestionList = new ();
   }
+  
   private async Task OnDeleteClick(List<CreateFormMailModels> list, string id)
   {
       bool confirmDelete = await JSRuntime.InvokeAsync<bool>("confirm", "Bạn có chắc chắn muốn xoá dữ liệu này?");

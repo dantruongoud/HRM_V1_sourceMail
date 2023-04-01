@@ -77,18 +77,28 @@
 @code 
 {
   private bool isGroupReceived = false;
+
   private bool isGroupReceivedinCC = false;
+
   private bool isGroupReceivedinBCC = false;
+
   private bool checkbox_member = false;
+
   private string openGroupUserReceived => isGroupReceived ? "is_active" : "";
+
   private string openGroupUserReceivedinCC => isGroupReceivedinCC ? "is_active" : "";
+
   private string openGroupUserReceivedinBCC => isGroupReceivedinBCC ? "is_active" : "";
+
   private List<TypeColorStickyMailModels> DepartmentList = new();
+
   protected override void OnInitialized() 
   {
     ListDepartments();
   }
-  public void ListDepartments() {
+
+  public void ListDepartments() 
+  {
     DepartmentList = new() {
       new TypeColorStickyMailModels() {
         nameSticky = "HEADBOM",

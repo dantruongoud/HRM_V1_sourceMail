@@ -223,6 +223,7 @@
           list.RemoveAll(x => x.ID == id);
       }
   } 
+
   private async Task OnDeleteClickUser(List<CreateFormMailModels.listUsers> list, string id, string name)
   {
       bool confirmDelete = await JSRuntime.InvokeAsync<bool>("confirm", "Bạn có chắc chắn muốn xoá người dùng " + name + " ?");
@@ -232,6 +233,7 @@
           list.RemoveAll(x => x.ID == id);
       }
   } 
+
   public void OnEditClick(CreateFormMailModels models)
   {
     isOpenFormEditGroup = !isOpenFormEditGroup;
@@ -255,6 +257,7 @@
   {
     List();
   }
+  
   public void List() 
   {
     dataList = new () {

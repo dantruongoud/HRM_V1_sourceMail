@@ -113,33 +113,49 @@
 </div>
 @code {
   private bool isAddUserReceived = false;
+
   private bool isAddUserReceivedinCC = false;
+
   private bool isAddUserReceivedinBCC = false;
+
   private bool checkbox_member = false;
+
   private bool isChoseDepartmentInFormAddUserReceived = false;
+
   private string selectDepartmentMail {get; set;} = "Tất cả phòng ban";
+
   private string choseDepartmentInFormAddUserReceived => isChoseDepartmentInFormAddUserReceived ? "is_active" : "";
+
   private string openFormAddUserReceived => isAddUserReceived ? "is_active" : "";
+
   private string openFormAddUserReceivedinCC => isAddUserReceivedinCC ? "is_active" : "";
+
   private string openFormAddUserReceivedinBCC => isAddUserReceivedinBCC ? "is_active" : "";
+
   private List<EducateModels> UserItemsList = new();
+
   public void OnSelectDepartmentValueChanged(string value) 
   {
     selectDepartmentMail = value;
   }
+
   public void openFormUser()
   {
     isAddUserReceived = !isAddUserReceived;
   }
+
   public void choseDepartment() 
   {
     isChoseDepartmentInFormAddUserReceived = !isChoseDepartmentInFormAddUserReceived;
   }
+
   protected override void OnInitialized() 
   {
     ListUserItems();
   }
-  public void ListUserItems() {
+
+  public void ListUserItems() 
+  {
     UserItemsList = new () {
       new EducateModels() {
         linkIMG = "/img/test4.jpg",

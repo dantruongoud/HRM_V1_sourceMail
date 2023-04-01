@@ -107,20 +107,28 @@
 @code {
   [CascadingParameter]
   public MainLayout Layout { get; set; }
+
   private bool isOpenMenu = false;
+
   private string menuClass => isOpenMenu ? "is_less" : "";
 
+
   private string menuMail = "0";
+
   public void Toggle()
   {
     isOpenMenu = !isOpenMenu;
   }
+
   private List<SidebarModels> NavList = new();
 
-  protected override void OnInitialized() {
+  protected override void OnInitialized() 
+  {
     CreateNav();
   }
-  public void clearActiveNavlist() {
+
+  public void clearActiveNavlist() 
+  {
     foreach (var item in NavList)
     {
       item.active = false;
@@ -141,7 +149,8 @@
     }
   }
 
-  protected override void OnParametersSet() {
+  protected override void OnParametersSet() 
+  {
     var url = navigation.Uri.Replace(navigation.BaseUri, "");
     foreach (var main in NavList)
     {
@@ -162,7 +171,9 @@
       }
     }
   }
-  private void CreateNav() {
+  
+  private void CreateNav() 
+  {
     NavList = new() {
       new SidebarModels() {
         id = "0",

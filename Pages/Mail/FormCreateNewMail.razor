@@ -351,31 +351,38 @@
   {
     openChoseTypeSort = !openChoseTypeSort;
   }
+
   public void openfillWarning() 
   {
     fillWarning = !fillWarning;
   }
+
   public void OnSelectTypeSortValueChanged(string value) 
   {
     selectSortFormMail = value;
   }
+
   public void OnSelectSignatureValueChanged(string value) 
   {
     selectSignatureMail = value;
   }
+
   public void ToggleStickMenu()
   {
     isStickMenu = !isStickMenu;
   }
+
   public void ToggleSticky()
   {
     isSticky = !isSticky;
   }
+
   protected override void OnInitialized() 
   {
     ListStyleSticky();
     ListToFormMail();
   }
+
   public void ListToFormMail() {
     ToFormList = new() {
       new  TypeColorStickyMailModels() {
@@ -389,6 +396,7 @@
       },
     };
   }
+  
   public void ListStyleSticky()
   {
     StyleStickyList = new() {

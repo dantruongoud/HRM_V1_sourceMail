@@ -95,6 +95,7 @@
 </section>
 @code {
   private string selectSignatureMail {get; set;} = "Không có chữ ký";
+
   private string numberSignature {get; set;} = "Mẫu chữ ký số ";
 
   private bool isOpenDropdownSignature = false;
@@ -113,6 +114,7 @@
       }
     );
   }
+  
   public void OnSelectSignatureValueChanged(string value) 
   {
     selectSignatureMail = value;

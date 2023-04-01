@@ -38,11 +38,17 @@
 @code {
   [CascadingParameter]
   public MainLayout Layout { get; set; }
+
   private bool isOpenMenuMail = false;
+
   private bool isOpenSetting_Mail = false;
+
   private List<SidebarModels> NavMailList = new();
+
   private string menuMail = "0";
+
   private bool active_settings = false;
+
   public void ToggleMail()
   {
     isOpenMenuMail = !isOpenMenuMail;
@@ -52,6 +58,7 @@
   {
     CreateNavMail();
   }
+  
   protected override void OnParametersSet()
   {
     var url = navigation.Uri.Replace(navigation.BaseUri, "");
