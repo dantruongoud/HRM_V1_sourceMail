@@ -1,0 +1,87 @@
+<section class="p-4">
+  <section class="crud-options p-4">
+    <div class="columm py-8">
+      <h2 class="is-size-5 has-text-weight has-text-info">QUẢN LÝ DANH MỤC</h2>
+    </div>
+    @foreach (var option in dataList)
+    {
+      <ul class="column is-flex is-acentered gap_10 is-border-bottom mt-10">
+        <li class="column" style="flex: 1;">
+          <a class="button is-flex">
+            <span class="icon has-text-grey">
+              <i class="is-size-5 material-icons material-icons-outlined">
+              drag_indicator
+              </i>
+            </span>
+          </a>
+        </li>
+        <li class="column">
+          <div class="columm">
+            <span class="group">@option.name</span>
+          </div>
+        </li>
+        <li class="column">
+          <a class="button up-down-btn">
+            <span class="icon">
+              <i class="is-size-5 material-icons material-icons-outlined">
+              north
+              </i>
+            </span>
+          </a>
+        </li>
+        <li class="column">
+          <a class="button up-down-btn">
+            <span class="icon">
+              <i class="is-size-5 material-icons material-icons-outlined">
+              south
+              </i>
+            </span>
+          </a>
+        </li>
+      </ul>
+    }
+    <div class="columm is-border-bottom p-8">
+      <a class="button">
+        <span class="group weight500">Khác</span>
+      </a>
+    </div>
+  </section>
+</section>
+@code {
+  private List<CreateFormMailModels> dataList = new();
+
+  
+  protected override void OnInitialized() 
+  {
+    ListData();
+  }
+
+  public void ListData() 
+  {
+    Guid guid = new Guid();
+    dataList = new() {
+      new CreateFormMailModels() {
+        ID = guid.ToString(),
+        name = "Nhân sự",
+      },
+      new CreateFormMailModels() {
+        ID = guid.ToString(),
+        name = "Vận hành",
+      },
+      new CreateFormMailModels() {
+        ID = guid.ToString(),
+        name = "Kế toán",
+      },
+      new CreateFormMailModels() {
+        ID = guid.ToString(),
+        name = "Marketing",
+      },
+      new CreateFormMailModels() {
+        ID = guid.ToString(),
+        name = "Truyền thông",
+      },
+      
+    };
+
+  }
+}

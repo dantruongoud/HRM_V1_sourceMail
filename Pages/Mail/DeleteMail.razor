@@ -2,12 +2,12 @@
 @page "/email/deleteMail"
 
 <section class="main ">
-  <div class="columm is-sticky-68">
+  <div class="columm is-sticky-68 draftmail">
     <ul class="column is-flex">
       <li class="column">
-        <span class="has-text-titleMail">Thùng rác</span>
+        <span class="has-text-titleMail">Thư nháp</span>
       </li>
-      <li class="column is-narrow is-one-quarter" style="width: 400px;">
+      <li class="column is-narrow is-one-quarter">
         <div class="control has-icon-left has-icon-right has-suggest">
           <input type="text" class="input is-rounded is_bg" placeholder="Tiêu đề, nội dung, người gửi...">
           <span class="icon is-left">
@@ -17,7 +17,7 @@
           </span>
         </div>
       </li>
-       <li class="column is-narrow">
+      <li class="column is-narrow">
         <div class="field has-addons">
           <div class="control has-icons-left">
             <div id="" title="Chọn ngày">
@@ -34,7 +34,7 @@
           <div class="control is-boder boder-radius-right">
             <div class="dropdown is-hoverable is-right">
               <div class="dropdown-trigger">
-                <a class="icon-text p-7">
+                <a class="icon-text p-7 ellipsis" style="width: fit-content">
                   <span class="has-text-weight-medium">@selectTimevalue</span>
                   <span class="icon">
                     <i class="material-icons material-icons-outlined is-size-5">arrow_drop_down</i>
@@ -54,12 +54,9 @@
           </div>
         </div>
       </li>
-      <li class="column is-narrow has-text-right" style="width: 160px;">
-        
-      </li>
     </ul>
     <div class="columm mt-10 is-sticky-109 is-flex is-acentered bg-danger p-8 font_13">
-      <ul class="column is-flex p-8">
+      <ul class="column is-flex p-8" style="width: fit-content;">
         <li class="column is-flex">
           <input type="checkbox">
         </li>
@@ -70,7 +67,7 @@
           Thư trong thùng rác sau 30 ngày sẽ được xóa ra khỏi hệ thống.
         </li>
         <li class="column" style="width: fit-content;">
-          <a class="button has-text-danger is-flex is-radius-4 p-8" @onclick="ToggleStickMenu">
+          <a class="button has-text-danger is-flex is-radius-4 p-7" @onclick="ToggleStickMenu">
             <span class="icon">
               <span class="material-icons material-icons-outlined is-size-5">
               delete
@@ -129,27 +126,29 @@
           </li>
           <li class="column">
             <div class="column is-flex gap_5 is-acentered">
-              <a class="">
-                <span class="label_survey">
-                  <span class="is-size-7 has-text-dark">KS</span>
-                </span>
-              </a>
-              @if (mail.titleMail.Length > 0 && mail.contentMail.Length > 0)
-              {
-                <a class="ellipsis">@mail.titleMail - @mail.contentMail</a>
-              }
-              else if (string.IsNullOrEmpty(mail.titleMail) && mail.contentMail.Length > 0)
-              {
-                <a class="ellipsis is-flex">
-                  <span class="weight600">@notitleMail</span>
-                  <span class="px-2">-</span>
-                  <span>@mail.contentMail</span>
+              <a href="/email/details" class="is-flex is-acentered has-text-grey gap_5">
+                <a class="">
+                  <span class="label_survey">
+                    <span class="is-size-7 has-text-dark">KS</span>
+                  </span>
                 </a>
-              }
-              else if (string.IsNullOrEmpty(mail.titleMail) && string.IsNullOrEmpty(mail.contentMail))
-              {
-                <a class="ellipsis weight500">@notitleMail</a>
-              }
+                @if (mail.titleMail.Length > 0 && mail.contentMail.Length > 0)
+                {
+                  <a class="ellipsis">@mail.titleMail - @mail.contentMail</a>
+                }
+                else if (string.IsNullOrEmpty(mail.titleMail) && mail.contentMail.Length > 0)
+                {
+                  <a class="ellipsis is-flex">
+                    <span class="weight600">@notitleMail</span>
+                    <span class="px-2">-</span>
+                    <span>@mail.contentMail</span>
+                  </a>
+                }
+                else if (string.IsNullOrEmpty(mail.titleMail) && string.IsNullOrEmpty(mail.contentMail))
+                {
+                  <a class="ellipsis weight500">@notitleMail</a>
+                }
+              </a>
             </div>
           </li>
           <li class="column labelStick">

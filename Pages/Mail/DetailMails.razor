@@ -1,0 +1,264 @@
+
+@page "/email/details"
+
+<section class="main">
+  <div class="columm details">
+    <ul class="column is-flex is-acentered gap_10">
+      <li class="column is-flex">
+        <a href="/email/receivedMail" class="p-6 icon-text button has-text-link weight500">
+          <span class="icon">
+            <i class="material-icons material-icons-outlined is-size-6">arrow_back</i>
+          </span>
+          <span class="">Trở về</span>
+        </a>
+      </li>
+      <li class="column is-flex @fillWarningText">
+        <a class="is-flex" @onclick="openfillWarning">
+          <span class="mr-2 is-flex">
+            @if (fillWarning == false)
+            {
+              <i class="has-text-warning is-size-6 material-icons material-icons-outlined">
+                star_border
+              </i>
+            } else {
+              <i class="has-text-warning is-size-6 material-icons material-icons-outlined">
+                star
+              </i>
+            }
+          </span>
+          <span>Đánh dấu quan trọng</span>
+        </a>
+      </li>
+      <li class='column is-flex @(isChecked == true ? "is_active" : "")'>
+        <a class="is-flex has-text-link is-acentered" @onclick="() => isChecked = !isChecked">
+          <span class="mr-2 is-flex">
+            @if (isChecked == false)
+            {
+              <span class="is-size-6 material-icons material-icons-outlined">
+              mail_outline
+              </span>
+            } 
+            else 
+            {
+              <i class="is-size-6 material-icons material-icons-outlined">
+              drafts
+              </i>
+            }
+          </span>
+          <span>Đánh dấu đã đọc</span>
+        </a>
+      </li>
+      <li class="columns @openStickMenu is-flex gap_10">
+        <a class="is-flex gap_5 is-acentered">
+          <span class="is-flex has-text-danger" @onclick="ToggleStickMenu">
+            <i class="is-size-5 material-symbols-outlined">
+            label
+            </i>
+          </span>
+          <div class="dropdown is-right">
+            <div class="dropdown-trigger" @onclick="ToggleStickMenu">
+              <span class="">Nhãn</span>
+            </div>
+            <div class="dropdown-menu is-right-dropdown" style="width: 200px;">
+              <div class="dropdown-content">
+                <a class="dropdown-item has-text-weight-bold">Danh sách nhãn</a>
+                @foreach (var sticky in StyleStickyList)
+                {
+                  <a class="dropdown-item">
+                    <ul class="column is-flex gap_5">
+                      <li class="column">
+                        <input class="input" type="checkbox" @onclick="ToggleSticky">   
+                      </li>
+                      <li class="column">
+                        <span class="icon @sticky.Class_color pt-2">
+                          <i class="is-size-6 material-icons material-icons">
+                          label
+                          </i>
+                        </span>
+                      </li>
+                      <li class="column font_13 weight500">@sticky.nameSticky</li>
+                    </ul>
+                  </a>      
+                }
+              </div>
+            </div>
+          </div>
+        </a>
+        <ul class="column gap_5 is-flex">
+          <li class="column @activeSticky p-3 is-border" style="background-color: red;">
+            <span>Nhân sự Conando</span>
+            <a class="is-flex" @onclick="ToggleSticky">
+              <span class="icon has-text-grey">
+                <span class="is-size-5 material-icons material-icons">
+                cancel
+                </span>
+              </span>
+            </a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <div class="py-8">
+      <div class="columm header-details py-10 ellipsis" >
+        <span class="is-size-5 py-8">[Thông báo] LỊCH NGHỈ TẾT DƯƠNG LỊCH 2023</span>
+      </div>
+    </div>
+
+    <a class="block-mail">
+      <div class="columm is-border-bottom py-8">
+        <ul class="column is-flex gap_10 py-10 is-acentered">
+          <li class="column">
+            <div class="is-image">
+              <img src="/img/favicon.png" class="image is-24x24" alt="IMG">
+            </div>
+          </li>
+          <li class="column">
+            <div class="columm">
+              <span class="is-size-6 weight500">Jane Cooper</span>
+            </div>
+            <div class="columm ellipsis">
+              <span class="font_13 has-text-grey">Kính gửi: Toàn thể Nhân sự Công ty TNHH Truyền thông và Công nghệ Conando;
+                Nhằm mục đích triển khai kịp thời lịch nghỉ Tết Dương lịch 2023 và Tết Nguyên Đán Quý Mão, tạo điều kiện thuận lợi cho NLĐ chuẩn bị đón Tết</span>
+            </div>
+          </li>
+          <li class="column ellipsis">
+            <span class="font_13 has-text-grey">12:40, 01/04/2023 (1 ngày trước)</span>
+          </li>
+        </ul>
+      </div>
+    </a>
+    @foreach (var repply in listRepply)
+    {
+      <a class="block-mail">
+        <div class="columm is-border-bottom py-8">
+          <ul class="column is-flex gap_10 py-10 is-acentered">
+            <li class="column">
+              <div class="is-image">
+                <img src="/img/@repply.icon" class="image is-24x24" alt="IMG">
+              </div>
+            </li>
+            <li class="column">
+              <div class="columm">
+                <span class="is-size-6 weight500">@repply.name</span>
+              </div>
+              <div class="columm ellipsis">
+                <span class="font_13 has-text-grey">@repply.content</span>
+              </div>
+            </li>
+            <li class="column ellipsis">
+              <span class="font_13 has-text-grey">@repply.time</span>
+            </li>
+          </ul>
+        </div>
+      </a>
+    }
+  </div>
+</section>
+@code {
+  
+
+  private bool fillWarning = false; 
+
+  private bool isStickMenu = false;
+  
+  private bool isSticky = false;
+  
+  private bool isChecked = false;
+  private string openStickMenu => isStickMenu ? "is_active" : "";
+
+  private string fillWarningText => fillWarning ? "is_active" : "";
+  
+  private string activeSticky => isSticky ? "is-flex" : "";
+  
+  private List<TypeColorStickyMailModels> StyleStickyList = new();
+
+  private List<DetailsMail> listRepply = new();
+
+
+  public void ToggleStickMenu()
+  {
+    isStickMenu = !isStickMenu;
+  }
+
+  public void ToggleSticky()
+  {
+    isSticky = !isSticky;
+  }
+
+  public void openfillWarning() 
+  {
+    fillWarning = !fillWarning;
+  }
+  protected override void OnInitialized() 
+  {
+    ListStyleSticky();
+    ListRepplyMail();
+  }
+
+  public void ListRepplyMail()
+  {
+    listRepply = new() {
+      new DetailsMail() {
+        name = "Dan Truong",
+        icon = "test4.jpg",
+        content = "Tôi đã đọc và nắm thông tin",
+        time = "12:40, 01/04/2023 (1 ngày trước)"
+      },
+      new DetailsMail() {
+        name = "Quang Huy",
+        icon = "test4.jpg",
+        content = "Hiện tại tôi không thể tham gia tiệc cuối nằm vì lý do gia đình. Hy vọng tôi có thể tham dự các buổi tiệc sắp tới. Chúc tất cả các anh chị em có 1 mùa xuân thật dui dẻ",
+        time = "12:40, 01/04/2023 (1 ngày trước)"
+      },
+      new DetailsMail() {
+        name = "Tran Xuan Tan",
+        icon = "favicon.png",
+        content = "Tôi đã đọc và nắm thông tin",
+        time = "12:40, 01/04/2023 (1 ngày trước)"
+      },
+      new DetailsMail() {
+        name = "Thanh Thang",
+        icon = "test4.jpg",
+        content = "Tôi đã đọc và nắm thông tin",
+        time = "12:40, 01/04/2023 (1 ngày trước)"
+      },
+      new DetailsMail() {
+        name = "Dan Truong",
+        icon = "test4.jpg",
+        content = "Tôi đã đọc và nắm thông tin",
+        time = "12:40, 01/04/2023 (1 ngày trước)"
+      },
+
+    };
+  }
+  public void ListStyleSticky()
+  {
+    StyleStickyList = new() {
+      new TypeColorStickyMailModels() {
+        id = "0",
+        Class_color = "has-text-link",
+        nameSticky = "Nhân sự Conando",
+      },
+      new TypeColorStickyMailModels() {
+        id = "1",
+        Class_color = "has-text-warning",
+        nameSticky = "Nhân sự Brando",
+      },
+      new TypeColorStickyMailModels() {
+        id = "2",
+        Class_color = "has-text-danger",
+        nameSticky = "Nhân sự Fastdo",
+      },
+      new TypeColorStickyMailModels() {
+        id = "3",
+        Class_color = "has-text-grey",
+        nameSticky = "Nhân sự Seodo",
+      },
+      new TypeColorStickyMailModels() {
+        id = "4",
+        Class_color = "has-text-dark",
+        nameSticky = "Nhân sự DoCorp",
+      },
+    };
+  }
+}

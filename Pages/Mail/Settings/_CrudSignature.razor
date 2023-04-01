@@ -1,0 +1,120 @@
+<section class="p-4">
+  <section class="crud-signature p-4">
+    <div class="columm py-8">
+      <h2 class="is-size-5 has-text-weight has-text-info">QUẢN LÝ CHỮ KÝ</h2>
+    </div>
+    <div class="columm py-8">
+
+      @if (isOpenFormSignature == false)
+      {
+        <a class="button is-links" @onclick="() => isOpenFormSignature = !isOpenFormSignature">
+          <span class="icon">
+            <i class="is-size-6 material-icons material-icons-outlined">
+            add
+            </i>
+          </span>
+          <span>Tạo chữ ký mới</span>
+        </a>  
+      }
+      else 
+      {
+        <div class="column is-flex gap_20">
+          <div class="button-left">
+            <div id="to" class="p-8 ellipsis">
+              <a class="p-7">@numberSignature 1</a>
+            </div>
+            <div class="columm py-8">
+              <a class="button is-links">
+                <span class="icon">
+                  <i class="is-size-6 material-icons material-icons-outlined">
+                  add
+                  </i>
+                </span>
+                <span>Tạo chữ ký mới</span>
+              </a>
+            </div>
+          </div>
+          <div class="button-right">
+            <div class="control column">
+              <input class="input p-8" type="text" placeholder="Nhập tên chữ ký">
+            </div>
+            <div class="column py-8">
+              <textarea id="to" class="textarea" placeholder="Nhập chữ ký"></textarea>
+            </div>
+            <div class="foot-signature py-8">
+
+            </div>
+            <div class="columm py-8">
+              <div class="has-text-right">
+                <a class="icon-text has-text-link mr-3">
+                  <span class="icon">
+                    <i class="is-size-5 material-icons material-icons-outlined">
+                      update
+                    </i>
+                  </span>
+                  <span>Cập nhật</span>
+                </a>
+                <a class="icon-text button is-danger p-6 is-radius-4" @onclick="() => isOpenFormSignature = !isOpenFormSignature">
+                  <span class="icon">
+                    <i class="is-size-5 material-icons material-icons-outlined">
+                      delete_outline
+                    </i>
+                  </span>
+                  <span>Xoá</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+    <div class="columm py-8">
+      <h2 class="is-size-6 has-text-weight-semibold has-text-info">THẾT LẬP CHỮ KÝ MẶC ĐỊNH</h2>
+      <div class='dropdown py-8 @(isOpenDropdownSignature == true ? "is_active" : "")'>
+        <div class="dropdown-trigger">
+          <a class="button is-border is-radius-4 px-2 is-iflex p-6" style="width: 150px;" @onclick="() => isOpenDropdownSignature = !isOpenDropdownSignature">
+            <span>@selectSignatureMail</span>
+            <span class="icon is-small">
+              <i class="material-icons is-size-5 material-icons-outlined">
+                arrow_drop_down
+              </i>
+            </span>
+          </a>
+        </div>
+        <div class="dropdown-menu font_13" style="width: fit-content">
+          <div class="dropdown-content">
+            <a class="dropdown-item" @onclick='() => OnSelectSignatureValueChanged("Không có chữ ký")'>Không có chữ ký</a>
+            <a class="dropdown-item" @onclick='() => OnSelectSignatureValueChanged("Chữ ký 1")'>Chữ ký 1</a>
+            <a class="dropdown-item" @onclick='() => OnSelectSignatureValueChanged("Chữ ký 2")'>Chữ ký 2</a>
+            <a class="dropdown-item" @onclick='() => OnSelectSignatureValueChanged("Chữ ký của tôi")'>Chữ ký của tôi</a>
+        </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</section>
+@code {
+  private string selectSignatureMail {get; set;} = "Không có chữ ký";
+  private string numberSignature {get; set;} = "Mẫu chữ ký số ";
+
+  private bool isOpenDropdownSignature = false;
+
+  private bool isOpenFormSignature = false;
+
+  private List<TodolistModels> dataList = new();
+
+  public void AddSignature() 
+  {
+    dataList.Add(
+      new TodolistModels() {
+        ID = DateTime.Now.Ticks.ToString(),
+        name = numberSignature,
+        result = "",
+      }
+    );
+  }
+  public void OnSelectSignatureValueChanged(string value) 
+  {
+    selectSignatureMail = value;
+  }
+}

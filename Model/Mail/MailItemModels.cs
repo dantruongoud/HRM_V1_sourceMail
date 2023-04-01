@@ -17,7 +17,11 @@ namespace testApp.Model
   {
     public string ID { get; set; }
     public string name { get; set; }
+    public string content { get; set; }
+    public string time { get; set; }
     public string icon { get; set; }
     public string typefile { get; set; }
+    public string color { get; set; }
+    public string bgColor { get; set; }
   }
 }

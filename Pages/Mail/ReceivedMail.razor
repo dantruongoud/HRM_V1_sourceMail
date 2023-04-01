@@ -7,12 +7,12 @@
 
 
 <section class="main">
-  <div class="columm is-sticky-68">
+  <div class="columm is-sticky-68 receivedmail">
     <ul class="column is-flex gap_5 is-acentered">
-      <li class="column ellipsis" style="width: 15%;">
+      <li class="column ellipsis">
         <span class="has-text-titleMail">Hộp thư đến</span>
       </li>
-      <li class="column is-narrow is-one-quarter" style="width: 45%;">
+      <li class="column is-narrow is-one-quarter">
         <div class="control has-icon-left has-icon-right has-suggest">
           <input type="text" class="input is-rounded is_bg" placeholder="Tiêu đề, nội dung, người gửi...">
           <span class="icon is-left">
@@ -22,7 +22,7 @@
           </span>
         </div>
       </li>
-      <li class="column is-narrow is-flex" style="justify-content: end;">
+      <li class="column is-narrow is-flex">
         <div class="field has-addons">
           <div class="control has-icons-left">
             <div id="" title="Chọn ngày">
@@ -40,8 +40,8 @@
           </div>
           <div class="control is-boder boder-radius-right">
             <div class="dropdown is-hoverable is-right">
-              <div class="dropdown-trigger">
-                <a class="icon-text p-7">
+              <div class="dropdown-trigger" style="max-width: 150px;">
+                <a class="icon-text p-7 ellipsis">
                   <span class="has-text-weight-medium">@selectTimevalue</span>
                   <span class="icon">
                     <i class="material-icons material-icons-outlined is-size-5">arrow_drop_down</i>
@@ -61,7 +61,7 @@
           </div>
         </div>
       </li>
-      <li class="column is-narrow has-text-right" style="width: 140px;">
+      <li class="column is-narrow has-text-right">
         <div class="dropdown is-hoverable is-right">
           <div class="dropdown-trigger">
             <a class="icon-text">
@@ -80,7 +80,7 @@
           </div>
         </div>
       </li>
-      <li class="column is-narrow has-text-right" style="width: 140px;">
+      <li class="column is-narrow has-text-right">
         <div class="dropdown is-right @openStickMenu">
           <div class="dropdown-trigger">
             <a class="icon-text" @onclick="ToggleStickMenu">
@@ -93,83 +93,27 @@
           <div class="dropdown-menu is-right-dropdown" style="width: 250px;">
             <div class="dropdown-content">
               <a class="dropdown-item has-text-weight-bold">Nhãn cần lọc</a>
-              <a class="dropdown-item">
-                <ul class="column is-flex">
-                  <li class="column">
-                    <input class="input" type="checkbox">   
-                  </li>
-                  <li class="column">
-                    <span class="icon has-text-danger pt-2">
-                      <i class="is-size-6 material-icons material-icons">
-                      label
-                      </i>
-                    </span>
-                  </li>
-                  <li class="column font_13 weight500">Nhân sự Brando</li>
-                </ul>
-              </a>
-              <a class="dropdown-item">
-                <ul class="column is-flex">
-                  <li class="column">
-                    <input class="input" type="checkbox">   
-                  </li>
-                  <li class="column">
-                    <span class="icon has-text-link pt-2">
-                      <i class="is-size-6 material-icons material-icons">
-                      label
-                      </i>
-                    </span>
-                  </li>
-                  <li class="column font_13 weight500">Nhân sự Conando</li>
-                </ul>
-              </a>
-              <a class="dropdown-item">
-                <ul class="column is-flex">
-                  <li class="column">
-                    <input class="input" type="checkbox">   
-                  </li>
-                  <li class="column">
-                    <span class="icon has-text-success pt-2">
-                      <i class="is-size-6 material-icons material-icons">
-                      label
-                      </i>
-                    </span>
-                  </li>
-                  <li class="column font_13 weight500">Nhân sự Docorp</li>
-                </ul>
-              </a>
-              <a class="dropdown-item">
-                <ul class="column is-flex">
-                  <li class="column">
-                    <input class="input" type="checkbox">   
-                  </li>
-                  <li class="column">
-                    <span class="icon has-text-success pt-2">
-                      <i class="is-size-6 material-icons material-icons">
-                      label
-                      </i>
-                    </span>
-                  </li>
-                  <li class="column font_13 weight500">Nhân sự Fastdo</li>
-                </ul>
-              </a>
-              <a class="dropdown-item">
-                <ul class="column is-flex">
-                  <li class="column">
-                    <input class="input" type="checkbox">   
-                  </li>
-                  <li class="column">
-                    <span class="icon has-text-grey pt-2">
-                      <i class="is-size-6 material-icons material-icons">
-                      label
-                      </i>
-                    </span>
-                  </li>
-                  <li class="column font_13 weight500">Nhân sự Docorp</li>
-                </ul>
-              </a>
+              @foreach (var sticky in Sticklist)
+              {
+                <a class="dropdown-item">
+                  <ul class="p-3 column is-flex is-acentered gap_10">
+                    <li class="column">
+                      <input class="input" type="checkbox">   
+                    </li>
+                    <li class="column">
+                      <span class="icon has-text-danger is-flex is-acentered">
+                        <i class="is-size-6 material-icons material-icons">
+                        label
+                        </i>
+                      </span>
+                    </li>
+                    <li class="column font_13 weight500">@sticky.name</li>
+                  </ul>
+                </a>
+              }
+              
               <div class="control is-flex pt-5">
-                <a class="button is-link is-flex is-radius-4"> 
+                <a class="button is-link is-flex p-3 is-radius-4"> 
                   <span class="icon has-text-white">
                     <i class="material-icons material-icons-outlined is-size-6">
                     filter_alt
@@ -177,7 +121,7 @@
                   </span>
                   <span class="pr-5">Lọc</span>
                 </a>
-                <a class="button has-text-link is-flex is-radius-4" @onclick="ToggleStickMenu">
+                <a class="button has-text-link is-flex is-radius-4 p-3" @onclick="ToggleStickMenu">
                   <span class="icon has-text-danger">
                     <span class="material-icons material-icons-outlined is-size-5">
                     cancel
@@ -240,29 +184,32 @@
             </span>
           </li>
           <li class="column">
-            <div class="column is-flex gap_5 is-acentered">
-              <a class="">
-                <span class="label_survey">
-                  <span class="is-size-7 has-text-dark">KS</span>
-                </span>
-              </a>
-              @if (mail.titleMail.Length > 0 && mail.contentMail.Length > 0)
-              {
-                <a class="ellipsis">@mail.titleMail - @mail.contentMail</a>
-              }
-              else if (string.IsNullOrEmpty(mail.titleMail) && mail.contentMail.Length > 0)
-              {
-                <a class="ellipsis is-flex">
-                  <span class="weight600">@notitleMail</span>
-                  <span class="px-2">-</span>
-                  <span>@mail.contentMail</span>
+              <div class="column gap_5 is-acentered">
+                <a href="/email/details" class="is-flex gap_5 is-acentered has-text-grey">
+                  <a class="">
+                    <span class="label_survey">
+                      <span class="is-size-7 has-text-dark">KS</span>
+                    </span>
+                  </a>
+                  @if (mail.titleMail.Length > 0 && mail.contentMail.Length > 0)
+                  {
+                    <a class="ellipsis">@mail.titleMail - @mail.contentMail</a>
+                  }
+                  else if (string.IsNullOrEmpty(mail.titleMail) && mail.contentMail.Length > 0)
+                  {
+                    <a class="ellipsis is-flex">
+                      <span class="weight600">@notitleMail</span>
+                      <span class="px-2">-</span>
+                      <span>@mail.contentMail</span>
+                    </a>
+                  }
+                  else if (string.IsNullOrEmpty(mail.titleMail) && string.IsNullOrEmpty(mail.contentMail))
+                  {
+                    <a class="ellipsis weight500">@notitleMail</a>
+                  }
                 </a>
-              }
-              else if (string.IsNullOrEmpty(mail.titleMail) && string.IsNullOrEmpty(mail.contentMail))
-              {
-                <a class="ellipsis weight500">@notitleMail</a>
-              }
-            </div>
+              </div>
+            
           </li>
           <li class="column labelStick">
             <ul class="is-flex gap_5 column">
@@ -441,6 +388,7 @@ else
   private string choseTypeSortMail => isTypeSortMail ? "is_active" : "";
   public List<MailItemModels> mailList = new();
   public List<DetailsMail> FilesList = new();
+  public List<DetailsMail> Sticklist = new();
   private List<string> selectedMail = new();
   public void ToggleStickMenu()
   {
@@ -467,6 +415,7 @@ else
   {
     listMail();
     listFile();
+    ListStick();
   }
 
   private void CheckTicked(string id) 
@@ -480,6 +429,26 @@ else
     }
   }
 
+  public void ListStick()
+  {
+    Sticklist = new () {
+      new DetailsMail() {
+        name = "Nhân sự Conando"
+      },
+      new DetailsMail() {
+        name = "Nhân sự Docorp"
+      },
+      new DetailsMail() {
+        name = "Nhân sự Brando"
+      },
+      new DetailsMail() {
+        name = "Nhân sự Fastdo"
+      },
+      new DetailsMail() {
+        name = "Nhân sự Seodo"
+      },
+    };
+  }
   public void listMail() 
   {
     mailList = new() {

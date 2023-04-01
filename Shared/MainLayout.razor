@@ -4,7 +4,7 @@
   <main id="main">
       <NavMenu />
       <section id="content">
-          @if (navigation.Uri.Contains("email") && navigation.Uri.Replace(navigation.BaseUri, "") != "email/create")
+          @if (navigation.Uri.Contains("email") && navigation.Uri.Replace(navigation.BaseUri, "") != "email/create" && navigation.Uri.Replace(navigation.BaseUri, "") != "email/details")
           {
            <section class="main-layout">
               <NavMail />

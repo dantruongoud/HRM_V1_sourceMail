@@ -67,14 +67,14 @@
             <div class="dropdown-trigger" @onclick="ToggleStickMenu">
               <span class="">Nhãn</span>
             </div>
-            <div class="dropdown-menu is-right-dropdown" style="width: 250px;">
+            <div class="dropdown-menu is-right-dropdown" style="width: 220px;">
               <div class="dropdown-content">
                 <a class="dropdown-item has-text-weight-bold">Danh sách nhãn</a>
                 @foreach (var sticky in StyleStickyList)
                 {
                   <a class="dropdown-item">
-                    <ul class="column is-flex">
-                      <li class="column">
+                    <ul class="column is-flex is-acentered gap_5">
+                      <li class="column" style="width: fit-content;">
                         <input class="input" type="checkbox" @onclick="ToggleSticky">   
                       </li>
                       <li class="column">
@@ -319,20 +319,33 @@
 @code {
   [CascadingParameter]
   public MainLayout Layout { get; set; }
+
   private bool FormCC_BCC {get; set;} = false;
+
   private string selectSortFormMail {get; set;} = "Vận hành";
+
   private string selectSignatureMail {get; set;} = "Không có chữ ký";
+
   private bool openChoseTypeSort = false;
+
   private bool fillWarning = false; 
+
   private bool isStickMenu = false;
+
   private bool isSticky = false;
 
   private string openStickMenu => isStickMenu ? "is_active" : "";
+
   private string fillWarningText => fillWarning ? "is_active" : "";
+
   private string openSort => openChoseTypeSort ? "is_active" : "";
+
   private string activeSticky => isSticky ? "is-flex" : "";
+
   private List<TypeColorStickyMailModels> StyleStickyList = new();
+
   private List<TypeColorStickyMailModels> ToFormList = new();
+    
 
   public void choseTypeSort() 
   {

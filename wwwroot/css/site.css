@@ -9,7 +9,9 @@
 }
 
 .crud-group.p-4 > ul > li,
-.crud-options.p-4 > ul > li {
+.crud-options.p-4 > ul > li,
+.crud-stick.p-4 > ul > li,
+.crud-signature.p-4 > ul > li {
   padding: 8px 0px;
 }
 /* List item mail */
@@ -85,7 +87,9 @@ div.item-mail > ul li > a.button.is-border:not(.is-flex) {
 
 /* section group */
 .crud-group,
-.crud-options {
+.crud-options,
+.crud-stick,
+.crud-signature {
   border: 1px solid #ccc;
   background-color: #fff;
   border-radius: 8px;
@@ -213,6 +217,137 @@ div.columm > .group {
   justify-content: center;
   align-items: center;
 }
+/* end options section */
+
+/* start signature section */
+.crud-signature > div:nth-child(2) > a.button.is-links {
+  width: 140px;
+  padding: 6px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+}
+.crud-signature > div:nth-child(2) > a.button.is-links:hover {
+  background-color: #3082c5;
+}
+
+.crud-signature .dropdown-trigger > a {
+  width: 150px;
+  justify-content: space-between;
+}
+.crud-signature .button-left {
+  width: 20%;
+}
+.crud-signature .button-left a.button {
+  width: 100%;
+  padding: 5px;
+  display: flex;
+  justify-content: center;
+  border-radius: 4px;
+}
+.crud-signature .button-left a.button:hover {
+  background-color: #3082c5;
+}
+.crud-signature .button-right {
+  width: calc(100% - 20%);
+}
+.crud-signature .button-right textarea {
+  min-height: 100px;
+}
+.button-right .foot-signature {
+  background-color: #fff;
+  bottom: 10px;
+  box-shadow: 0px 4px 4px 1px rgba(0, 0, 0, 0.15), 0px 1px 3px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  z-index: 5;
+  height: 40px;
+}
+/* end signature section */
+/* start details section */
+.details > ul li {
+  width: fit-content;
+}
+.details > ul > li:first-child:hover {
+  background-color: #ccc;
+  border-radius: 4px;
+}
+.details > ul li:last-child.is_active .dropdown-menu {
+  display: block;
+}
+.details > ul li:last-child .dropdown-menu {
+  display: none;
+}
+.details > ul li:last-child.is_active ul {
+  display: block;
+}
+.details > ul > li:last-child > ul > li {
+  display: none;
+}
+.details .header-details {
+  max-width: 1000px;
+}
+.block-mail > div > ul > li:first-child {
+  flex: 1;
+}
+.block-mail > div > ul > li:nth-child(2) {
+  min-width: 600px;
+}
+.block-mail > div > ul > li:last-child {
+  width: calc(100% - 644px);
+  display: flex;
+  align-items: center;
+  justify-content: end;
+}
+
+/* end details section */
+/* start stick section */
+.crud-stick > div:nth-child(2) > ul > li:last-child a {
+  width: 110px;
+}
+.crud-stick input:placeholder-shown {
+  font-style: italic;
+}
+input:placeholder-shown {
+  font-family: "Inter" !important;
+}
+input:valid {
+  font-family: "Inter" !important;
+  font-weight: 400 !important;
+}
+.crud-stick input:valid {
+  font-size: 13px;
+}
+.crud-stick .label-edit {
+  font-size: 12px;
+  font-weight: 400;
+  font-style: italic;
+  color: var(--color-extra);
+}
+.crud-stick .stick-list {
+  flex-wrap: wrap;
+}
+.is-danger {
+  background: #ffede9;
+}
+.is-warning {
+  background-color: #fffdc6;
+}
+.is-success {
+  background-color: #cef9cc;
+}
+.stick-list {
+  flex-wrap: wrap;
+}
+.stick-list > div > ul > li:first-child {
+  width: 150px !important;
+}
+.stick-list > div > ul > li {
+  width: fit-content;
+}
+.stick-list > div > ul > li:first-child > a {
+  width: fit-content;
+}
+/* end stick section */
 /* .footer-mail */
 .footer-mail > ul > li.column.is-flex {
   width: fit-content;

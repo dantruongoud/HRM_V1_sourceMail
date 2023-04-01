@@ -93,7 +93,7 @@ body {
 }
 #sidebarmail + .columm {
   width: calc(100% - 200px);
-  overflow: auto;
+  overflow: hidden;
 }
 section.main-layout > section.columm {
   height: 100vh;
@@ -754,6 +754,10 @@ table .p-16 {
   padding-top: 8px;
   padding-bottom: 8px;
 }
+.py-10 {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
 
 .has-text-dark {
   color: #5c6669;
@@ -1262,6 +1266,12 @@ ul li {
 }
 .p-3 {
   padding: 3px;
+}
+.p-2 {
+  padding: 2px;
+}
+.p-1 {
+  padding: 1px;
 }
 .p-8 {
   padding: 8px;
@@ -2268,7 +2278,6 @@ div.mt-10 > ul:first-child {
   align-items: center;
 }
 div.is-sticky-68 > ul.column.is-flex li:first-child {
-  width: fit-content;
   flex: none;
   flex-wrap: nowrap;
 }
@@ -2296,10 +2305,6 @@ section#content > section.main {
   color: var(--color-main);
 }
 
-div.dropdown-content > a.dropdown-item > ul.is-flex {
-  text-align: center;
-  justify-content: center;
-}
 .pt-2 {
   padding-top: 2px;
 }
@@ -2312,13 +2317,14 @@ input[type="checkbox"] {
   width: 12px;
   height: 12px;
 }
-a.dropdown-item > ul.column.is-flex > li {
-  width: 15%;
-}
+
 a.dropdown-item > ul.column.is-flex > li:last-child {
-  width: 70%;
+  width: fit-content;
 }
-div.control.is-flex > a {
+a.dropdown-item > ul.column.is-flex > li:nth-child(2) {
+  width: fit-content;
+}
+div.control.is-flex > a:not(.is-border) {
   margin-left: 15px;
   justify-content: center;
   align-items: center;
@@ -2350,10 +2356,55 @@ div.control.is-flex:not(.float-right) > a:last-child:hover {
   position: sticky;
   top: 109px;
 }
+.receivedmail.is-sticky-68 > ul li:first-child {
+  width: 120px;
+}
+.receivedmail.is-sticky-68 > ul li:nth-child(4) {
+  width: 140px;
+}
+.receivedmail.is-sticky-68 > ul li:nth-child(5) {
+  width: 140px;
+}
+.receivedmail.is-sticky-68 > ul li:nth-child(2) {
+  width: calc(100% - 720px);
+}
 
-div.columm.mt-10.is-sticky-109 > ul:first-child {
-  width: 10%;
-  left: 0;
+.sendmail > ul li:first-child {
+  width: 120px;
+}
+.sendmail > ul > li.is-one-quarter {
+  width: calc(100% - 570px);
+}
+.sendmail > ul li:last-child > div {
+  width: 160px;
+  justify-content: end;
+}
+.sendmail > ul li.is-narrow,
+.sendmail > ul li.is-narrow > div {
+  width: fit-content;
+}
+
+.starmail.is-sticky-68 > ul li:first-child {
+  width: 100px;
+}
+.starmail.is-sticky-68 > ul li:nth-child(4) {
+  width: 100px;
+}
+.starmail.is-sticky-68 > ul li:nth-child(5) {
+  width: 60px;
+}
+.starmail.is-sticky-68 > ul li:nth-child(2) {
+  width: calc(100% - 700px);
+}
+
+.draftmail > ul > li:first-child {
+  width: 110px;
+}
+.draftmail > ul > li.is-one-quarter {
+  width: calc(100% - 550px);
+}
+.draftmail > ul > li:last-child {
+  width: 395px;
 }
 div.columm.mt-10.is-sticky-109 > ul:last-child {
   width: 90%;
@@ -2431,7 +2482,7 @@ div.columm.mt-10.is-sticky-109 > ul:last-child > li:last-child div.dropdown.is_a
 }
 
 .disable-hover:hover {
-  background-color: #fff !important;
+  background-color: inherit !important;
 }
 
 /* Start phân trang */

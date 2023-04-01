@@ -47,8 +47,8 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWFpbFxEZWxldGVNYWlsLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/myC\#/testAPP/Pages/Mail/DetailsGroupSetting.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWFpbFxEZXRhaWxzR3JvdXBTZXR0aW5nLnJhem9y
+[D:/myC\#/testAPP/Pages/Mail/DetailMails.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWFpbFxEZXRhaWxNYWlscy5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/myC\#/testAPP/Pages/Mail/DraftMail.razor]
@@ -71,8 +71,24 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWFpbFxTZW5kTWFpbC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/myC\#/testAPP/Pages/Mail/Setting.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWFpbFxTZXR0aW5nLnJhem9y
+[D:/myC\#/testAPP/Pages/Mail/Settings/Setting.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWFpbFxTZXR0aW5nc1xTZXR0aW5nLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/myC\#/testAPP/Pages/Mail/Settings/_CrudGroup.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWFpbFxTZXR0aW5nc1xfQ3J1ZEdyb3VwLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/myC\#/testAPP/Pages/Mail/Settings/_CrudOptions.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWFpbFxTZXR0aW5nc1xfQ3J1ZE9wdGlvbnMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/myC\#/testAPP/Pages/Mail/Settings/_CrudSignature.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWFpbFxTZXR0aW5nc1xfQ3J1ZFNpZ25hdHVyZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/myC\#/testAPP/Pages/Mail/Settings/_CrudSticky.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWFpbFxTZXR0aW5nc1xfQ3J1ZFN0aWNreS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/myC\#/testAPP/Pages/Mail/StarMail.razor]

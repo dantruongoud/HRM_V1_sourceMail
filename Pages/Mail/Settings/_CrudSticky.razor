@@ -1,0 +1,143 @@
+@inject IJSRuntime JSRuntime;
+<section class="p-4">
+  <section class="crud-stick p-4">
+    <div class="columm py-8">
+      <h2 class="is-size-5 has-text-weight has-text-info">QUẢN LÝ NHÃN</h2>
+    </div>
+    <div class="columm py-8">
+      <ul class="col-half is-flex gap_5 is-acentered">
+        <li class="column">
+          <div class="control">
+            <input @bind="nameStick" class="input p-9" type="text" placeholder="Nhập tiêu đề nhãn">
+          </div>
+        </li>
+        <li class="column" style="width: fit-content;">
+          <a class="button is-border p-9 is-flex is-acentered has-text-grey" style="width: fit-content;">
+              <i class="is-size-6 material-icons material-icons-outlined">
+              palette
+              </i>
+          </a>
+        </li>
+          <li class="column" style="width: fit-content;">
+            <div class="control">
+            <a class="button button-is-link is-flex p-9" @onclick="AddStickList">
+              <span class="icon">
+                <span class="is-size-6 material-icons material-icons-outlined">
+                done
+                </span>
+              </span>
+              <span>Tạo nhãn</span>
+            </a>
+          </div>
+          </li>
+      </ul>
+    </div>
+    <div class="columm py-8">
+      <div class="columm">
+        <span class="label-edit">Chọn nhãn để chỉnh sửa</span>
+      </div>
+      <div class="columm py-8">
+        <div class="column is-flex gap_10 stick-list">
+
+          @foreach (var stick in stickList)
+          {
+            <div class="@stick.bgColor is-radius-4">
+              <ul class="column is-flex is-acentered p-6 gap_5">
+                <li class="column">
+                  <span class="@stick.color font_13">@stick.name</span>
+                </li>
+                <li class="column">
+                  <a class="button disable-hover is-flex is-link p-3">
+                    <span class="icon has-text-link">
+                      <i class="is-size-6 material-icons material-icons-outlined">
+                        mode_edit_outline
+                      </i>
+                    </span>
+                  </a>
+                </li>
+                <li class="column">
+                  <a class="button is-flex is-acentered is-danger is-radius-4" @onclick="() => OnDeleteClick(stickList, stick.ID, stick.name)">
+                    <span class="p-3">
+                      <i class="is-size-6 material-icons material-icons-outlined">
+                        delete_outline
+                      </i>
+                    </span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+</section>
+
+@code {
+   private string nameStick {get; set;} = "";
+
+  private List<DetailsMail> stickList = new();
+
+  protected override void OnInitialized() 
+  {
+    StickList();
+  }
+
+  private async Task OnDeleteClick(List<DetailsMail> list, string id, string name)
+  {
+      bool confirmDelete = await JSRuntime.InvokeAsync<bool>("confirm", "Bạn có chắc chắn muốn xoá nhãn " + name + " ?");
+      if (confirmDelete)
+      {
+          // Xoá dữ liệu ở đây
+          list.RemoveAll(x => x.ID == id);
+      }
+  } 
+
+  public void AddStickList() 
+  {
+    Guid guid = new Guid();
+    stickList.Add(
+      new DetailsMail() {
+        ID = guid.ToString(),
+        name = nameStick
+      }
+    );
+    nameStick = "";
+  }
+
+  public void StickList() 
+  {
+    stickList = new() {
+      new DetailsMail() {
+        ID = DateTime.Now.Ticks.ToString(),
+        name = "Nhân sự Conando",
+        bgColor = "is-warning",
+        color = "has-text-warning"
+      },
+      new DetailsMail() {
+        ID = DateTime.Now.Ticks.ToString(),
+        name = "Nhân sự Brando",
+        bgColor = "is-danger",
+        color = "has-text-danger"
+      },
+      new DetailsMail() {
+        ID = DateTime.Now.Ticks.ToString(),
+        name = "Nhân sự Conando",
+        bgColor = "is-success",
+        color = "has-text-success"
+      },
+      new DetailsMail() {
+        ID = DateTime.Now.Ticks.ToString(),
+        name = "Nhân sự Conando",
+        bgColor = "is-none",
+        color = "has-text-grey"
+      },
+      new DetailsMail() {
+        ID = DateTime.Now.Ticks.ToString(),
+        name = "Nhân sự Conando",
+        bgColor = "is-warning",
+        color = "has-text-warning"
+      },
+    };
+  }
+}
